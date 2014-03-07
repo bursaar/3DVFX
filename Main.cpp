@@ -158,18 +158,20 @@ void initD3D(HWND hWnd)
 		&d3dpp,
 		&d3ddev);
 
-	init_graphics();    // call the function to initialize the triangle
+	
 }
 
 // this is the function used to render a single frame
 void render_frame(void)
 {
-	// clear the window to a deep blue
-	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, backgroundColour, 1.0f, 0);
+	// clear the window
+	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, NULL, 1.0f, 0);
 
 	d3ddev->BeginScene();    // begins the 3D scene
 
 	// do 3D rendering on the back buffer here
+	init_graphics();    // call the function to initialize the triangle
+
 	// select which vertex format we are using
 	d3ddev->SetFVF(CUSTOMFVF);
 
@@ -189,17 +191,19 @@ void render_frame(void)
 void cleanD3D(void)
 {
 	v_buffer->Release();    // close and release the vertex buffer
-	d3ddev->Release();    // close and release the 3D device
-	d3d->Release();    // close and release Direct3D
+	d3ddev->Release();		// close and release the 3D device
+	d3d->Release();			// close and release Direct3D
 }
 
 // this is the function that puts the 3D models into video RAM
 void init_graphics(void)
 {
+
+	
 	// create the vertices using the CUSTOMVERTEX struct
 	CUSTOMVERTEX vertices[] =
 	{
-		{ 400.0f, 62.5f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), },
+		{ 400.0f, 62.5f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 255, 255), },
 		{ 650.0f, 500.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 255, 0), },
 		{ 150.0f, 500.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(255, 0, 0), },
 	};
