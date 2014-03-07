@@ -13,6 +13,7 @@
 LPDIRECT3D9 d3d;							// the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev;					// the pointer to the device class
 LPDIRECT3DVERTEXBUFFER9 v_buffer = NULL;    // the pointer to the vertex buffer
+LPDIRECT3DINDEXBUFFER9 i_buffer = NULL;    // the pointer to the index buffer
 
 // function prototypes
 void initD3D(HWND hWnd);    // sets up and initializes Direct3D
@@ -65,9 +66,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	hWnd = CreateWindowEx(NULL,
 		L"WindowClass1",    // name of the window class
 		L"Ben Keenan (CD900002O) - Portfolio 2 Assignment 1",   // title of the window
-		WS_EX_TOPMOST | WS_POPUP,    // window style
-		0,    // x-position of the window
-		0,    // y-position of the window
+		WS_BORDER | WS_ACTIVECAPTION | WS_MINIMIZE,    // window style
+		90,    // x-position of the window
+		50,    // y-position of the window
 		SCREEN_WIDTH,    // width of the window
 		SCREEN_HEIGHT,    // height of the window
 		NULL,    // we have no parent window, NULL
@@ -167,7 +168,8 @@ void initD3D(HWND hWnd)
 	init_graphics();    // call the function to initialize the triangle
 
 	d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE);    // turn off the 3D lighting
-	d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);    // both sides of the triangles
+	// d3ddev->SetRenderState(D3DRS_)
+	// d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);    // both sides of the triangles
 	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
 }
 
@@ -185,7 +187,7 @@ void render_frame(void)
 	// set the view transform
 	D3DXMATRIX matView;    // the view transform matrix
 	D3DXMatrixLookAtLH(&matView,
-		&D3DXVECTOR3(0.0f, 0.0f, 15.0f),   // the camera position
+		&D3DXVECTOR3(0.0f, 8.0f, 25.0f),   // the camera position
 		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),    // the look-at position
 		&D3DXVECTOR3(0.0f, 1.0f, 0.0f));    // the up direction
 	d3ddev->SetTransform(D3DTS_VIEW, &matView);    // set the view transform to matView
@@ -198,24 +200,29 @@ void render_frame(void)
 		1.0f,    // the near view-plane
 		100.0f);    // the far view-plane
 	d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);     // set the projection
-
-
-	// select the vertex buffer to display
-	d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
-
-	D3DXMATRIX matTranslateA;    // a matrix to store the translation for triangle A
-	D3DXMATRIX matTranslateB;    // a matrix to store the translation for triangle B
-	D3DXMATRIX matRotateY;    // a matrix to store the rotation for each triangle
+	
+	D3DXMATRIX matScaleA;
+	D3DXMATRIX matTranslateA;
+	D3DXMATRIX matTranslateB;
+	D3DXMATRIX matRotateY;    // a matrix to store the rotation for each object
 	static float index = 0.0f; index += 0.05f; // an ever-increasing float value
 
-	// build MULTIPLE matrices to translate the model and one to rotate
+	D3DXMatrixScaling(&matScaleA, 0.5f, 0.5f, 0.5f);
 	D3DXMatrixTranslation(&matTranslateA, 0.0f, 0.0f, 2.0f);
-	D3DXMatrixTranslation(&matTranslateB, 0.0f, 0.0f, -2.0f);
-	D3DXMatrixRotationY(&matRotateY, index);    // the front side
+	D3DXMatrixTranslation(&matTranslateB, 2.0f, 0.0f, 0.0f);
+	D3DXMatrixRotationY(&matRotateY, index);    // Rotate cubes
+
+	// select the vertex and index buffers to use
+	d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
+	d3ddev->SetIndices(i_buffer);
 
 	// tell Direct3D about each world transform, and then draw another triangle
-	d3ddev->SetTransform(D3DTS_WORLD, &(matTranslateA * matRotateY));
-	d3ddev->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 3);
+	d3ddev->SetTransform(D3DTS_WORLD, &(matRotateY * matScaleA * matRotateY));
+	d3ddev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
+
+	// tell Direct3D about each world transform, and then draw another triangle
+	d3ddev->SetTransform(D3DTS_WORLD, &(matTranslateB * matRotateY));
+	d3ddev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
 
 	d3ddev->EndScene();
 
@@ -226,6 +233,7 @@ void render_frame(void)
 void cleanD3D(void)
 {
 	v_buffer->Release();    // close and release the vertex buffer
+	i_buffer->Release();
 	d3ddev->Release();		// close and release the 3D device
 	d3d->Release();			// close and release Direct3D
 }
@@ -238,14 +246,18 @@ void init_graphics(void)
 	// create the vertices using the CUSTOMVERTEX struct
 	CUSTOMVERTEX vertices[] =
 	{
-		{ -3.0f, 3.0f, 0.0f, D3DCOLOR_XRGB(0, 0, 255), },
-		{ 3.0f, 3.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ -3.0f, -3.0f, 0.0f, D3DCOLOR_XRGB(255, 0, 0), },
-		{ 3.0f, -3.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 255), },
+		{ -3.0f, 3.0f, -3.0f, D3DCOLOR_XRGB(0, 0, 255), },
+		{ 3.0f, 3.0f, -3.0f, D3DCOLOR_XRGB(0, 255, 0), },
+		{ -3.0f, -3.0f, -3.0f, D3DCOLOR_XRGB(255, 0, 0), },
+		{ 3.0f, -3.0f, -3.0f, D3DCOLOR_XRGB(0, 255, 255), },
+		{ -3.0f, 3.0f, 3.0f, D3DCOLOR_XRGB(0, 0, 255), },
+		{ 3.0f, 3.0f, 3.0f, D3DCOLOR_XRGB(255, 0, 0), },
+		{ -3.0f, -3.0f, 3.0f, D3DCOLOR_XRGB(0, 255, 0), },
+		{ 3.0f, -3.0f, 3.0f, D3DCOLOR_XRGB(0, 255, 255), },
 	};
 
 	// create a vertex buffer interface called v_buffer
-	d3ddev->CreateVertexBuffer(4 * sizeof(CUSTOMVERTEX),
+	d3ddev->CreateVertexBuffer(8 * sizeof(CUSTOMVERTEX),
 		0,
 		CUSTOMFVF,
 		D3DPOOL_MANAGED,
@@ -258,4 +270,34 @@ void init_graphics(void)
 	v_buffer->Lock(0, 0, (void**)&pVoid, 0);
 	memcpy(pVoid, vertices, sizeof(vertices));
 	v_buffer->Unlock();
+
+	// create the indices using an int array
+	short indices[] =
+	{
+		0, 1, 2,    // side 1
+		2, 1, 3,
+		4, 0, 6,    // side 2
+		6, 0, 2,
+		7, 5, 6,    // side 3
+		6, 5, 4,
+		3, 1, 7,    // side 4
+		7, 1, 5,
+		4, 5, 0,    // side 5
+		0, 5, 1,
+		3, 7, 2,    // side 6
+		2, 7, 6,
+	};
+
+	// create an index buffer interface called i_buffer
+	d3ddev->CreateIndexBuffer(36 * sizeof(short),
+		0,
+		D3DFMT_INDEX16,
+		D3DPOOL_MANAGED,
+		&i_buffer,
+		NULL);
+
+	// lock i_buffer and load the indices into it
+	i_buffer->Lock(0, 0, (void**)&pVoid, 0);
+	memcpy(pVoid, indices, sizeof(indices));
+	i_buffer->Unlock();
 }
