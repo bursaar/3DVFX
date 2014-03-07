@@ -16,36 +16,15 @@
     <Filter Include="Setup Files">
       <UniqueIdentifier>{360d3b48-a642-4279-a30e-7a9a77f87fbf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Rendering">
-      <UniqueIdentifier>{937981d4-94f6-4de2-8a57-5e5cb63907df}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RenderFrame.h">
-      <Filter>Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Init_Graphics.h">
-      <Filter>Rendering</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen Properties.h">
       <Filter>Setup Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Declarations.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Rendering.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Init_D3D.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="CleanD3D.h">
-      <Filter>Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
