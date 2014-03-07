@@ -1,6 +1,6 @@
 // define the screen resolution
-#define SCREEN_WIDTH  1280
-#define SCREEN_HEIGHT 800
+#define SCREEN_WIDTH  640
+#define SCREEN_HEIGHT 480
 #define CUSTOMFVF (D3DFVF_XYZ | D3DFVF_DIFFUSE)
 
 // Backround Colours
