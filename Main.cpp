@@ -2,10 +2,12 @@
 #include <windows.h>
 #include <windowsx.h>
 #include <d3d9.h>
+#include <d3dx9.h>
 #include "Screen Properties.h"
 
 // include the Direct3D Library file
 #pragma comment (lib, "d3d9.lib")
+#pragma comment (lib, "d3dx9.lib")
 
 // global declarations
 LPDIRECT3D9 d3d;							// the pointer to our Direct3D interface
@@ -18,6 +20,7 @@ void render_frame(void);    // renders a single frame
 void cleanD3D(void);		// closes Direct3D and releases memory
 void init_graphics(void);    // 3D declarations
 
+
 // the WindowProc function prototype
 LRESULT CALLBACK WindowProc(HWND hWnd,
 	UINT message,
@@ -28,7 +31,7 @@ DWORD backgroundColour = D3DCOLOR_XRGB(backgroundRed, backgroundGreen, backgroun
 
 struct CUSTOMVERTEX
 {
-	FLOAT x, y, z, rhw;    // from the D3DFVF_XYZRHW flag
+	FLOAT x, y, z;    // from the D3DFVF_XYZRHW flag
 	DWORD color;    // from the D3DFVF_DIFFUSE flag
 };
 
@@ -158,7 +161,7 @@ void initD3D(HWND hWnd)
 		&d3dpp,
 		&d3ddev);
 
-	
+	d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE);			// Disable 3D lighting
 }
 
 // this is the function used to render a single frame
@@ -174,6 +177,37 @@ void render_frame(void)
 
 	// select which vertex format we are using
 	d3ddev->SetFVF(CUSTOMFVF);
+
+	// PIPELINE
+	D3DXMATRIX matRotateY;
+
+	static float index = 0.0f; index += 0.05f;
+
+	// Build matrix to roate the model based on the increasing float value
+	D3DXMatrixRotationY(&matRotateY, index);
+
+	// Tell DirectX about the matrix
+	d3ddev->SetTransform(D3DTS_WORLD, &matRotateY);
+
+	D3DXMATRIX matView;	// View transformation matrix
+
+	D3DXMatrixLookAtLH(&matView,
+		&D3DXVECTOR3(0.0f, 0.0f, 10.0f),	// Camera position
+		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),		// Look at or target position
+		&D3DXVECTOR3(0.0f, 1.0f, 0.0f)		// The direction of up
+		);
+
+	d3ddev->SetTransform(D3DTS_VIEW, &matView);		// Put the view transform in matView
+
+	D3DXMATRIX matProjection;				// projection transform matrix
+
+	D3DXMatrixPerspectiveFovLH(&matProjection,
+		D3DXToRadian(45),								// Field of View
+		(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,		// Aspect ratio
+		1.0f,											// Near plane
+		100.0f);										// Far plane
+
+	d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);
 
 	// select the vertex buffer to display
 	d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
@@ -203,9 +237,9 @@ void init_graphics(void)
 	// create the vertices using the CUSTOMVERTEX struct
 	CUSTOMVERTEX vertices[] =
 	{
-		{ 400.0f, 62.5f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 255, 255), },
-		{ 650.0f, 500.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ 150.0f, 500.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(255, 0, 0), },
+		{ 2.5f, -3.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 255), },
+		{ 0.0f, 3.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0), },
+		{ -2.5f, -3.0f, 0.0f, D3DCOLOR_XRGB(255, 0, 0), },
 	};
 
 	// create a vertex buffer interface called v_buffer
