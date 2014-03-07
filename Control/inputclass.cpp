@@ -233,6 +233,46 @@ bool InputClass::IsEscapePressed()
 	return false;
 }
 
+bool InputClass::IsUpPressed()
+{
+	if (m_keyboardState[DIK_UPARROW] & DIK_UP)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::IsRightPressed()
+{
+	if (m_keyboardState[DIK_ESCAPE] & 0x80)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::IsDownPressed()
+{
+	if (m_keyboardState[DIK_ESCAPE] & 0x80)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::IsLeftPressed()
+{
+	if (m_keyboardState[DIK_ESCAPE] & 0x80)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 
 void InputClass::GetMouseLocation(int& mouseX, int& mouseY)
 {

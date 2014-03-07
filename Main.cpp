@@ -35,7 +35,7 @@ LPDIRECT3DINDEXBUFFER9 i_buffer = NULL;    // the pointer to the index buffer
 
 // function prototypes
 void initD3D(HWND hWnd);    // sets up and initializes Direct3D
-void render_frame(void);    // renders a single frame
+void render_frame(InputClass pInput);    // renders a single frame
 void cleanD3D(void);		// closes Direct3D and releases memory
 void init_graphics(void);    // 3D declarations
 
@@ -119,12 +119,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		if (msg.message == WM_QUIT)
 			break;
-		int mouseX;
-		int mouseY;
-
 		Input.Frame();
-		Input.GetMouseLocation(mouseX, mouseY);
-		render_frame();
+		render_frame(Input);
 		if (Input.IsEscapePressed()) break;
 	}
 
@@ -194,14 +190,18 @@ void initD3D(HWND hWnd)
 	init_graphics();    // call the function to initialize the triangle
 
 	d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE);    // turn off the 3D lighting
-	// d3ddev->SetRenderState(D3DRS_)
 	// d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);    // both sides of the triangles
 	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
 }
 
 // this is the function used to render a single frame
-void render_frame(void)
+void render_frame(InputClass pInput)
 {
+	int mouseX;
+	int mouseY;
+
+	pInput.GetMouseLocation(mouseX, mouseY);
+
 	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 	d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
@@ -231,7 +231,13 @@ void render_frame(void)
 	D3DXMATRIX matTranslateA;
 	D3DXMATRIX matTranslateB;
 	D3DXMATRIX matRotateY;    // a matrix to store the rotation for each object
-	static float index = 0.0f; index += 0.05f; // an ever-increasing float value
+	float diff = 0.1f;
+	if (pInput.IsUpPressed())
+	{
+		diff *= 1.1f;
+	}
+	static float index = 0.0f; index += diff; // an ever-increasing float value
+
 
 	D3DXMatrixScaling(&matScaleA, 0.5f, 0.5f, 0.5f);
 	D3DXMatrixTranslation(&matTranslateA, 0.0f, 0.0f, 2.0f);
