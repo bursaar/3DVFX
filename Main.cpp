@@ -1,13 +1,31 @@
+// ================================================================================================ //
+//																									//
+//						Level 7 3D Graphics for Computer Games (4241-504)							//
+//																									//
+//											 3DVFX													//
+//											   by													//
+//									       Ben Keenan												//
+//																									//
+//									  Student No. CD900002O											//
+//																									//
+//								   ben@ben.ie | +353 87 935 0483									//
+//																									//
+// ================================================================================================	//
+
 // Basic window construction code taken from http://www.directxtutorial.com/Lesson.aspx?lessonid=9-1-3
+// Method of input taken from http://www.rastertek.com/dx11tut13.html
+
 #include <windows.h>
 #include <windowsx.h>
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "Screen Properties.h"
+#include "Control/inputclass.h"
 
 // include the Direct3D Library file
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
+#define WIN32_LEAN_AND_MEAN
 
 // global declarations
 LPDIRECT3D9 d3d;							// the pointer to our Direct3D interface
@@ -82,6 +100,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	// set up and initialize Direct3D
 	initD3D(hWnd);
 
+	// Initialise the input class
+	InputClass Input;
+	Input.Initialize(hInstance, hWnd, SCREEN_WIDTH, SCREEN_HEIGHT);
+
 	// enter the main loop:
 
 	// this struct holds Windows event messages
@@ -97,8 +119,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		if (msg.message == WM_QUIT)
 			break;
+		int mouseX;
+		int mouseY;
 
+		Input.Frame();
+		Input.GetMouseLocation(mouseX, mouseY);
 		render_frame();
+		if (Input.IsEscapePressed()) break;
 	}
 
 	// clean up DirectX and COM
@@ -139,7 +166,6 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-// this function initializes and prepares Direct3D for use
 // this function initializes and prepares Direct3D for use
 void initD3D(HWND hWnd)
 {
