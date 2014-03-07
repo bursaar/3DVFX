@@ -139,21 +139,24 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 }
 
 // this function initializes and prepares Direct3D for use
+// this function initializes and prepares Direct3D for use
 void initD3D(HWND hWnd)
 {
-	d3d = Direct3DCreate9(D3D_SDK_VERSION);    // create the Direct3D interface
+	d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
-	D3DPRESENT_PARAMETERS d3dpp;    // create a struct to hold various device information
+	D3DPRESENT_PARAMETERS d3dpp;
 
-	ZeroMemory(&d3dpp, sizeof(d3dpp));						// clear out the struct for use
-	d3dpp.Windowed = TRUE;									// program windowed, not fullscreen
-	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;				// discard old frames
-	d3dpp.hDeviceWindow = hWnd;								// set the window to be used by Direct3D
-	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;				// set the back buffer format to 32-bit
-	d3dpp.BackBufferWidth = SCREEN_WIDTH;					// set the width of the buffer
-	d3dpp.BackBufferHeight = SCREEN_HEIGHT;					// set the height of the buffer
+	ZeroMemory(&d3dpp, sizeof(d3dpp));
+	d3dpp.Windowed = TRUE;
+	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	d3dpp.hDeviceWindow = hWnd;
+	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
+	d3dpp.BackBufferWidth = SCREEN_WIDTH;
+	d3dpp.BackBufferHeight = SCREEN_HEIGHT;
+	d3dpp.EnableAutoDepthStencil = TRUE;    // automatically run the z-buffer for us
+	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;    // 16-bit pixel format for the z-buffer
 
-	// create a device class using this information and information from the d3dpp stuct
+	// create a device class using this information and the info from the d3dpp stuct
 	d3d->CreateDevice(D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
 		hWnd,
@@ -161,65 +164,63 @@ void initD3D(HWND hWnd)
 		&d3dpp,
 		&d3ddev);
 
-	d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE);			// Disable 3D lighting
+	init_graphics();    // call the function to initialize the triangle
+
+	d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE);    // turn off the 3D lighting
+	d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);    // both sides of the triangles
+	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
 }
 
 // this is the function used to render a single frame
 void render_frame(void)
 {
-	// clear the window
-	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, NULL, 1.0f, 0);
+	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+	d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
-	d3ddev->BeginScene();    // begins the 3D scene
-
-	// do 3D rendering on the back buffer here
-	init_graphics();    // call the function to initialize the triangle
+	d3ddev->BeginScene();
 
 	// select which vertex format we are using
 	d3ddev->SetFVF(CUSTOMFVF);
 
-	// PIPELINE
-	D3DXMATRIX matRotateY;
-
-	static float index = 0.0f; index += 0.05f;
-
-	// Build matrix to roate the model based on the increasing float value
-	D3DXMatrixRotationY(&matRotateY, index);
-
-	// Tell DirectX about the matrix
-	d3ddev->SetTransform(D3DTS_WORLD, &matRotateY);
-
-	D3DXMATRIX matView;	// View transformation matrix
-
+	// set the view transform
+	D3DXMATRIX matView;    // the view transform matrix
 	D3DXMatrixLookAtLH(&matView,
-		&D3DXVECTOR3(0.0f, 0.0f, 10.0f),	// Camera position
-		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),		// Look at or target position
-		&D3DXVECTOR3(0.0f, 1.0f, 0.0f)		// The direction of up
-		);
+		&D3DXVECTOR3(0.0f, 0.0f, 15.0f),   // the camera position
+		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),    // the look-at position
+		&D3DXVECTOR3(0.0f, 1.0f, 0.0f));    // the up direction
+	d3ddev->SetTransform(D3DTS_VIEW, &matView);    // set the view transform to matView
 
-	d3ddev->SetTransform(D3DTS_VIEW, &matView);		// Put the view transform in matView
-
-	D3DXMATRIX matProjection;				// projection transform matrix
-
+	// set the projection transform
+	D3DXMATRIX matProjection;    // the projection transform matrix
 	D3DXMatrixPerspectiveFovLH(&matProjection,
-		D3DXToRadian(45),								// Field of View
-		(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,		// Aspect ratio
-		1.0f,											// Near plane
-		100.0f);										// Far plane
+		D3DXToRadian(45),    // the horizontal field of view
+		(FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT, // aspect ratio
+		1.0f,    // the near view-plane
+		100.0f);    // the far view-plane
+	d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);     // set the projection
 
-	d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);
 
 	// select the vertex buffer to display
 	d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
 
-	// copy the vertex buffer to the back buffer
-	d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
+	D3DXMATRIX matTranslateA;    // a matrix to store the translation for triangle A
+	D3DXMATRIX matTranslateB;    // a matrix to store the translation for triangle B
+	D3DXMATRIX matRotateY;    // a matrix to store the rotation for each triangle
+	static float index = 0.0f; index += 0.05f; // an ever-increasing float value
 
-	d3ddev->EndScene();    // ends the 3D scene
+	// build MULTIPLE matrices to translate the model and one to rotate
+	D3DXMatrixTranslation(&matTranslateA, 0.0f, 0.0f, 2.0f);
+	D3DXMatrixTranslation(&matTranslateB, 0.0f, 0.0f, -2.0f);
+	D3DXMatrixRotationY(&matRotateY, index);    // the front side
 
-	d3ddev->Present(NULL, NULL, NULL, NULL);   // displays the created frame on the screen
+	// tell Direct3D about each world transform, and then draw another triangle
+	d3ddev->SetTransform(D3DTS_WORLD, &(matTranslateA * matRotateY));
+	d3ddev->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 3);
+
+	d3ddev->EndScene();
+
+	d3ddev->Present(NULL, NULL, NULL, NULL);
 }
-
 
 // this is the function that cleans up Direct3D and COM
 void cleanD3D(void)
@@ -237,13 +238,14 @@ void init_graphics(void)
 	// create the vertices using the CUSTOMVERTEX struct
 	CUSTOMVERTEX vertices[] =
 	{
-		{ 2.5f, -3.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 255), },
-		{ 0.0f, 3.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ -2.5f, -3.0f, 0.0f, D3DCOLOR_XRGB(255, 0, 0), },
+		{ -3.0f, 3.0f, 0.0f, D3DCOLOR_XRGB(0, 0, 255), },
+		{ 3.0f, 3.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0), },
+		{ -3.0f, -3.0f, 0.0f, D3DCOLOR_XRGB(255, 0, 0), },
+		{ 3.0f, -3.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 255), },
 	};
 
 	// create a vertex buffer interface called v_buffer
-	d3ddev->CreateVertexBuffer(3 * sizeof(CUSTOMVERTEX),
+	d3ddev->CreateVertexBuffer(4 * sizeof(CUSTOMVERTEX),
 		0,
 		CUSTOMFVF,
 		D3DPOOL_MANAGED,
