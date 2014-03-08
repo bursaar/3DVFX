@@ -18,6 +18,12 @@
     <Filter Include="Renderer">
       <UniqueIdentifier>{282a9fb2-d732-4cf7-a676-4239d169f07b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{c8be21b2-4bd9-438a-b15b-ccc89b832009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows">
+      <UniqueIdentifier>{9f9904b2-dc7c-4adc-a243-15d0ce8bd227}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -29,6 +35,12 @@
     <ClCompile Include="RenderClass.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="MyWindows.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemClass.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen Properties.h">
@@ -39,6 +51,12 @@
     </ClInclude>
     <ClInclude Include="RenderClass.h">
       <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="MyWindows.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemClass.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

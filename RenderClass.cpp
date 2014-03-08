@@ -53,6 +53,9 @@ void RenderClass::render_frame(InputClass pInput)		// renders a single frame
 
 	pInput.GetMouseLocation(mouseX, mouseY);
 
+	float xNo = mouseX / SCREEN_WIDTH;
+	float yNo = mouseY / SCREEN_HEIGHT;
+
 	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 	d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
@@ -82,6 +85,7 @@ void RenderClass::render_frame(InputClass pInput)		// renders a single frame
 	D3DXMATRIX matTranslateA;
 	D3DXMATRIX matTranslateB;
 	D3DXMATRIX matRotateY;    // a matrix to store the rotation for each object
+	
 	float diff = 0.1f;
 	static float index = 0.0f; index += diff; // an ever-increasing float value
 
@@ -105,6 +109,7 @@ void RenderClass::render_frame(InputClass pInput)		// renders a single frame
 	d3ddev->EndScene();
 
 	d3ddev->Present(NULL, NULL, NULL, NULL);
+
 }
 
 void RenderClass::cleanD3D(void)						// closes Direct3D and releases memory
