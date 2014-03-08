@@ -235,7 +235,7 @@ bool InputClass::IsEscapePressed()
 
 bool InputClass::IsUpPressed()
 {
-	if (m_keyboardState[DIK_UPARROW] & DIK_UP)
+	if (m_keyboardState[DIK_0] & 0x80)
 	{
 		return true;
 	}

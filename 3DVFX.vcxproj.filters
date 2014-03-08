@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -19,6 +15,9 @@
     <Filter Include="Control">
       <UniqueIdentifier>{1c5f32f3-22b4-4fcf-b150-fe3998933573}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{282a9fb2-d732-4cf7-a676-4239d169f07b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -27,6 +26,9 @@
     <ClCompile Include="Control\inputclass.cpp">
       <Filter>Control</Filter>
     </ClCompile>
+    <ClCompile Include="RenderClass.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen Properties.h">
@@ -34,6 +36,9 @@
     </ClInclude>
     <ClInclude Include="Control\inputclass.h">
       <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderClass.h">
+      <Filter>Renderer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
