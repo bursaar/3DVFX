@@ -7,10 +7,12 @@ SystemClass::SystemClass(HINSTANCE hInstance, int nCmdShow)
 	m_MyWindow = MyWindow;
 
 	// Initialise Direct3D
-	m_Renderer(MyWindow.hWnd);
-
+	RenderClass Renderer(MyWindow.hWnd);
+	m_Renderer = Renderer;
 
 	// Initialise the input class
+	InputClass Input;
+	m_Input = Input;
 	m_Input.Initialize(hInstance, MyWindow.hWnd, SCREEN_WIDTH, SCREEN_HEIGHT);
 	
 }

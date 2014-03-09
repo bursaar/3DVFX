@@ -24,6 +24,9 @@
     <Filter Include="Windows">
       <UniqueIdentifier>{9f9904b2-dc7c-4adc-a243-15d0ce8bd227}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Objects">
+      <UniqueIdentifier>{7c01f2fa-3741-4163-b0bb-4214cc50818e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -41,6 +44,12 @@
     <ClCompile Include="SystemClass.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterClass.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemClass.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen Properties.h">
@@ -57,6 +66,12 @@
     </ClInclude>
     <ClInclude Include="SystemClass.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterClass.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemClass.h">
+      <Filter>Game Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

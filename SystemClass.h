@@ -11,9 +11,9 @@ public:
 	SystemClass();
 	~SystemClass();
 
+	InputClass m_Input;
 	MyWindows m_MyWindow;
 	RenderClass m_Renderer;
-	InputClass m_Input;
 
 	
 	int Run();

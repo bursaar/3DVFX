@@ -82,14 +82,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CharacterClass.cpp" />
     <ClCompile Include="Control\inputclass.cpp" />
+    <ClCompile Include="ItemClass.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyWindows.cpp" />
     <ClCompile Include="RenderClass.cpp" />
     <ClCompile Include="SystemClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CharacterClass.h" />
     <ClInclude Include="Control\inputclass.h" />
+    <ClInclude Include="ItemClass.h" />
     <ClInclude Include="MyWindows.h" />
     <ClInclude Include="RenderClass.h" />
     <ClInclude Include="Screen Properties.h" />
