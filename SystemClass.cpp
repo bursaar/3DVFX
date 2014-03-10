@@ -8,13 +8,7 @@ SystemClass::SystemClass(HINSTANCE hInstance, int nCmdShow)
 
 	// Initialise Direct3D
 	RenderClass Renderer(MyWindow.hWnd);
-	m_Renderer = Renderer;
-
-	// Initialise the input class
-	InputClass Input;
-	m_Input = Input;
-	m_Input.Initialize(hInstance, MyWindow.hWnd, SCREEN_WIDTH, SCREEN_HEIGHT);
-	
+	m_Renderer = Renderer;	
 }
 
 SystemClass::SystemClass()
@@ -42,10 +36,7 @@ int SystemClass::Run()
 			break;
 
 		// Rendering loop here
-		m_Input.Frame();
-		m_Renderer.render_frame(m_Input);
-
-		if (m_Input.IsEscapePressed()) break;
+		m_Renderer.render_frame();
 	}
 
 

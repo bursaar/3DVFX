@@ -24,7 +24,7 @@ public:
 
 
 	MyWindows(HINSTANCE hInstance, int nCmdShow);
-	MyWindows::MyWindows();
+	MyWindows();
 	~MyWindows();
 };
 

@@ -27,7 +27,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	int nCmdShow)
 {
 	SystemClass System(hInstance, nCmdShow);
-
+	
 	System.Run();
 
 	System.Shutdown();

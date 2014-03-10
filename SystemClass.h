@@ -11,13 +11,9 @@ public:
 	SystemClass();
 	~SystemClass();
 
-	InputClass m_Input;
 	MyWindows m_MyWindow;
 	RenderClass m_Renderer;
 	MSG msg;
-
-
-
 	
 	int Run();
 	int Shutdown();

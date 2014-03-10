@@ -46,15 +46,8 @@ void RenderClass::initD3D(HWND hWnd)					// sets up and initializes Direct3D
 	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
 }
 
-void RenderClass::render_frame(InputClass pInput)		// renders a single frame
+void RenderClass::render_frame()		// renders a single frame
 {
-	int mouseX;
-	int mouseY;
-
-	pInput.GetMouseLocation(mouseX, mouseY);
-
-	float xNo = mouseX / SCREEN_WIDTH;
-	float yNo = mouseY / SCREEN_HEIGHT;
 
 	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 	d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
