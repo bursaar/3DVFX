@@ -107,7 +107,7 @@ void RenderClass::render_frame()		// renders a single frame
 	static float diff = 0.0f;
 	static float index = 0.0f; index += diff;						// an ever-increasing float value
 	static float spin = 0.0f;
-	static float drive = spin;
+	static float drive = 2.0f;
 
 	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);		// Clear the buffer
 	d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);		// Clear the depth buffer
@@ -129,18 +129,18 @@ void RenderClass::render_frame()		// renders a single frame
 
 	if (GetAsyncKeyState(VK_UP))
 	{
-		spin += 0.1f;
+		spin += 0.01f;
 	}
 	if (GetAsyncKeyState(VK_DOWN))
 	{
-		spin -= 0.1f;
+		spin -= 0.01f;
 	}
 
 
 	D3DXMatrixScaling(&matScale, 2.5f, 2.5f, 2.5f);							// Scale object
 	D3DXMatrixRotationY(&matRotateY, D3DXToRadian(270));					// Rotate object left and right
 	D3DXMatrixRotationX(&matRotateX, spin);									// Rotate object clockwise / counter clock
-	D3DXMatrixTranslation(&matTranslate, 0.0f, 0.0f, 2.0f + drive);			// Move object
+	D3DXMatrixTranslation(&matTranslate, 0.0f, 0.0f, drive += spin);			// Move object
 	
 	init_graphics();
 
@@ -227,7 +227,7 @@ void RenderClass::init_graphics(void)					// 3D declarations
 		v_buffer->Unlock();
 		i_buffer->Unlock();
 
-		
+		sphereMesh->Release();
 }
 
 void RenderClass::SetViewTransform()
