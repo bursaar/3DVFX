@@ -1,4 +1,5 @@
 #pragma once
+#include "T2G\Code\Leak Detector.h"
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "Screen Properties.h"
@@ -32,6 +33,7 @@ public:
 
 	// Public member functions to:
 	void render_frame();		// render a single frame
+	// void render_frame(ID3DXMesh *pMeshToRender);
 	void cleanD3D(void);						// close Direct3D and release memory
 	void init_graphics(void);					// 3D declarations - drawing
 	~RenderClass();

@@ -4,6 +4,7 @@
 RenderClass::RenderClass(HWND pHWND)
 {
 	RenderClass::initD3D(pHWND);
+
 }
 
 RenderClass::RenderClass()
@@ -48,7 +49,7 @@ void RenderClass::initD3D(HWND hWnd)					// sets up and initializes Direct3D
 	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
 }
 
-void RenderClass::render_frame()		// renders a single frame
+/* void RenderClass::render_frame()		// renders a single frame
 {
 
 	float diff = 0.0f;
@@ -92,16 +93,77 @@ void RenderClass::render_frame()		// renders a single frame
 		D3DXMatrixTranslation(&matTranslate, 0.0f, 0.0f, 2.0f);
 		D3DXMatrixRotationY(&matRotateY, index);						// Rotate object
 
-		
+		init_graphics();
+
+	d3ddev->EndScene();
+
+	d3ddev->Present(NULL, NULL, NULL, NULL);
+}
+*/
+
+void RenderClass::render_frame()		// renders a single frame
+{
+
+	float diff = 0.0f;
+
+	if (GetAsyncKeyState(VK_LEFT))
+	{
+		diff += 0.1f;
+	}
+	if (GetAsyncKeyState(VK_RIGHT))
+	{
+		diff -= 0.1f;
+	}
+
+	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);		// Clear the buffer
+	d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);		// Clear the depth buffer
+
+	d3ddev->BeginScene();
+
+	// select which vertex format we are using
+	d3ddev->SetFVF(CUSTOMFVF);
+
+	SetViewTransform();
+
+	if (GetAsyncKeyState(VK_UP))
+	{
+		m_FOV += 1;
+	}
+	if (GetAsyncKeyState(VK_DOWN))
+	{
+		m_FOV -= 1;
+	}
+
+	SetProjectionTransform(m_FOV, 1.0f, 100.0f);
+
+	// select the vertex and index buffers to use
+	d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
+	d3ddev->SetIndices(i_buffer);
+
+	D3DXMATRIX matScale;
+	D3DXMATRIX matTranslate;
+	D3DXMATRIX matRotateY;											// a matrix to store the rotation for each object
+	static float index = 0.0f; index += diff;						// an ever-increasing float value
+
+	D3DXMatrixScaling(&matScale, 0.5f, 0.5f, 0.5f);					// Scale object
+	D3DXMatrixRotationY(&matRotateY, index);						// Rotate object
+	D3DXMatrixTranslation(&matTranslate, 0.0f, 0.0f, 2.0f);			// Move object
+
+	d3ddev->SetTransform(D3DTS_WORLD, &(matScale * matTranslate * matRotateY));
+	d3ddev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+	init_graphics();
 
 	d3ddev->EndScene();
 
 	d3ddev->Present(NULL, NULL, NULL, NULL);
 }
 
+
 void RenderClass::cleanD3D(void)						// closes Direct3D and releases memory
 {
 	v_buffer->Release();    // close and release the vertex buffer
+	i_buffer->Release();	// close and release the index buffer
 	d3ddev->Release();		// close and release the 3D device
 	d3d->Release();			// close and release Direct3D
 }
@@ -109,52 +171,63 @@ void RenderClass::cleanD3D(void)						// closes Direct3D and releases memory
 void RenderClass::init_graphics(void)					// 3D declarations
 {
 
-	// Create a sphere
-	CUSTOMVERTEX sphereOrigin = { 0.0f, 0.0f, 0.0f, D3DCOLOR_XRGB(0, 0, 255) };
-	float fl_radius = 1.0f;
-	int slices = 15;
-	int stacks = 15;
-	LPD3DXMESH sphereMesh;
-
-	D3DXCreateSphere(d3ddev, fl_radius, slices, stacks, &sphereMesh, NULL);
-
-	D3DXATTRIBUTERANGE sphereAttribs;
-	DWORD sphereAttribTableSize;
-
-	DWORD sphereVertexCount = sphereMesh->GetNumVertices();
-	sphereMesh->GetAttributeTable(&sphereAttribs, &sphereAttribTableSize);
-
-	DWORD sphereVertexStartLoc = sphereAttribs.VertexStart;
-	CUSTOMVERTEX sphereVertexStart = { sphereVertexStartLoc };
-
-	sphereMesh->GetVertexBuffer(&v_buffer);
-
-	int sphereFaceCount = sphereMesh->GetNumFaces();
-	const int arraySize = sphereFaceCount * 3;
-
-	DWORD * adaj = new DWORD[arraySize];											// Taken from http://ngemu.com/threads/c-setting-the-size-of-array-during-runtime.42522/
-
-	sphereMesh->GenerateAdjacency(0.5f, adaj);
-	sphereMesh->OptimizeInplace(
-		D3DXMESHOPT_COMPACT |
-		D3DXMESH_MANAGED |
-		D3DXMESHOPT_ATTRSORT,adaj ,NULL, NULL, NULL);
-
-
-	VOID* pVoid = NULL;    // a void pointer
-
-	// lock v_buffer and load the vertices into it
-	// v_buffer->Lock(0, 0, (void**)&pVoid, 0);
+		// Create a sphere
+		CUSTOMVERTEX sphereOrigin = { 0.0f, 0.0f, 0.0f, D3DCOLOR_XRGB(0, 0, 255) };
+		float fl_radius = 1.0f;
+		int slices = 15;
+		int stacks = 15;
 	
-	int numSubSets = sphereMesh->GetAttributeTable(&sphereAttribs, &sphereAttribTableSize);
-	
-	for (DWORD i = 0; i < numSubSets; i++)
-	{
-		sphereMesh->DrawSubset(i);
-	}
-	memcpy(pVoid, v_buffer, sizeof(sphereVertexCount));
-	v_buffer->Unlock();
+		ID3DXMesh *sphereMesh;
+		LPD3DXBUFFER vRemap;
+		LPD3DXBUFFER adjacencyBuffer;
+		D3DXATTRIBUTERANGE sphereAttribs;
+		D3DMATERIAL9 playerSkin;
 
+		playerSkin.Ambient.a = 1.0f;
+		playerSkin.Ambient.r = 1.0f;
+		playerSkin.Ambient.g = 1.0f;
+		playerSkin.Ambient.b = 1.0f;
+
+		D3DXCreateSphere(d3ddev, fl_radius, slices, stacks, &sphereMesh, &adjacencyBuffer);
+
+		DWORD arraySize = sphereMesh->GetNumFaces() * 3;
+
+		d3ddev->SetMaterial(&playerSkin);
+
+		DWORD * adaj = new DWORD[arraySize];											// Taken from http://ngemu.com/threads/c-setting-the-size-of-array-during-runtime.42522/
+		DWORD * optAdaj = new DWORD[arraySize];
+		DWORD * fRemap = new DWORD[arraySize];
+		
+		sphereMesh->GenerateAdjacency(0.1f, adaj);
+
+		sphereMesh->OptimizeInplace(
+			D3DXMESHOPT_ATTRSORT,
+			adaj,
+			optAdaj,
+			fRemap,
+			&vRemap);
+
+		VOID* pVoid;    // a void pointer
+
+		D3DXComputeNormals(sphereMesh, optAdaj);
+
+		sphereMesh->LockVertexBuffer(D3DLOCK_DISCARD, (LPVOID*) &v_buffer);
+		sphereMesh->GetVertexBuffer(&v_buffer);
+		sphereMesh->LockIndexBuffer(D3DLOCK_DISCARD, (LPVOID*) &i_buffer);
+		sphereMesh->GetIndexBuffer(&i_buffer);
+
+		d3ddev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+		for (DWORD i = 0; i < sphereMesh->GetNumFaces(); i++)
+		{
+			sphereMesh->DrawSubset(0);
+		}
+		
+		// memcpy(&pVoid, &v_buffer, sizeof(sphereMesh->GetNumBytesPerVertex()));
+		sphereMesh->UnlockVertexBuffer();
+		sphereMesh->UnlockIndexBuffer();
+
+		
 }
 
 void RenderClass::SetViewTransform()

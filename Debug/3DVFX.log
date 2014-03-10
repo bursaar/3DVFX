@@ -1,17 +1,20 @@
-﻿Build started 10/03/2014 15:27:28.
+﻿Build started 10/03/2014 20:46:54.
      1>Project "C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\3DVFX\3DVFX.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt RenderClass.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp RenderClass.cpp
          RenderClass.cpp
-     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(128): warning C4244: 'initializing' : conversion from 'DWORD' to 'FLOAT', possible loss of data
-     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(151): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(210): warning C4101: 'pVoid' : unreferenced local variable
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(183): warning C4101: 'sphereAttribs' : unreferenced local variable
+         Generating Code...
+         Compiling...
+         Main.cpp
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.lib" /MACHINE:X86 Debug\Main.obj
          Debug\RenderClass.obj
-     1>MSVCRTD.lib(crtexew.obj) : error LNK2019: unresolved external symbol _WinMain@16 referenced in function ___tmainCRTStartup
-     1>C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 ûá3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.exe : fatal error LNK1120: 1 unresolved externals
-     1>Done Building Project "C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\3DVFX\3DVFX.vcxproj" (Build target(s)) -- FAILED.
+         3DVFX.vcxproj -> C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.exe
+     1>Done Building Project "C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\3DVFX\3DVFX.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:01.26
+Time Elapsed 00:00:05.65

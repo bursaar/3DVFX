@@ -19,6 +19,7 @@
 #include <windows.h>
 #include <windowsx.h>
 #include "RenderClass.h"
+#include "T2G\Code\Leak Detector.h"
 
 #define WIN32_LEAN_AND_MEAN
 
