@@ -23,9 +23,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Control\inputclass.cpp">
-      <Filter>Control</Filter>
-    </ClCompile>
     <ClCompile Include="RenderClass.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
@@ -33,9 +30,6 @@
   <ItemGroup>
     <ClInclude Include="Screen Properties.h">
       <Filter>Setup Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Control\inputclass.h">
-      <Filter>Control</Filter>
     </ClInclude>
     <ClInclude Include="RenderClass.h">
       <Filter>Renderer</Filter>

@@ -1,7 +1,6 @@
 #pragma once
 #include <d3d9.h>
 #include <d3dx9.h>
-#include "Control\inputclass.h"
 #include "Screen Properties.h"
 
 // include the Direct3D Library file
@@ -28,7 +27,7 @@ public:
 	RenderClass(HWND hWnd);
 
 	// Public member functions to:
-	void render_frame(InputClass pInput);		// render a single frame
+	void render_frame();		// render a single frame
 	void cleanD3D(void);						// close Direct3D and release memory
 	void init_graphics(void);					// 3D declarations - drawing
 

@@ -57,7 +57,7 @@ bool InputClass::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, int
 	}
 
 	// Set the cooperative level of the keyboard to not share with other programs.
-	result = m_keyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE);
+	result = m_keyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND);
 	if(FAILED(result))
 	{
 		return false;
@@ -235,7 +235,7 @@ bool InputClass::IsEscapePressed()
 
 bool InputClass::IsUpPressed()
 {
-	if (m_keyboardState[DIK_0] & 0x80)
+	if (m_keyboardState[DIK_UP] & 0x80)
 	{
 		return true;
 	}
@@ -245,7 +245,7 @@ bool InputClass::IsUpPressed()
 
 bool InputClass::IsRightPressed()
 {
-	if (m_keyboardState[DIK_ESCAPE] & 0x80)
+	if (m_keyboardState[DIK_RIGHT] & 0x80)
 	{
 		return true;
 	}
@@ -255,7 +255,7 @@ bool InputClass::IsRightPressed()
 
 bool InputClass::IsDownPressed()
 {
-	if (m_keyboardState[DIK_ESCAPE] & 0x80)
+	if (m_keyboardState[DIK_DOWN] & 0x80)
 	{
 		return true;
 	}
@@ -265,7 +265,7 @@ bool InputClass::IsDownPressed()
 
 bool InputClass::IsLeftPressed()
 {
-	if (m_keyboardState[DIK_ESCAPE] & 0x80)
+	if (m_keyboardState[DIK_LEFT] & 0x80)
 	{
 		return true;
 	}

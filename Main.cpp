@@ -12,6 +12,7 @@
 //																									//
 // ================================================================================================	//
 
+// ACKNOWLEDGEMENTS
 // Basic window construction code taken from http://www.directxtutorial.com/Lesson.aspx?lessonid=9-1-3
 // Method of input taken from http://www.rastertek.com/dx11tut13.html
 
@@ -75,10 +76,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	// Initialise Direct3D
 	RenderClass Renderer(hWnd);
 
-	// Initialise the input class
-	InputClass Input;
-	Input.Initialize(hInstance, hWnd, SCREEN_WIDTH, SCREEN_HEIGHT);
-
 	// enter the main loop:
 
 	// this struct holds Windows event messages
@@ -94,9 +91,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		if (msg.message == WM_QUIT)
 			break;
-		Input.Frame();
-		Renderer.render_frame(Input);
-		if (Input.IsEscapePressed()) break;
+		if (GetAsyncKeyState(VK_ESCAPE))
+			break;
+		Renderer.render_frame();
 	}
 
 	// clean up DirectX and COM
