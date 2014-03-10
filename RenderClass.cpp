@@ -19,6 +19,8 @@ void RenderClass::initD3D(HWND hWnd)					// sets up and initializes Direct3D
 {
 	d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
+	m_FOV = 45;
+
 	D3DPRESENT_PARAMETERS d3dpp;
 
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
@@ -60,53 +62,37 @@ void RenderClass::render_frame()		// renders a single frame
 		diff -= 0.1f;
 	}
 
-	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-	d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);		// Clear the buffer
+	d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);		// Clear the depth buffer
 
 	d3ddev->BeginScene();
 
-	// select which vertex format we are using
-	d3ddev->SetFVF(CUSTOMFVF);
+		// select which vertex format we are using
+		d3ddev->SetFVF(CUSTOMFVF);
 
-	// set the view transform
-	D3DXMATRIX matView;    // the view transform matrix
-	D3DXMatrixLookAtLH(&matView,
-		&D3DXVECTOR3(0.0f, 8.0f, 25.0f),   // the camera position
-		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),    // the look-at position
-		&D3DXVECTOR3(0.0f, 1.0f, 0.0f));    // the up direction
-	d3ddev->SetTransform(D3DTS_VIEW, &matView);    // set the view transform to matView
+		SetViewTransform();
 
-	// set the projection transform
-	D3DXMATRIX matProjection;    // the projection transform matrix
-	D3DXMatrixPerspectiveFovLH(&matProjection,
-		D3DXToRadian(45),    // the horizontal field of view
-		(FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT, // aspect ratio
-		1.0f,    // the near view-plane
-		100.0f);    // the far view-plane
-	d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);     // set the projection
+		if (GetAsyncKeyState(VK_UP))
+		{
+			m_FOV += 1;
+		}
+		if (GetAsyncKeyState(VK_DOWN))
+		{
+			m_FOV -= 1;
+		}
 
-	D3DXMATRIX matScaleA;
-	D3DXMATRIX matTranslateA;
-	D3DXMATRIX matTranslateB;
-	D3DXMATRIX matRotateY;    // a matrix to store the rotation for each object
-	static float index = 0.0f; index += diff; // an ever-increasing float value
+		SetProjectionTransform(m_FOV, 1.0f, 100.0f);
 
-	D3DXMatrixScaling(&matScaleA, 0.5f, 0.5f, 0.5f);
-	D3DXMatrixTranslation(&matTranslateA, 0.0f, 0.0f, 2.0f);
-	D3DXMatrixTranslation(&matTranslateB, 2.0f, 0.0f, 0.0f);
-	D3DXMatrixRotationY(&matRotateY, index);    // Rotate cubes
+		D3DXMATRIX matScale;
+		D3DXMATRIX matTranslate;
+		D3DXMATRIX matRotateY;											// a matrix to store the rotation for each object
+		static float index = 0.0f; index += diff;						// an ever-increasing float value
 
-	// select the vertex and index buffers to use
-	d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
-	d3ddev->SetIndices(i_buffer);
+		D3DXMatrixScaling(&matScale, 0.5f, 0.5f, 0.5f);
+		D3DXMatrixTranslation(&matTranslate, 0.0f, 0.0f, 2.0f);
+		D3DXMatrixRotationY(&matRotateY, index);						// Rotate object
 
-	// tell Direct3D about each world transform, and then draw another triangle
-	d3ddev->SetTransform(D3DTS_WORLD, &(matRotateY * matScaleA * matRotateY));
-	d3ddev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
-
-	// tell Direct3D about each world transform, and then draw another triangle
-	d3ddev->SetTransform(D3DTS_WORLD, &(matTranslateB * matRotateY));
-	d3ddev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
+		
 
 	d3ddev->EndScene();
 
@@ -116,7 +102,6 @@ void RenderClass::render_frame()		// renders a single frame
 void RenderClass::cleanD3D(void)						// closes Direct3D and releases memory
 {
 	v_buffer->Release();    // close and release the vertex buffer
-	i_buffer->Release();
 	d3ddev->Release();		// close and release the 3D device
 	d3d->Release();			// close and release Direct3D
 }
@@ -124,62 +109,96 @@ void RenderClass::cleanD3D(void)						// closes Direct3D and releases memory
 void RenderClass::init_graphics(void)					// 3D declarations
 {
 
+	// Create a sphere
+	CUSTOMVERTEX sphereOrigin = { 0.0f, 0.0f, 0.0f, D3DCOLOR_XRGB(0, 0, 255) };
+	float fl_radius = 1.0f;
+	int slices = 15;
+	int stacks = 15;
+	LPD3DXMESH sphereMesh;
 
-	// create the vertices using the CUSTOMVERTEX struct
-	CUSTOMVERTEX vertices[] =
-	{
-		{ -3.0f, 3.0f, -3.0f, D3DCOLOR_XRGB(0, 0, 255), },
-		{ 3.0f, 3.0f, -3.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ -3.0f, -3.0f, -3.0f, D3DCOLOR_XRGB(255, 0, 0), },
-		{ 3.0f, -3.0f, -3.0f, D3DCOLOR_XRGB(0, 255, 255), },
-		{ -3.0f, 3.0f, 3.0f, D3DCOLOR_XRGB(0, 0, 255), },
-		{ 3.0f, 3.0f, 3.0f, D3DCOLOR_XRGB(255, 0, 0), },
-		{ -3.0f, -3.0f, 3.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ 3.0f, -3.0f, 3.0f, D3DCOLOR_XRGB(0, 255, 255), },
-	};
+	D3DXCreateSphere(d3ddev, fl_radius, slices, stacks, &sphereMesh, NULL);
 
-	// create a vertex buffer interface called v_buffer
-	d3ddev->CreateVertexBuffer(8 * sizeof(CUSTOMVERTEX),
-		0,
-		CUSTOMFVF,
-		D3DPOOL_MANAGED,
-		&v_buffer,
-		NULL);
+	D3DXATTRIBUTERANGE sphereAttribs;
+	DWORD sphereAttribTableSize;
 
-	VOID* pVoid;    // a void pointer
+	DWORD sphereVertexCount = sphereMesh->GetNumVertices();
+	sphereMesh->GetAttributeTable(&sphereAttribs, &sphereAttribTableSize);
+
+	DWORD sphereVertexStartLoc = sphereAttribs.VertexStart;
+	CUSTOMVERTEX sphereVertexStart = { sphereVertexStartLoc };
+
+	sphereMesh->GetVertexBuffer(&v_buffer);
+
+	int sphereFaceCount = sphereMesh->GetNumFaces();
+	const int arraySize = sphereFaceCount * 3;
+
+	DWORD * adaj = new DWORD[arraySize];											// Taken from http://ngemu.com/threads/c-setting-the-size-of-array-during-runtime.42522/
+
+	sphereMesh->GenerateAdjacency(0.5f, adaj);
+	sphereMesh->OptimizeInplace(
+		D3DXMESHOPT_COMPACT |
+		D3DXMESH_MANAGED |
+		D3DXMESHOPT_ATTRSORT,adaj ,NULL, NULL, NULL);
+
+
+	VOID* pVoid = NULL;    // a void pointer
 
 	// lock v_buffer and load the vertices into it
-	v_buffer->Lock(0, 0, (void**)&pVoid, 0);
-	memcpy(pVoid, vertices, sizeof(vertices));
+	// v_buffer->Lock(0, 0, (void**)&pVoid, 0);
+	
+	int numSubSets = sphereMesh->GetAttributeTable(&sphereAttribs, &sphereAttribTableSize);
+	
+	for (DWORD i = 0; i < numSubSets; i++)
+	{
+		sphereMesh->DrawSubset(i);
+	}
+	memcpy(pVoid, v_buffer, sizeof(sphereVertexCount));
 	v_buffer->Unlock();
 
-	// create the indices using an int array
-	short indices[] =
-	{
-		0, 1, 2,    // side 1
-		2, 1, 3,
-		4, 0, 6,    // side 2
-		6, 0, 2,
-		7, 5, 6,    // side 3
-		6, 5, 4,
-		3, 1, 7,    // side 4
-		7, 1, 5,
-		4, 5, 0,    // side 5
-		0, 5, 1,
-		3, 7, 2,    // side 6
-		2, 7, 6,
-	};
-
-	// create an index buffer interface called i_buffer
-	d3ddev->CreateIndexBuffer(36 * sizeof(short),
-		0,
-		D3DFMT_INDEX16,
-		D3DPOOL_MANAGED,
-		&i_buffer,
-		NULL);
-
-	// lock i_buffer and load the indices into it
-	i_buffer->Lock(0, 0, (void**)&pVoid, 0);
-	memcpy(pVoid, indices, sizeof(indices));
-	i_buffer->Unlock();
 }
+
+void RenderClass::SetViewTransform()
+{
+	// set the view transform
+	D3DXMATRIX matView;    // the view transform matrix
+	D3DXMatrixLookAtLH(&matView,
+		&D3DXVECTOR3(0.0f, 8.0f, 25.0f),   // the camera position
+		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),    // the look-at position
+		&D3DXVECTOR3(0.0f, 1.0f, 0.0f));    // the up direction
+	d3ddev->SetTransform(D3DTS_VIEW, &matView);    // set the view transform to matView
+}
+
+void RenderClass::SetViewTransform(D3DXVECTOR3 pCameraPosition, D3DXVECTOR3 pLookAtPosition, D3DXVECTOR3 UpDirection)
+{// set the view transform
+	D3DXMATRIX matView;    // the view transform matrix
+	D3DXMatrixLookAtLH(&matView,
+		&pCameraPosition,   // the camera position
+		&pLookAtPosition,    // the look-at position
+		&UpDirection);    // the up direction
+	d3ddev->SetTransform(D3DTS_VIEW, &matView);    // set the view transform to matView
+}
+
+void RenderClass::SetProjectionTransform()
+{
+	// set the projection transform
+	D3DXMATRIX matProjection;										// the projection transform matrix
+	D3DXMatrixPerspectiveFovLH(&matProjection,
+		D3DXToRadian(45),											// the horizontal field of view
+		(FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT,					// aspect ratio
+		1.0f,														// the near view-plane
+		100.0f);													// the far view-plane
+	d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);			// set the projection
+}
+
+void RenderClass::SetProjectionTransform(int pFOV, float pNearView = 1.0f, float pFarView = 100.0f)
+{
+	// set the projection transform
+	D3DXMATRIX matProjection;										// the projection transform matrix
+	D3DXMatrixPerspectiveFovLH(&matProjection,
+		D3DXToRadian(pFOV),											// the horizontal field of view
+		(FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT,					// aspect ratio
+		pNearView,													// the near view-plane
+		pFarView);													// the far view-plane
+	d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);			// set the projection
+}
+

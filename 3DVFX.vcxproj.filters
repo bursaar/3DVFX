@@ -18,6 +18,9 @@
     <Filter Include="Renderer">
       <UniqueIdentifier>{282a9fb2-d732-4cf7-a676-4239d169f07b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Code Library">
+      <UniqueIdentifier>{dddf7ef9-0cdc-43fe-9186-efc24d5c7d38}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -33,6 +36,9 @@
     </ClInclude>
     <ClInclude Include="RenderClass.h">
       <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="T2G\Code\Leak Detector.h">
+      <Filter>Game Code Library</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
