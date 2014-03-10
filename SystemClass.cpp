@@ -30,8 +30,6 @@ SystemClass::~SystemClass()
 
 int SystemClass::Run()
 {
-	MSG msg;
-
 	while (TRUE)
 	{
 		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -43,11 +41,23 @@ int SystemClass::Run()
 		if (msg.message == WM_QUIT)
 			break;
 
+		// Rendering loop here
 		m_Input.Frame();
 		m_Renderer.render_frame(m_Input);
 
 		if (m_Input.IsEscapePressed()) break;
 	}
+
+
+	return 0;
+}
+
+int SystemClass::Shutdown()
+{
+
+
+	// return this part of the WM_QUIT message to Windows
+	return msg.wParam;
 
 	// clean up DirectX and COM
 	m_Renderer.cleanD3D();
@@ -64,6 +74,5 @@ int SystemClass::Run()
 		DispatchMessage(&msg);
 	}
 
-	// return this part of the WM_QUIT message to Windows
-	return msg.wParam;
+	return 0;
 }

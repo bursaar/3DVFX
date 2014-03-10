@@ -34,15 +34,18 @@ public:
 	InputClass(const InputClass&);
 	~InputClass();
 
+	bool mouseFlag = false;
+
 	bool Initialize(HINSTANCE, HWND, int, int);
 	void Shutdown();
 	bool Frame();
-
+	
 	bool IsEscapePressed();
 	bool IsUpPressed();
 	bool IsRightPressed();
 	bool IsDownPressed();
 	bool IsLeftPressed();
+	void IsSpacePressed();
 	void GetMouseLocation(int&, int&);
 
 private:
