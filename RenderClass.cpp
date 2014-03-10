@@ -104,16 +104,10 @@ void RenderClass::initD3D(HWND hWnd)					// sets up and initializes Direct3D
 void RenderClass::render_frame()		// renders a single frame
 {
 
-	float diff = 0.0f;
-
-	if (GetAsyncKeyState(VK_LEFT))
-	{
-		diff += 0.1f;
-	}
-	if (GetAsyncKeyState(VK_RIGHT))
-	{
-		diff -= 0.1f;
-	}
+	static float diff = 0.0f;
+	static float index = 0.0f; index += diff;						// an ever-increasing float value
+	static float spin = 0.0f;
+	static float drive = spin;
 
 	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);		// Clear the buffer
 	d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);		// Clear the depth buffer
@@ -123,36 +117,40 @@ void RenderClass::render_frame()		// renders a single frame
 	// select which vertex format we are using
 	d3ddev->SetFVF(CUSTOMFVF);
 
-	SetViewTransform();
-
-	if (GetAsyncKeyState(VK_UP))
-	{
-		m_FOV += 1;
-	}
-	if (GetAsyncKeyState(VK_DOWN))
-	{
-		m_FOV -= 1;
-	}
-
-	SetProjectionTransform(m_FOV, 1.0f, 100.0f);
-
 	// select the vertex and index buffers to use
-	d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
-	d3ddev->SetIndices(i_buffer);
+	// d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
+	// d3ddev->SetIndices(i_buffer);
 
 	D3DXMATRIX matScale;
 	D3DXMATRIX matTranslate;
+	D3DXMATRIX matRotateZ;
 	D3DXMATRIX matRotateY;											// a matrix to store the rotation for each object
-	static float index = 0.0f; index += diff;						// an ever-increasing float value
+	D3DXMATRIX matRotateX;
 
-	D3DXMatrixScaling(&matScale, 0.5f, 0.5f, 0.5f);					// Scale object
-	D3DXMatrixRotationY(&matRotateY, index);						// Rotate object
-	D3DXMatrixTranslation(&matTranslate, 0.0f, 0.0f, 2.0f);			// Move object
+	if (GetAsyncKeyState(VK_UP))
+	{
+		spin += 0.1f;
+	}
+	if (GetAsyncKeyState(VK_DOWN))
+	{
+		spin -= 0.1f;
+	}
 
-	d3ddev->SetTransform(D3DTS_WORLD, &(matScale * matTranslate * matRotateY));
-	d3ddev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
+	D3DXMatrixScaling(&matScale, 2.5f, 2.5f, 2.5f);							// Scale object
+	D3DXMatrixRotationY(&matRotateY, D3DXToRadian(270));					// Rotate object left and right
+	D3DXMatrixRotationX(&matRotateX, spin);									// Rotate object clockwise / counter clock
+	D3DXMatrixTranslation(&matTranslate, 0.0f, 0.0f, 2.0f + drive);			// Move object
+	
 	init_graphics();
+
+
+	// Pipeline:
+	d3ddev->SetTransform(D3DTS_WORLD, &(matScale * matRotateY * matRotateX * matTranslate));
+
+	SetViewTransform();
+
+	SetProjectionTransform(m_FOV, 1.0f, 100.0f);
 
 	d3ddev->EndScene();
 
@@ -201,7 +199,7 @@ void RenderClass::init_graphics(void)					// 3D declarations
 		sphereMesh->GenerateAdjacency(0.1f, adaj);
 
 		sphereMesh->OptimizeInplace(
-			D3DXMESHOPT_ATTRSORT,
+			D3DXMESHOPT_ATTRSORT | D3DXMESHOPT_COMPACT | D3DXMESHOPT_IGNOREVERTS,
 			adaj,
 			optAdaj,
 			fRemap,
@@ -226,6 +224,8 @@ void RenderClass::init_graphics(void)					// 3D declarations
 		// memcpy(&pVoid, &v_buffer, sizeof(sphereMesh->GetNumBytesPerVertex()));
 		sphereMesh->UnlockVertexBuffer();
 		sphereMesh->UnlockIndexBuffer();
+		v_buffer->Unlock();
+		i_buffer->Unlock();
 
 		
 }

@@ -89,9 +89,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MyCameraController.cpp" />
     <ClCompile Include="RenderClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MyCameraController.h" />
     <ClInclude Include="RenderClass.h" />
     <ClInclude Include="Screen Properties.h" />
     <ClInclude Include="T2G\Code\Leak Detector.h" />

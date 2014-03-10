@@ -21,6 +21,9 @@
     <Filter Include="Game Code Library">
       <UniqueIdentifier>{dddf7ef9-0cdc-43fe-9186-efc24d5c7d38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Renderer\Camera">
+      <UniqueIdentifier>{2fea8d2c-f52e-4a08-9785-ce3979c3c460}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -28,6 +31,9 @@
     </ClCompile>
     <ClCompile Include="RenderClass.cpp">
       <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="MyCameraController.cpp">
+      <Filter>Renderer\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +45,9 @@
     </ClInclude>
     <ClInclude Include="T2G\Code\Leak Detector.h">
       <Filter>Game Code Library</Filter>
+    </ClInclude>
+    <ClInclude Include="MyCameraController.h">
+      <Filter>Renderer\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
