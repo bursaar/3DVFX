@@ -185,27 +185,23 @@ bool InputClass::ReadMouse()
 {
 	HRESULT result;
 
-	if (mouseFlag)
-	{// Read the mouse device.
-		result = m_mouse->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&m_mouseState);
-		if (FAILED(result))
+
+	// Read the mouse device.
+	result = m_mouse->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&m_mouseState);
+	if(FAILED(result))
+	{
+		// If the mouse lost focus or was not acquired then try to get control back.
+		if((result == DIERR_INPUTLOST) || (result == DIERR_NOTACQUIRED))
 		{
-			// If the mouse lost focus or was not acquired then try to get control back.
-			if ((result == DIERR_INPUTLOST) || (result == DIERR_NOTACQUIRED))
-			{
-				m_mouse->Acquire();
-			}
-			else
-			{
-				return false;
-			}
+			m_mouse->Acquire();
 		}
-
-
-		return true;
+		else
+		{
+			return false;
+		}
 	}
 
-	return false;
+	return true;
 }
 
 
@@ -235,18 +231,6 @@ bool InputClass::IsEscapePressed()
 	}
 
 	return false;
-}
-
-void InputClass::IsSpacePressed()
-{
-	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
-	if (m_keyboardState[DIK_SPACE] & 0x80)
-	{
-		mouseFlag = true;
-		return;
-	}
-
-	return;
 }
 
 bool InputClass::IsUpPressed()

@@ -28,14 +28,13 @@ public:
 	RenderClass(HWND hWnd);
 
 	// Public member functions to:
-	void render_frame();		// render a single frame
+	void render_frame(InputClass pInput);		// render a single frame
 	void cleanD3D(void);						// close Direct3D and release memory
-	
+	void init_graphics(void);					// 3D declarations - drawing
 
 	~RenderClass();
 
 private:
 	void initD3D(HWND hWnd);					// sets up and initializes Direct3D
-	void init_graphics(void);					// 3D declarations - drawing
 };
 
