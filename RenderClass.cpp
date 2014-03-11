@@ -103,6 +103,9 @@ void RenderClass::initD3D(HWND hWnd)					// sets up and initializes Direct3D
 
 void RenderClass::render_frame()		// renders a single frame
 {
+	DWORD timer = 0;
+
+	timer = GetTickCount();
 
 	static float diff = 0.0f;
 	static float index = 0.0f; index += diff;						// an ever-increasing float value
@@ -129,17 +132,17 @@ void RenderClass::render_frame()		// renders a single frame
 
 	if (GetAsyncKeyState(VK_UP))
 	{
-		spin += 0.01f;
+		spin -= 0.01f;
 	}
 	if (GetAsyncKeyState(VK_DOWN))
 	{
-		spin -= 0.01f;
+		spin += 0.01f;
 	}
 
 
-	D3DXMatrixScaling(&matScale, 2.5f, 2.5f, 2.5f);							// Scale object
-	D3DXMatrixRotationY(&matRotateY, D3DXToRadian(270));					// Rotate object left and right
-	D3DXMatrixRotationX(&matRotateX, spin);									// Rotate object clockwise / counter clock
+	D3DXMatrixScaling(&matScale, 2.5f, 2.5f, 2.5f);								// Scale object
+	D3DXMatrixRotationY(&matRotateY, D3DXToRadian(270));						// Rotate object left and right
+	D3DXMatrixRotationX(&matRotateX, spin);										// Rotate object clockwise / counter clock
 	D3DXMatrixTranslation(&matTranslate, 0.0f, 0.0f, drive += spin);			// Move object
 	
 	init_graphics();

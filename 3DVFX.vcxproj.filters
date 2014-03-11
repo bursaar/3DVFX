@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -24,16 +20,32 @@
     <Filter Include="Renderer\Camera">
       <UniqueIdentifier>{2fea8d2c-f52e-4a08-9785-ce3979c3c460}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Character">
+      <UniqueIdentifier>{70f72928-bb70-48e1-b8ac-342d61ce5e1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Objects">
+      <UniqueIdentifier>{f57fee3e-5bab-4b4e-be88-20579ad3295e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{00b3af95-2bdb-4528-8ab1-8d802d753d21}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RenderClass.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
     <ClCompile Include="MyCameraController.cpp">
       <Filter>Renderer\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MyMeshClass.cpp">
+      <Filter>Renderer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterClass.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshManager.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +60,15 @@
     </ClInclude>
     <ClInclude Include="MyCameraController.h">
       <Filter>Renderer\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMeshClass.h">
+      <Filter>Renderer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterClass.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshManager.h">
+      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
