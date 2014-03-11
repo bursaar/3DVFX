@@ -4,16 +4,17 @@
 class CharacterClass
 {
 public:
-	enum DIRECTIONS { NONE, FORWARD, RIGHT, BACK, LEFT };
-	CharacterClass();
-	~CharacterClass();
-	float speed;
-	D3DXVECTOR3 location;
-	ID3DXMesh *characterMesh;
-	int movement = NONE;
-	float friction = 1.0f;
-	void UpdateCharacter();
-	
+	enum DIRECTIONS { NONE, FORWARD, RIGHT, BACK, LEFT };		// Cardinal directions
+	CharacterClass(MyMeshClass pMyMesh);											// Default constructor
+	~CharacterClass();											// Default destructor
+	float speed;												// Current speed constant
+	D3DXVECTOR3 location;										// Vector to hold current location
+	ID3DXMesh *characterMesh;									// Pointer to mesh object
+	int movement = NONE;										// Current direction of travel
+	float friction = 1.0f;										// Current friction experienced on the ground
+	void UpdateCharacter();										// Member function to update stats of character.
+	void DrawCharacter();
+
 private:
 	bool mKeyUp;
 	bool mKeyDown;

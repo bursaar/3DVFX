@@ -143,6 +143,7 @@ void RenderClass::render_frame()		// renders a single frame
 	D3DXMatrixScaling(&matScale, 2.5f, 2.5f, 2.5f);								// Scale object
 	D3DXMatrixRotationY(&matRotateY, D3DXToRadian(270));						// Rotate object left and right
 	D3DXMatrixRotationX(&matRotateX, spin);										// Rotate object clockwise / counter clock
+	D3DXMatrixRotationZ(&matRotateZ, 0.0f);
 	D3DXMatrixTranslation(&matTranslate, 0.0f, 0.0f, drive += spin);			// Move object
 	
 	init_graphics();
@@ -182,18 +183,11 @@ void RenderClass::init_graphics(void)					// 3D declarations
 		LPD3DXBUFFER vRemap;
 		LPD3DXBUFFER adjacencyBuffer;
 		D3DXATTRIBUTERANGE sphereAttribs;
-		D3DMATERIAL9 playerSkin;
 
-		playerSkin.Ambient.a = 1.0f;
-		playerSkin.Ambient.r = 1.0f;
-		playerSkin.Ambient.g = 1.0f;
-		playerSkin.Ambient.b = 1.0f;
 
 		D3DXCreateSphere(d3ddev, fl_radius, slices, stacks, &sphereMesh, &adjacencyBuffer);
 
 		DWORD arraySize = sphereMesh->GetNumFaces() * 3;
-
-		d3ddev->SetMaterial(&playerSkin);
 
 		DWORD * adaj = new DWORD[arraySize];											// Taken from http://ngemu.com/threads/c-setting-the-size-of-array-during-runtime.42522/
 		DWORD * optAdaj = new DWORD[arraySize];

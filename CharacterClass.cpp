@@ -1,14 +1,20 @@
 #include "CharacterClass.h"
 
 
-CharacterClass::CharacterClass()
+CharacterClass::CharacterClass(MyMeshClass pMyMesh)
 {
 	speed = 0.0f;
+	characterMesh = pMyMesh.mesh;
 }
 
 
 CharacterClass::~CharacterClass()
 {
+}
+
+void CharacterClass::DrawCharacter()
+{
+	characterMesh->DrawSubset(0);
 }
 
 void CharacterClass::UpdateCharacter()
