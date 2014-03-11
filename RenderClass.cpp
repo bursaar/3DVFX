@@ -49,58 +49,6 @@ void RenderClass::initD3D(HWND hWnd)					// sets up and initializes Direct3D
 	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
 }
 
-/* void RenderClass::render_frame()		// renders a single frame
-{
-
-	float diff = 0.0f;
-	
-	if (GetAsyncKeyState(VK_LEFT))
-	{
-		diff += 0.1f;
-	}
-	if (GetAsyncKeyState(VK_RIGHT))
-	{
-		diff -= 0.1f;
-	}
-
-	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);		// Clear the buffer
-	d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);		// Clear the depth buffer
-
-	d3ddev->BeginScene();
-
-		// select which vertex format we are using
-		d3ddev->SetFVF(CUSTOMFVF);
-
-		SetViewTransform();
-
-		if (GetAsyncKeyState(VK_UP))
-		{
-			m_FOV += 1;
-		}
-		if (GetAsyncKeyState(VK_DOWN))
-		{
-			m_FOV -= 1;
-		}
-
-		SetProjectionTransform(m_FOV, 1.0f, 100.0f);
-
-		D3DXMATRIX matScale;
-		D3DXMATRIX matTranslate;
-		D3DXMATRIX matRotateY;											// a matrix to store the rotation for each object
-		static float index = 0.0f; index += diff;						// an ever-increasing float value
-
-		D3DXMatrixScaling(&matScale, 0.5f, 0.5f, 0.5f);
-		D3DXMatrixTranslation(&matTranslate, 0.0f, 0.0f, 2.0f);
-		D3DXMatrixRotationY(&matRotateY, index);						// Rotate object
-
-		init_graphics();
-
-	d3ddev->EndScene();
-
-	d3ddev->Present(NULL, NULL, NULL, NULL);
-}
-*/
-
 void RenderClass::render_frame()		// renders a single frame
 {
 	DWORD timer = 0;

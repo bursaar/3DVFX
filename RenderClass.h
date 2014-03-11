@@ -3,6 +3,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "Screen Properties.h"
+#include "MeshManager.h"
 #include <vector>
 
 using namespace std;

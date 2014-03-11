@@ -1,5 +1,5 @@
 #pragma once
-#include <d3dx9.h>
+#include "RenderClass.h"
 #include "MeshManager.h"
 
 class MyMeshClass
@@ -11,7 +11,9 @@ public:
 	D3DXMATRIX matRotateZ, matRotateY, matRotateX;					// a matrix to store the rotation for each axis
 
 	ID3DXMesh *mesh;												// Pointer to the mesh object created
-	LPDIRECT3DDEVICE9 *d3ddev;										// Pointer to the D3D device
+	RenderClass *mRenderClass;										// Pointer to the D3D device
+
+	bool worldTransformFlag = false;
 
 	MeshManager *myMeshManager;
 
@@ -21,11 +23,14 @@ public:
 
 	void OptimizeMesh();
 
-	void SetScale(float pX, float pY, float pZ);
-	void SetRotation(float pX, float pY, float pZ);
-	void SetTranslation(float pX, float pY, float pZ);
+	void SetScale(float pX, float pY, float pZ);					// Function to set scale of object
+	void SetRotation(float pX, float pY, float pZ);					// Function to set rotation of object
+	void SetTranslation(float pX, float pY, float pZ);				// Function to set translation of object
+	void ApplyWorldTransform();										// Function to apply world transformation to object
 
-	MyMeshClass(MeshManager myMeshManager, ID3DXMesh &pMesh, LPDIRECT3DDEVICE9 pD3ddev);	// No default empty constructor, always needs to be passed the current mesh manager, the mesh to populate it with and the LPDIRECT3DDEVICE9.
+	
+
+	MyMeshClass(MeshManager myMeshManager, ID3DXMesh &pMesh, RenderClass pRenderClass);	// No default empty constructor, always needs to be passed the current mesh manager, the mesh to populate it with and the LPDIRECT3DDEVICE9.
 	~MyMeshClass();
 };
 

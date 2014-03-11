@@ -1,13 +1,13 @@
 #include "MyMeshClass.h"
 
 
-MyMeshClass::MyMeshClass(MeshManager pMeshManager, ID3DXMesh &pMesh, LPDIRECT3DDEVICE9 pD3ddev)
+MyMeshClass::MyMeshClass(MeshManager pMeshManager, ID3DXMesh &pMesh, RenderClass pRenderClass)
 {
-	myMeshManager = &pMeshManager;	// Load a pointer to the mesh manager
-	mesh = &pMesh;					// Pass a mesh by reference
-	myMeshManager->AddMesh();		// Add a mesh to the mesh manager
-	OptimizeMesh();					// Optimise the loaded mesh
-	d3ddev = &pD3ddev;				// Load a pointer to the D3D device
+	myMeshManager = &pMeshManager;			// Load a pointer to the mesh manager
+	mesh = &pMesh;							// Pass a mesh by reference
+	myMeshManager->AddMesh();				// Add a mesh to the mesh manager
+	OptimizeMesh();							// Optimise the loaded mesh
+	mRenderClass = &pRenderClass;			// Load a pointer to the render class
 }
 
 
@@ -21,20 +21,25 @@ void MyMeshClass::SetScale(float pX, float pY, float pZ)
 	mScaleX = pX;
 	mScaleY = pY;
 	mScaleZ = pZ;
+	D3DXMatrixScaling(&matScale, mScaleX, mScaleY, mScaleZ);
 }
 
 void MyMeshClass::SetRotation(float pX, float pY, float pZ)
 {
-	mRotateX = pX;
-	mRotateY = pY;
-	mRotateZ = pZ;
+	mRotateX = pX;									// Float to rotate by (in radians)
+	D3DXMatrixRotationX(&matRotateX, mRotateX);		// Place rotation calculation in matrix.
+	mRotateY = pY;									// Float to rotate by (in radians)
+	D3DXMatrixRotationY(&matRotateY, mRotateY);		// Place rotation calculation in matrix.
+	mRotateZ = pZ;									// Float to rotate by (in radians)
+	D3DXMatrixRotationZ(&matRotateZ, mRotateZ);		// Place rotation calculation in matrix.
 }
 
 void MyMeshClass::SetTranslation(float pX, float pY, float pZ)
 {
-	mTranslateX = pX;
-	mTranslateY = pY;
-	mTranslateZ = pZ;
+	mTranslateX = pX;								// Float to translate in the X axis
+	mTranslateY = pY;								// Float to translate in the Y axis
+	mTranslateZ = pZ;								// Float to translate in the Z axis
+	D3DXMatrixTranslation(&matTranslate, mTranslateX, mTranslateY, mTranslateZ);		// Place rotation calculation in matrix
 }
 
 void MyMeshClass::OptimizeMesh()
@@ -55,3 +60,12 @@ void MyMeshClass::OptimizeMesh()
 		&vRemap);
 }
 
+void MyMeshClass::ApplyWorldTransform()
+{
+	mRenderClass->d3ddev->SetTransform(D3DTS_WORLD, 
+		&(matRotateX
+		* matRotateY
+		* matRotateZ
+		* matScale
+		* matTranslate));
+}
