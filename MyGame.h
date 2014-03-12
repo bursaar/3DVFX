@@ -12,6 +12,7 @@ public:
 	~MyGame();
 	RenderClass mRenderer;
 	MeshManager mMeshManager;
+	MyCameraController mCameraController;
 
 	// Pointers to characters
 	CharacterClass *mPlayerCharacter;

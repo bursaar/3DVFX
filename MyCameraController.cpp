@@ -1,7 +1,11 @@
 #include "MyCameraController.h"
 
 
-MyCameraController::MyCameraController(RenderClass pRenderClass)
+MyCameraController::MyCameraController()
+{
+}
+
+void MyCameraController::SetRenderClass(RenderClass &pRenderClass)
 {
 	mRenderClass = &pRenderClass;	// Pass in the render class to a pointer.
 }

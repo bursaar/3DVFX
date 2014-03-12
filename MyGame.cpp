@@ -18,7 +18,7 @@ void MyGame::SetupGame(HWND &pHWND)
 	// Set up parameters of game however necessary.
 	RenderClass Renderer(pHWND);
 	mRenderer = Renderer;
-	
+
 	// Create the mesh manager
 	MeshManager GameMeshManager;
 	mMeshManager = GameMeshManager;
@@ -85,5 +85,15 @@ void MyGame::Update()
 
 	mPlayerCharacter->mMyMesh->UpdateMeshParameters(mPlayerCharacter->speed, mPlayerCharacter->rotationInRadians);
 
+
+
+	// Set up the camera
+	mCameraController.FOV = 45;
+	mCameraController.SetRenderClass(mRenderer);
+	mCameraController.SetViewTransform();
+	mCameraController.SetProjectionTransform();
+
 	mPlayerCharacter->mMyMesh->mesh->DrawSubset(0);
+
+	mRenderer.render_frame();
 }
