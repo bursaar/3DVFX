@@ -30,7 +30,7 @@ public:
 
 	
 
-	MyMeshClass(MeshManager myMeshManager, ID3DXMesh &pMesh, RenderClass pRenderClass);	// No default empty constructor, always needs to be passed the current mesh manager, the mesh to populate it with and the LPDIRECT3DDEVICE9.
+	MyMeshClass(MeshManager *pMeshManager, ID3DXMesh *pMesh, RenderClass *pRenderClass);	// No default empty constructor, always needs to be passed the current mesh manager, the mesh to populate it with and the LPDIRECT3DDEVICE9.
 	~MyMeshClass();
 };
 

@@ -29,6 +29,9 @@
     <Filter Include="Managers">
       <UniqueIdentifier>{00b3af95-2bdb-4528-8ab1-8d802d753d21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{f8244fea-52d9-4bd0-9f99-d6857c99c5f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderClass.cpp">
@@ -46,6 +49,9 @@
     </ClCompile>
     <ClCompile Include="MeshManager.cpp">
       <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="MyGame.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +75,9 @@
     </ClInclude>
     <ClInclude Include="MeshManager.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="MyGame.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

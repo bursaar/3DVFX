@@ -89,6 +89,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CharacterClass.cpp" />
+    <ClCompile Include="MyGame.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="MyCameraController.cpp" />
@@ -97,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CharacterClass.h" />
+    <ClInclude Include="MyGame.h" />
     <ClInclude Include="MeshManager.h" />
     <ClInclude Include="MyCameraController.h" />
     <ClInclude Include="MyMeshClass.h" />

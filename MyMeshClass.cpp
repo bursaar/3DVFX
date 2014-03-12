@@ -1,13 +1,15 @@
 #include "MyMeshClass.h"
 
 
-MyMeshClass::MyMeshClass(MeshManager pMeshManager, ID3DXMesh &pMesh, RenderClass pRenderClass)
+MyMeshClass::MyMeshClass(MeshManager *pMeshManager, ID3DXMesh *pMesh, RenderClass *pRenderClass)
 {
-	myMeshManager = &pMeshManager;			// Load a pointer to the mesh manager
-	mesh = &pMesh;							// Pass a mesh by reference
+	
+	myMeshManager = pMeshManager;			// Load a pointer to the mesh manager
+	mesh = pMesh;							// Pass a mesh by reference
 	myMeshManager->AddMesh();				// Add a mesh to the mesh manager
 	OptimizeMesh();							// Optimise the loaded mesh
-	mRenderClass = &pRenderClass;			// Load a pointer to the render class
+	mRenderClass = pRenderClass;			// Load a pointer to the render class
+	
 }
 
 
