@@ -20,6 +20,7 @@
 #include <windowsx.h>
 #include "RenderClass.h"
 #include "T2G\Code\Leak Detector.h"
+#include "MyGame.h"
 
 #define WIN32_LEAN_AND_MEAN
 
@@ -75,7 +76,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	ShowWindow(hWnd, nCmdShow);
 
 	// Initialise Direct3D
-	RenderClass Renderer(hWnd);
+	// RenderClass Renderer(hWnd);
+
+	// Create game
+	MyGame Game(&hWnd);
 
 	// enter the main loop:
 
@@ -94,11 +98,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			break;
 		if (GetAsyncKeyState(VK_ESCAPE))
 			break;
-		Renderer.render_frame();
+		Game.mRenderer.render_frame();
 	}
 
 	// clean up DirectX and COM
-	Renderer.cleanD3D();
+	Game.mRenderer.cleanD3D();
 
 	return msg.wParam;
 

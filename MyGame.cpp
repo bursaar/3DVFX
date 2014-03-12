@@ -1,10 +1,11 @@
 #include "MyGame.h"
 
 
-MyGame::MyGame(HWND pHWnd, RenderClass pRenderClass)
+MyGame::MyGame(HWND *pHWND)
 {
-	mHWND = pHWnd;
-	mRenderClass = &pRenderClass;
+	
+	mHWND = pHWND;
+	SetupGame();
 }
 
 
@@ -16,10 +17,12 @@ void MyGame::SetupGame()
 {
 
 	// Set up parameters of game however necessary.
-	RenderClass Renderer(mHWND);
+	RenderClass Renderer(*mHWND);
+	mRenderer = Renderer;
 	
 	// Create the mesh manager
 	MeshManager GameMeshManager;
+	mMeshManager = GameMeshManager;
 
 	// Create the sphere
 	float fl_radius = 1.0f;
@@ -27,10 +30,10 @@ void MyGame::SetupGame()
 	int stacks = 15;
 	LPD3DXBUFFER adjacencyBuffer;
 	ID3DXMesh *sphereMesh;
-	D3DXCreateSphere(mRenderClass->d3ddev, fl_radius, slices, stacks, &sphereMesh, &adjacencyBuffer);
+	D3DXCreateSphere(mRenderer.d3ddev, fl_radius, slices, stacks, &sphereMesh, &adjacencyBuffer);
 	
 	// Create the mesh to be used for all of the characters
-	MyMeshClass CharacterMesh(&GameMeshManager, sphereMesh, &Renderer);
+	MyMeshClass CharacterMesh(&mMeshManager, sphereMesh, &mRenderer);
 	
 	// Create the player and non-player characters
 	CharacterClass PlayerCharacter(CharacterMesh);

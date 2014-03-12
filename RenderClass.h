@@ -40,10 +40,11 @@ public:
 	~RenderClass();
 
 private:
-	void initD3D(HWND hWnd);					// sets up and initializes Direct3D
+	void initD3D();					// sets up and initializes Direct3D
 	void SetViewTransform();						// Set the view transform
 	void SetViewTransform(D3DXVECTOR3 pCameraPosition, D3DXVECTOR3 pLookAtPosition, D3DXVECTOR3 UpDirection); // Overload for changing transform
 	void SetProjectionTransform();
 	void SetProjectionTransform(int pFOV, float pNearView, float pFarView);
+	HWND *mHWND;									// Handle to window
 };
 

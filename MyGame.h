@@ -8,12 +8,14 @@
 class MyGame
 {
 public:
-	MyGame(HWND pHWND, RenderClass pRenderClass);
+	MyGame(HWND *pHWND);				// Pass a pointer to the handle of the window
 	~MyGame();
+	RenderClass mRenderer;
+	MeshManager mMeshManager;
 
 private:
-	RenderClass *mRenderClass;
-	HWND mHWND;
+
+	HWND *mHWND;
 	void SetupGame();
 };
 
