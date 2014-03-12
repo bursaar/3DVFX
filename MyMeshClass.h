@@ -17,20 +17,33 @@ public:
 
 	MeshManager *myMeshManager;
 
-	float mRotateX, mRotateY, mRotateZ;									// floats for rotations
-	float mTranslateX, mTranslateY, mTranslateZ;						// floats for translations
-	float mScaleX, mScaleY, mScaleZ;									// floats for scaling
+	float *mRotateX = NULL;
+	float *mRotateY = NULL;
+	float *mRotateZ = NULL;
+	
+	float *mTranslateX, *mTranslateY, *mTranslateZ = NULL;						// floats for translations
+
+	float *mScaleX = NULL;
+	float *mScaleY = NULL;
+	float *mScaleZ = NULL;
 
 	void OptimizeMesh();
 
-	void SetScale(float pX, float pY, float pZ);					// Function to set scale of object
-	void SetRotation(float pX, float pY, float pZ);					// Function to set rotation of object
-	void SetTranslation(float pX, float pY, float pZ);				// Function to set translation of object
-	void ApplyWorldTransform();										// Function to apply world transformation to object
-
-	
+	void UpdateMeshParameters(float pSpeed, float pRotation, float pScale = 1.0f);
 
 	MyMeshClass(MeshManager *pMeshManager, ID3DXMesh *pMesh, RenderClass *pRenderClass);	// No default empty constructor, always needs to be passed the current mesh manager, the mesh to populate it with and the LPDIRECT3DDEVICE9.
 	~MyMeshClass();
+
+
+private:
+	void SetScale(float &pX, float &pY, float &pZ);					// Function to set scale of object
+	void SetRotation(float &pX, float &pY, float &pZ);					// Function to set rotation of object
+	void SetTranslation(float &pX, float &pY, float &pZ);				// Function to set translation of object
+	void SetTranslation(float &speed);								// Function for forward and backward momentum
+	void ApplyWorldTransform();										// Function to apply world transformation to object
+
+	float mDefaultScale = 1.0f;
+	float mDefaultRotation = 0.0f;
+
 };
 

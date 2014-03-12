@@ -30,7 +30,7 @@ public:
 
 	// Overloaded constructors
 	RenderClass();
-	RenderClass(HWND hWnd);
+	RenderClass(HWND *hWnd);
 
 	// Public member functions to:
 	void render_frame();		// render a single frame

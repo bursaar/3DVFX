@@ -1,19 +1,8 @@
-﻿Build started 12/03/2014 11:15:49.
+﻿Build started 12/03/2014 12:52:44.
      1>Project "C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\3DVFX\3DVFX.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CharacterClass.cpp Main.cpp MyCameraController.cpp MyGame.cpp MyMeshClass.cpp RenderClass.cpp
-         RenderClass.cpp
-     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(154): warning C4101: 'pVoid' : unreferenced local variable
-     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(134): warning C4101: 'sphereAttribs' : unreferenced local variable
-         MyMeshClass.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MyGame.cpp
          MyGame.cpp
-         Main.cpp
-         Generating Code...
-         Compiling...
-         MyCameraController.cpp
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         CharacterClass.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.lib" /MACHINE:X86 Debug\CharacterClass.obj
          Debug\MyGame.obj
@@ -27,4 +16,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:07.34
+Time Elapsed 00:00:01.49

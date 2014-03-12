@@ -1,10 +1,11 @@
 #include "CharacterClass.h"
 
 
-CharacterClass::CharacterClass(MyMeshClass pMyMesh)
+CharacterClass::CharacterClass(MyMeshClass *pMyMesh)
 {
 	speed = 0.0f;
-	characterMesh = pMyMesh.mesh;
+	mMyMesh = new MyMeshClass (*pMyMesh);
+	characterMesh = mMyMesh->mesh;
 }
 
 

@@ -1,10 +1,10 @@
 #include "MyGame.h"
 
 
-MyGame::MyGame(HWND *pHWND)
+MyGame::MyGame(HWND &pHWND)
 {
 	
-	mHWND = pHWND;
+	mHWND = new HWND (pHWND);
 	SetupGame();
 }
 
@@ -17,7 +17,7 @@ void MyGame::SetupGame()
 {
 
 	// Set up parameters of game however necessary.
-	RenderClass Renderer(*mHWND);
+	RenderClass Renderer(mHWND);
 	mRenderer = Renderer;
 	
 	// Create the mesh manager
@@ -36,10 +36,55 @@ void MyGame::SetupGame()
 	MyMeshClass CharacterMesh(&mMeshManager, sphereMesh, &mRenderer);
 	
 	// Create the player and non-player characters
-	CharacterClass PlayerCharacter(CharacterMesh);
-	CharacterClass EnemyCharacter1(CharacterMesh);
-	CharacterClass EnemyCharacter2(CharacterMesh);
+	CharacterClass PlayerCharacter(&CharacterMesh);
+// 	CharacterClass EnemyCharacter1(&CharacterMesh);
+// 	CharacterClass EnemyCharacter2(&CharacterMesh);
 
+	// Assign newly created characters to game class
+	 mPlayerCharacter = new CharacterClass(PlayerCharacter);
 
+//	mPlayerCharacter = &PlayerCharacter;
+// 	mNPC1 = &EnemyCharacter1;
+// 	mNPC2 = &EnemyCharacter2;
 
+}
+
+void MyGame::Update()
+{
+	// Update character input
+	mPlayerCharacter->UpdateCharacter();
+
+	// Player attributes first - NPC attributes will be derived from this model
+	if (mPlayerCharacter->speed > 0)
+	{
+		mPlayerCharacter->speed -= mPlayerCharacter->friction;		// Trend towards zero with friction variable.
+	}
+	if (mPlayerCharacter->speed < 0)
+	{
+		mPlayerCharacter->speed += mPlayerCharacter->friction;		// Trend towards zero with friction variable.
+	}
+
+	switch (mPlayerCharacter->movement)
+	{
+	case CharacterClass::FORWARD:
+	{
+									mPlayerCharacter->speed += accelerationPlayer;
+	}
+	case CharacterClass::BACK:
+	{
+								 mPlayerCharacter->speed -= accelerationPlayer;
+	}
+	case CharacterClass::LEFT:
+	{
+								 mPlayerCharacter->rotationInRadians -= rotationPlayer;
+	}
+	case CharacterClass::RIGHT:
+	{
+								  mPlayerCharacter->rotationInRadians += rotationPlayer;
+	}
+	}
+
+	mPlayerCharacter->mMyMesh->UpdateMeshParameters(mPlayerCharacter->speed, mPlayerCharacter->rotationInRadians);
+
+	mPlayerCharacter->mMyMesh->mesh->DrawSubset(0);
 }

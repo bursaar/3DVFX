@@ -79,7 +79,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	// RenderClass Renderer(hWnd);
 
 	// Create game
-	MyGame Game(&hWnd);
+	MyGame Game(hWnd);
 
 	// enter the main loop:
 
@@ -98,7 +98,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			break;
 		if (GetAsyncKeyState(VK_ESCAPE))
 			break;
-		Game.mRenderer.render_frame();
+		Game.Update();
+		// Game.mRenderer.render_frame();
 	}
 
 	// clean up DirectX and COM

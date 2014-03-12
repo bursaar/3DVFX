@@ -1,9 +1,9 @@
 #include "RenderClass.h"
 
 
-RenderClass::RenderClass(HWND pHWND)
+RenderClass::RenderClass(HWND *pHWND)
 {
-	mHWND = &pHWND;
+	mHWND = pHWND;
 	RenderClass::initD3D();
 
 }
@@ -151,7 +151,7 @@ void RenderClass::init_graphics(void)					// 3D declarations
 			fRemap,
 			&vRemap);
 
-		VOID* pVoid;    // a void pointer
+// 		VOID* pVoid;    // a void pointer
 
 		D3DXComputeNormals(sphereMesh, optAdaj);
 

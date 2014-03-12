@@ -3,6 +3,7 @@
 
 MeshManager::MeshManager()
 {
+	meshCount = 0;
 }
 
 
