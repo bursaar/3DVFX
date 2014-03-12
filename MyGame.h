@@ -25,8 +25,6 @@ private:
 	// PLAYER
 		float accelerationPlayer = 0.01f;
 		float rotationPlayer = 0.06f;
-
-	HWND *mHWND;
-	void SetupGame();
+		void SetupGame(HWND &pHWND);
 };
 

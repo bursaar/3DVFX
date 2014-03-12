@@ -1,10 +1,10 @@
 #include "RenderClass.h"
 
 
-RenderClass::RenderClass(HWND *pHWND)
+RenderClass::RenderClass(HWND &pHWND)
 {
-	mHWND = pHWND;
-	RenderClass::initD3D();
+
+	RenderClass::initD3D(pHWND);
 
 }
 
@@ -17,7 +17,7 @@ RenderClass::~RenderClass()
 {
 }
 
-void RenderClass::initD3D()					// sets up and initializes Direct3D
+void RenderClass::initD3D(HWND &pHWND)					// sets up and initializes Direct3D
 {
 	d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
@@ -28,7 +28,7 @@ void RenderClass::initD3D()					// sets up and initializes Direct3D
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
 	d3dpp.Windowed = TRUE;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	d3dpp.hDeviceWindow = *mHWND;
+	d3dpp.hDeviceWindow = pHWND;
 	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
 	d3dpp.BackBufferWidth = SCREEN_WIDTH;
 	d3dpp.BackBufferHeight = SCREEN_HEIGHT;
@@ -38,7 +38,7 @@ void RenderClass::initD3D()					// sets up and initializes Direct3D
 	// create a device class using this information and the info from the d3dpp stuct
 	d3d->CreateDevice(D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
-		*mHWND,
+		pHWND,
 		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 		&d3dpp,
 		&d3ddev);
@@ -131,7 +131,7 @@ void RenderClass::init_graphics(void)					// 3D declarations
 		ID3DXMesh *sphereMesh;
 		LPD3DXBUFFER vRemap;
 		LPD3DXBUFFER adjacencyBuffer;
-		D3DXATTRIBUTERANGE sphereAttribs;
+	//		D3DXATTRIBUTERANGE sphereAttribs;
 
 
 		D3DXCreateSphere(d3ddev, fl_radius, slices, stacks, &sphereMesh, &adjacencyBuffer);

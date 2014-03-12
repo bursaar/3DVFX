@@ -4,8 +4,7 @@
 MyGame::MyGame(HWND &pHWND)
 {
 	
-	mHWND = new HWND (pHWND);
-	SetupGame();
+	SetupGame(pHWND);
 }
 
 
@@ -13,11 +12,11 @@ MyGame::~MyGame()
 {
 }
 
-void MyGame::SetupGame()
+void MyGame::SetupGame(HWND &pHWND)
 {
 
 	// Set up parameters of game however necessary.
-	RenderClass Renderer(mHWND);
+	RenderClass Renderer(pHWND);
 	mRenderer = Renderer;
 	
 	// Create the mesh manager
