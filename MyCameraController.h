@@ -17,6 +17,6 @@ public:
 	void SetRenderClass(RenderClass &pRenderClass);
 	void SetViewTransform();							// Function to set the view transform
 	void SetViewTransform(float pPosX, float pPosY, float pPosZ, float pLookX, float pLookY, float pLookZ);
-	void SetProjectionTransform();						// Set the Field of View
+	void SetProjectionTransform(int pFOV = 45, float pNear = 1.0, float pFar = 100.0);
 };
 

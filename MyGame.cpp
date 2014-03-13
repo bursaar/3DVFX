@@ -22,6 +22,7 @@ void MyGame::SetupGame(HWND &pHWND)
 	// Create the mesh manager
 	MeshManager GameMeshManager;
 	mMeshManager = GameMeshManager;
+	mRenderer.SetMeshManager(mMeshManager);	// Assign mesh manager to renderer
 
 	// Create the sphere
 	float fl_radius = 1.0f;
@@ -65,35 +66,53 @@ void MyGame::Update()
 
 	switch (mPlayerCharacter->movement)
 	{
-	case CharacterClass::FORWARD:
+	case CharacterClass::BACKWARDRIGHT:
 	{
-									mPlayerCharacter->speed += accelerationPlayer;
+										 mPlayerCharacter->speed += accelerationPlayer;
+										 mPlayerCharacter->rotationInRadians -= rotationPlayer;
+										 break;
+	}
+	case CharacterClass::BACKWARDLEFT:
+	{
+										 mPlayerCharacter->speed += accelerationPlayer;
+										 mPlayerCharacter->rotationInRadians -= rotationPlayer;
+										 break;
+	}
+	case CharacterClass::FORWARDRIGHT:
+	{
+										mPlayerCharacter->speed -= accelerationPlayer;
+										mPlayerCharacter->rotationInRadians += rotationPlayer;
+										break;
+	}
+	case CharacterClass::FORWARDLEFT:
+	{
+										mPlayerCharacter->speed -= accelerationPlayer;
+										mPlayerCharacter->rotationInRadians -= rotationPlayer;
+										break;
 	}
 	case CharacterClass::BACK:
 	{
-								 mPlayerCharacter->speed -= accelerationPlayer;
+										mPlayerCharacter->speed += accelerationPlayer;
+										break;
+	}
+	case CharacterClass::FORWARD:
+	{
+										mPlayerCharacter->speed -= accelerationPlayer;
+										break;
 	}
 	case CharacterClass::LEFT:
 	{
-								 mPlayerCharacter->rotationInRadians -= rotationPlayer;
+										mPlayerCharacter->rotationInRadians -= rotationPlayer;
+										break;
 	}
 	case CharacterClass::RIGHT:
 	{
-								  mPlayerCharacter->rotationInRadians += rotationPlayer;
+										mPlayerCharacter->rotationInRadians += rotationPlayer;
+										break;
 	}
 	}
 
 	mPlayerCharacter->mMyMesh->UpdateMeshParameters(mPlayerCharacter->speed, mPlayerCharacter->rotationInRadians);
-
-
-
-	// Set up the camera
-	mCameraController.FOV = 45;
-	mCameraController.SetRenderClass(mRenderer);
-	mCameraController.SetViewTransform();
-	mCameraController.SetProjectionTransform();
-
-	mPlayerCharacter->mMyMesh->mesh->DrawSubset(0);
 
 	mRenderer.render_frame();
 }

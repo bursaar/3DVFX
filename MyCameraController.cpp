@@ -35,13 +35,13 @@ void MyCameraController::SetViewTransform(float pPosX, float pPosY, float pPosZ,
 	mRenderClass->d3ddev->SetTransform(D3DTS_VIEW, &mMatView);		// set the view transform to matView
 }
 
-void MyCameraController::SetProjectionTransform()
+void MyCameraController::SetProjectionTransform(int pFOV, float pNear, float pFar)
 {
 	// set the projection transform
 	D3DXMatrixPerspectiveFovLH(&mMatProjection,
 		D3DXToRadian(FOV),															// the horizontal field of view
 		(FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT,									// aspect ratio
-		1.0f,																		// the near view-plane
-		100.0f);																	// the far view-plane
+		pNear,																		// the near view-plane
+		pFar);																	// the far view-plane
 	mRenderClass->d3ddev->SetTransform(D3DTS_PROJECTION, &mMatProjection);			// set the projection
 }

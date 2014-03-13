@@ -9,6 +9,7 @@ public:
 	D3DXMATRIX matScale;											// Scale matrix
 	D3DXMATRIX matTranslate;										// Translation matrix
 	D3DXMATRIX matRotateZ, matRotateY, matRotateX;					// a matrix to store the rotation for each axis
+	D3DXMATRIX matTurn;
 
 	ID3DXMesh *mesh;												// Pointer to the mesh object created
 	RenderClass *mRenderClass;										// Pointer to the D3D device
@@ -21,6 +22,8 @@ public:
 	float *mRotateY = NULL;
 	float *mRotateZ = NULL;
 	
+	float *mYaw = NULL;
+
 	float *mTranslateX, *mTranslateY, *mTranslateZ = NULL;						// floats for translations
 
 	float *mScaleX = NULL;
@@ -42,7 +45,7 @@ private:
 	void SetTranslation(float &speed);								// Function for forward and backward momentum
 	void ApplyWorldTransform();										// Function to apply world transformation to object
 
-	float mDefaultScale = 1.0f;
+	float mDefaultScale = 2.5f;
 	float mDefaultRotation = 0.0f;
 
 };

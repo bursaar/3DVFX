@@ -6,9 +6,11 @@ MyMeshClass::MyMeshClass(MeshManager *pMeshManager, ID3DXMesh *pMesh, RenderClas
 	
 	myMeshManager = new MeshManager (*pMeshManager);			// Load a pointer to the mesh manager
 	mesh = pMesh;							// Pass a mesh by reference
-	myMeshManager->AddMesh();				// Add a mesh to the mesh manager
+	myMeshManager->AddMesh(*this);				// Add a mesh to the mesh manager
 	OptimizeMesh();							// Optimise the loaded mesh
 	mRenderClass = pRenderClass;			// Load a pointer to the render class
+
+	// Initialise the member variables
 	mRotateX = new float (0.0f);
 	mRotateY = new float (0.0f);
 	mRotateZ = new float(0.0f);
@@ -38,10 +40,12 @@ void MyMeshClass::SetRotation(float &pX, float &pY, float &pZ)
 {
 	mRotateX = &pX;									// Float to rotate by (in radians)
 	D3DXMatrixRotationX(&matRotateX, *mRotateX);		// Place rotation calculation in matrix.
-	mRotateY = &pY;									// Float to rotate by (in radians)
-	D3DXMatrixRotationY(&matRotateY, *mRotateY);		// Place rotation calculation in matrix.
+	// mRotateY = &pY;									// Float to rotate by (in radians)
+	// D3DXMatrixRotationY(&matRotateY, *mRotateY);		// Place rotation calculation in matrix.
 	mRotateZ = &pZ;									// Float to rotate by (in radians)
 	D3DXMatrixRotationZ(&matRotateZ, *mRotateZ);		// Place rotation calculation in matrix.
+	mYaw = &pY;
+	D3DXMatrixRotationYawPitchRoll(&matTurn, *mYaw, 0.0f, 0.0f);
 }
 
 void MyMeshClass::SetTranslation(float &pX, float &pY, float &pZ)
@@ -80,33 +84,18 @@ void MyMeshClass::ApplyWorldTransform()
 {
 	mRenderClass->d3ddev->SetTransform(D3DTS_WORLD, 
 		&(matRotateX
-		* matRotateY
+		* matTurn
 		* matRotateZ
 		* matScale
-		* matTranslate));
+		* matTranslate
+		));
 }
 
 void MyMeshClass::UpdateMeshParameters(float pSpeed, float pRotation, float pScale)
 {
-	bool changeFlag = false;
-
-	if (pScale)
-	{
 		SetScale(mDefaultScale, pScale, mDefaultScale);
-		changeFlag = true;
-	}
-	if (pRotation)
-	{
 		SetRotation(mDefaultRotation, pRotation, mDefaultRotation);
-		changeFlag = true;
-	}
-	if (pSpeed)
-	{
 		SetTranslation(pSpeed);
-		changeFlag = true;
-	}
-	if (changeFlag)
-	{
+
 		ApplyWorldTransform();
-	}
 }

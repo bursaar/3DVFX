@@ -66,6 +66,26 @@ void CharacterClass::UpdateInput()
 
 int CharacterClass::UpdateLocation()
 {
+	if (mKeyUp && mKeyLeft)
+	{
+		movement = FORWARDLEFT;
+		return FORWARDLEFT;
+	}
+	if (mKeyUp && mKeyRight)
+	{
+		movement = FORWARDRIGHT;
+		return FORWARDRIGHT;
+	}
+	if (mKeyDown && mKeyLeft)
+	{
+		movement = BACKWARDLEFT;
+		return BACKWARDLEFT;
+	}
+	if (mKeyDown && mKeyRight)
+	{
+		movement = BACKWARDRIGHT;
+		return BACKWARDRIGHT;
+	}
 	if (mKeyUp)
 	{
 		movement = FORWARD;

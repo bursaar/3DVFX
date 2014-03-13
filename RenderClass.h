@@ -3,6 +3,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "Screen Properties.h"
+#include "MyCameraController.h"
 #include "MeshManager.h"
 #include <vector>
 
@@ -34,6 +35,7 @@ public:
 
 	// Public member functions to:
 	void render_frame();		// render a single frame
+	void SetMeshManager(MeshManager &pMeshManager);
 	// void render_frame(ID3DXMesh *pMeshToRender);
 	void cleanD3D(void);						// close Direct3D and release memory
 	void init_graphics(void);					// 3D declarations - drawing
@@ -45,5 +47,7 @@ private:
 	void SetViewTransform(D3DXVECTOR3 pCameraPosition, D3DXVECTOR3 pLookAtPosition, D3DXVECTOR3 UpDirection); // Overload for changing transform
 	void SetProjectionTransform();
 	void SetProjectionTransform(int pFOV, float pNearView, float pFarView);
+	MeshManager *mMeshManager;
+	MyCameraController mCameraController;
 };
 

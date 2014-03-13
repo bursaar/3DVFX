@@ -4,7 +4,16 @@
 class CharacterClass
 {
 public:
-	enum DIRECTIONS { NONE, FORWARD, RIGHT, BACK, LEFT };		// Cardinal directions
+	enum DIRECTIONS { 
+		NONE, 
+		FORWARD, 
+		RIGHT, 
+		BACK, 
+		LEFT, 
+		FORWARDLEFT, 
+		FORWARDRIGHT, 
+		BACKWARDLEFT, 
+		BACKWARDRIGHT };		// Cardinal directions
 	CharacterClass(MyMeshClass *pMyMesh);											// Default constructor
 	~CharacterClass();											// Default destructor
 	float speed;												// Current speed constant

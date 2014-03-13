@@ -1,19 +1,120 @@
-﻿Build started 12/03/2014 14:41:14.
+﻿Build started 12/03/2014 17:22:21.
      1>Project "C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\3DVFX\3DVFX.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MyGame.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CharacterClass.cpp Main.cpp MeshManager.cpp MyCameraController.cpp MyGame.cpp MyMeshClass.cpp RenderClass.cpp
+         RenderClass.cpp
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(12): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(17): error C2061: syntax error : identifier 'RenderClass'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mymeshclass.h(15): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mymeshclass.h(15): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mymeshclass.h(19): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mymeshclass.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mymeshclass.h(37): error C2061: syntax error : identifier 'MeshManager'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2039: 'const_iterator' : is not a member of '`global namespace''
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(66): error C2660: 'MyCameraController::SetRenderClass' : function does not take 1 arguments
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(68): error C2039: 'myIterator' : is not a member of 'MeshManager'
+                 c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(9) : see declaration of 'MeshManager'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(68): error C2039: 'RegisteredMeshes' : is not a member of 'MeshManager'
+                 c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(9) : see declaration of 'MeshManager'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(68): error C2228: left of '.begin' must have class/struct/union
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(70): error C2039: 'myIterator' : is not a member of 'MeshManager'
+                 c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(9) : see declaration of 'MeshManager'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(70): error C2039: 'RegisteredMeshes' : is not a member of 'MeshManager'
+                 c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(9) : see declaration of 'MeshManager'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(70): error C2228: left of '.end' must have class/struct/union
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(71): error C2039: 'myIterator' : is not a member of 'MeshManager'
+                 c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(9) : see declaration of 'MeshManager'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(74): error C2039: 'iter' : is not a member of 'MeshManager'
+                 c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(9) : see declaration of 'MeshManager'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(74): error C2227: left of '->mesh' must point to class/struct/union/generic type
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(74): error C2227: left of '->DrawSubset' must point to class/struct/union/generic type
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(97): error C2039: 'RegisteredMeshes' : is not a member of 'MeshManager'
+                 c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(9) : see declaration of 'MeshManager'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\renderclass.cpp(97): error C2228: left of '.clear' must have class/struct/union
+         MyMeshClass.cpp
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(12): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(17): error C2061: syntax error : identifier 'RenderClass'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2039: 'const_iterator' : is not a member of '`global namespace''
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(15): error C2061: syntax error : identifier 'MyMeshClass'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mymeshclass.cpp(9): error C2660: 'MeshManager::AddMesh' : function does not take 1 arguments
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mymeshclass.cpp(28): error C2039: 'RemoveMesh' : is not a member of 'MeshManager'
+                 c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(9) : see declaration of 'MeshManager'
          MyGame.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.lib" /MACHINE:X86 Debug\CharacterClass.obj
-         Debug\MyGame.obj
-         Debug\Main.obj
-         Debug\MeshManager.obj
-         Debug\MyCameraController.obj
-         Debug\MyMeshClass.obj
-         Debug\RenderClass.obj
-         3DVFX.vcxproj -> C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.exe
-     1>Done Building Project "C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\3DVFX\3DVFX.vcxproj" (Build target(s)).
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(12): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(17): error C2061: syntax error : identifier 'RenderClass'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2039: 'const_iterator' : is not a member of '`global namespace''
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(15): error C2061: syntax error : identifier 'MyMeshClass'
+         MyCameraController.cpp
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.cpp : fatal error C1041: cannot open program database 'c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\debug\vc120.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+         MeshManager.cpp
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.cpp : fatal error C1041: cannot open program database 'c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\debug\vc120.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+         Main.cpp
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(12): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(17): error C2061: syntax error : identifier 'RenderClass'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mymeshclass.h(15): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mymeshclass.h(15): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mymeshclass.h(19): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mymeshclass.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mymeshclass.h(37): error C2061: syntax error : identifier 'MeshManager'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2039: 'const_iterator' : is not a member of '`global namespace''
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2238: unexpected token(s) preceding ';'
+         CharacterClass.cpp
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(12): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\mycameracontroller.h(17): error C2061: syntax error : identifier 'RenderClass'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(11): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(12): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2039: 'const_iterator' : is not a member of '`global namespace''
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(13): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\meshmanager.h(15): error C2061: syntax error : identifier 'MyMeshClass'
+         Generating Code...
+     1>Done Building Project "C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\3DVFX\3DVFX.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:02.35
+Time Elapsed 00:00:08.49
