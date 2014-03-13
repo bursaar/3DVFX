@@ -1,11 +1,9 @@
 #include "CharacterClass.h"
 
 
-CharacterClass::CharacterClass(MyMeshClass *pMyMesh)
+CharacterClass::CharacterClass()
 {
 	speed = 0.0f;
-	mMyMesh = new MyMeshClass (*pMyMesh);
-	characterMesh = mMyMesh->mesh;
 }
 
 
@@ -18,94 +16,77 @@ void CharacterClass::DrawCharacter()
 	characterMesh->DrawSubset(0);
 }
 
-void CharacterClass::UpdateCharacter()
+void CharacterClass::UpdateCharacter(int pMovement)
 {
-	UpdateInput();
+	UpdateInput(pMovement);
 	UpdateLocation();
 }
 
 // Check whether there is movement required
-void CharacterClass::UpdateInput()
+void CharacterClass::UpdateInput(int pMovement)
 {
-	if (GetAsyncKeyState(VK_UP) || GetAsyncKeyState(0x57))
+	// Player attributes first - NPC attributes will be derived from this model
+	if (speed > 0)
 	{
-		mKeyUp = true;
+		speed -= friction;		// Trend towards zero with friction variable.
 	}
-	else
+	if (speed < 0)
 	{
-		mKeyUp = false;
-	}
-
-	if (GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState(0x44))
-	{
-		mKeyRight = true;
-	}
-	else
-	{
-		mKeyRight = false;
+		speed += friction;		// Trend towards zero with friction variable.
 	}
 
-	if (GetAsyncKeyState(VK_DOWN) || GetAsyncKeyState(0x53))
+	switch (pMovement)
 	{
-		mKeyDown = true;
+	case InputClass::BACKWARDRIGHT:
+	{
+									  speed += acceleration;
+									  rotationInRadians -= rotationInRadians;
+									  break;
 	}
-	else
+	case InputClass::BACKWARDLEFT:
 	{
-		mKeyDown = false;
+									 speed += acceleration;
+									 rotationInRadians -= rotationInRadians;
+									 break;
+	}
+	case InputClass::FORWARDRIGHT:
+	{
+									 speed -= acceleration;
+									 rotationInRadians += rotationInRadians;
+									 break;
+	}
+	case InputClass::FORWARDLEFT:
+	{
+									speed -= acceleration;
+									rotationInRadians -= rotationInRadians;
+									break;
+	}
+	case InputClass::BACK:
+	{
+									 speed += acceleration;
+									 break;
+	}
+	case InputClass::FORWARD:
+	{
+									speed -= acceleration;
+									break;
+	}
+	case InputClass::LEFT:
+	{
+							 rotationInRadians -= rotationInRadians;
+							 break;
+	}
+	case InputClass::RIGHT:
+	{
+							  rotationInRadians += rotationInRadians;
+							  break;
+	}
 	}
 
-	if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x41))
-	{
-		mKeyLeft = true;
-	}
-	else
-	{
-		mKeyLeft = false;
-	}
+	// Send data somewhere
 }
 
 int CharacterClass::UpdateLocation()
 {
-	if (mKeyUp && mKeyLeft)
-	{
-		movement = FORWARDLEFT;
-		return FORWARDLEFT;
-	}
-	if (mKeyUp && mKeyRight)
-	{
-		movement = FORWARDRIGHT;
-		return FORWARDRIGHT;
-	}
-	if (mKeyDown && mKeyLeft)
-	{
-		movement = BACKWARDLEFT;
-		return BACKWARDLEFT;
-	}
-	if (mKeyDown && mKeyRight)
-	{
-		movement = BACKWARDRIGHT;
-		return BACKWARDRIGHT;
-	}
-	if (mKeyUp)
-	{
-		movement = FORWARD;
-		return FORWARD;
-	}
-	if (mKeyRight)
-	{
-		movement = RIGHT;
-		return RIGHT;
-	}
-	if (mKeyDown)
-	{
-		movement = BACK;
-		return BACK;
-	}
-	if (mKeyLeft)
-	{
-		movement = LEFT;
-		return LEFT;
-	}
-	movement = NONE;
-	return NONE;
+	return 0;
 }

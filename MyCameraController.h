@@ -1,6 +1,6 @@
 #pragma once
 #include "Screen Properties.h"
-#include "RenderClass.h"
+#include <d3dx9.h>
 
 class MyCameraController
 {
@@ -8,15 +8,17 @@ public:
 	MyCameraController();
 	~MyCameraController();
 
-	int FOV = 45;										// The field of view, referenced by the projection transform.
-	RenderClass *mRenderClass;							// A pointer to the render class
+	D3DXVECTOR3 *mPosition;
+	D3DXVECTOR3 *mLookAt;
+	D3DXVECTOR3 *mUp;
+	D3DXVECTOR3 *mRotation;
+	D3DXMATRIX mMatView;								// View matrix
 
-	D3DXMATRIX mMatView;								// A matrix for the view transform
-	D3DXMATRIX mMatProjection;							// A matrix for the projection transform
+	bool Render();
 
-	void SetRenderClass(RenderClass &pRenderClass);
-	void SetViewTransform();							// Function to set the view transform
-	void SetViewTransform(float pPosX, float pPosY, float pPosZ, float pLookX, float pLookY, float pLookZ);
-	void SetProjectionTransform(int pFOV = 45, float pNear = 1.0, float pFar = 100.0);
+	bool SetPosition(float pX, float pY, float pZ);
+	bool SetRotation(float pX, float pY, float pZ);
+
+	void GetViewMatrix(D3DXMATRIX &pViewMatrix);
 };
 

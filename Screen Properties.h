@@ -1,5 +1,8 @@
+#pragma once
+
 #include <windows.h>
 #include <windowsx.h>
+#include "T2G\Code\Leak Detector.h"
 
 // define the screen resolution
 #define SCREEN_WIDTH  800

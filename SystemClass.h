@@ -1,7 +1,7 @@
 #pragma once
 #include "Screen Properties.h"
-#include "MyGame.h"
 #include "InputClass.h"
+#include "RenderClass.h"
 
 #define WIN32_LEAN_AND_MEAN
 
@@ -25,6 +25,7 @@ public:
 	int m_nCmdShow;
 
 	int Run();
+	int Update();
 	int Initialise(HINSTANCE pHInstance, int nCmdShow);
 	int Shutdown();
 
@@ -34,6 +35,8 @@ public:
 private:
 	int InitialiseWindows();
 	int ShutdownWindow();
+	int Frame();
+	int Render();
 	RenderClass *m_renderer;
 	InputClass *m_input;
 };

@@ -29,8 +29,11 @@
     <Filter Include="Managers">
       <UniqueIdentifier>{00b3af95-2bdb-4528-8ab1-8d802d753d21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game">
-      <UniqueIdentifier>{f8244fea-52d9-4bd0-9f99-d6857c99c5f7}</UniqueIdentifier>
+    <Filter Include="Class Diagrams">
+      <UniqueIdentifier>{38d06493-1c47-4f60-94ba-13998a36bf86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{63584d84-b27a-45b4-ae02-ec2c2ae3b15d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -41,17 +44,17 @@
       <Filter>Renderer\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MyMeshClass.cpp">
-      <Filter>Renderer\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="CharacterClass.cpp">
       <Filter>Character</Filter>
     </ClCompile>
-    <ClCompile Include="MeshManager.cpp">
-      <Filter>Managers</Filter>
+    <ClCompile Include="SystemClass.cpp">
+      <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="MyGame.cpp">
-      <Filter>Game</Filter>
+    <ClCompile Include="InputClass.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DClass.cpp">
+      <Filter>Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -67,17 +70,22 @@
     <ClInclude Include="MyCameraController.h">
       <Filter>Renderer\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="MyMeshClass.h">
-      <Filter>Renderer\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="CharacterClass.h">
       <Filter>Character</Filter>
     </ClInclude>
-    <ClInclude Include="MeshManager.h">
-      <Filter>Managers</Filter>
+    <ClInclude Include="SystemClass.h">
+      <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="MyGame.h">
-      <Filter>Game</Filter>
+    <ClInclude Include="InputClass.h">
+      <Filter>Control</Filter>
     </ClInclude>
+    <ClInclude Include="D3DClass.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd">
+      <Filter>Class Diagrams</Filter>
+    </None>
   </ItemGroup>
 </Project>

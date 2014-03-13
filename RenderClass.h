@@ -1,10 +1,9 @@
 #pragma once
 #include "T2G\Code\Leak Detector.h"
-#include <d3d9.h>
-#include <d3dx9.h>
+#include "D3DClass.h"
 #include "Screen Properties.h"
 #include "MyCameraController.h"
-#include "MeshManager.h"
+#include "CharacterClass.h"
 #include <vector>
 
 using namespace std;
@@ -23,22 +22,27 @@ struct CUSTOMVERTEX
 class RenderClass
 {
 public:
-	LPDIRECT3D9 d3d;							// the pointer to our Direct3D interface
-	LPDIRECT3DDEVICE9 d3ddev;					// the pointer to the device class
-	LPDIRECT3DVERTEXBUFFER9 v_buffer = NULL;    // the pointer to the vertex buffer
-	LPDIRECT3DINDEXBUFFER9 i_buffer = NULL;		// the pointer to the index buffer
-	int m_FOV = 45;
+	D3DClass *m_D3D;
+	ID3DXMesh *m_characterMesh;
+	ID3DXMesh *m_wallMesh;
+	ID3DXMesh *m_floorMesh;
+	D3DXMATRIX m_viewMatrix;
+	CharacterClass *m_player;
+	MyCameraController* m_camera;
 
 	// Overloaded constructors
 	RenderClass();
-	RenderClass(HWND &pHWND);
+	bool Initialise(HWND phWND);
 
-	// Public member functions to:
-	void render_frame();		// render a single frame
-	void SetMeshManager(MeshManager &pMeshManager);
-	// void render_frame(ID3DXMesh *pMeshToRender);
-	void cleanD3D(void);						// close Direct3D and release memory
+	void cleanD3D(void);						// close Direct3D and release memo
+
 	void init_graphics(void);					// 3D declarations - drawing
+	void CreateCharacter();
+	void DrawMesh();
+
+	int v_buffer_index_offset;
+	int i_buffer_index_offset;
+
 	~RenderClass();
 
 private:
@@ -47,7 +51,12 @@ private:
 	void SetViewTransform(D3DXVECTOR3 pCameraPosition, D3DXVECTOR3 pLookAtPosition, D3DXVECTOR3 UpDirection); // Overload for changing transform
 	void SetProjectionTransform();
 	void SetProjectionTransform(int pFOV, float pNearView, float pFarView);
-	MeshManager *mMeshManager;
-	MyCameraController mCameraController;
+
+	// Mesh operations
+	LPD3DXBUFFER *m_adjacencyBuffer;
+	LPD3DXBUFFER *m_vRemap;
+	DWORD *m_adaj;
+	DWORD *m_optAdaj;
+	DWORD *m_fRemap;
 };
 

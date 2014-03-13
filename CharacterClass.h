@@ -1,29 +1,21 @@
 #pragma once
-#include "MyMeshClass.h"
+#include "InputClass.h"
+#include <d3dx9.h>
 
 class CharacterClass
 {
 public:
-	enum DIRECTIONS { 
-		NONE, 
-		FORWARD, 
-		RIGHT, 
-		BACK, 
-		LEFT, 
-		FORWARDLEFT, 
-		FORWARDRIGHT, 
-		BACKWARDLEFT, 
-		BACKWARDRIGHT };		// Cardinal directions
-	CharacterClass(MyMeshClass *pMyMesh);											// Default constructor
+	
+	CharacterClass();											// Default constructor
 	~CharacterClass();											// Default destructor
 	float speed;												// Current speed constant
 	float rotationInRadians;									// Current rotation
+	float acceleration;
 	D3DXVECTOR3 location;										// Vector to hold current location
-	int movement = NONE;										// Current direction of travel
 	float friction = 1.0f;										// Current friction experienced on the ground
-	void UpdateCharacter();										// Member function to update stats of character.
+	void UpdateCharacter(int pMovement);										// Member function to update stats of character.
 	void DrawCharacter();
-	MyMeshClass *mMyMesh;										// My mesh class for the character.
+	ID3DXMesh *mMyMesh;										// My mesh class for the character.
 
 private:
 	bool mKeyUp;
@@ -34,7 +26,7 @@ private:
 	ID3DXMesh *characterMesh;									// Pointer to mesh object
 
 	// Check whether there is movement required
-	void UpdateInput();
+	void UpdateInput(int pMovement);
 
 	// Update location with translation information
 	int UpdateLocation();

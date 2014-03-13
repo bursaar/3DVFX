@@ -41,6 +41,8 @@ int SystemClass::InitialiseWindows()
 		NULL,			 // we aren't using menus, NULL
 		m_hInstance,    // application handle
 		NULL);			// used with multiple windows, NULL
+
+	return 0;
 }
 
 int SystemClass::Initialise(HINSTANCE pHInstance, int pNCmdShow)
@@ -49,7 +51,16 @@ int SystemClass::Initialise(HINSTANCE pHInstance, int pNCmdShow)
 	m_hInstance = pHInstance;
 	m_nCmdShow = pNCmdShow;
 
+	InputClass Input;
+	m_input = &Input;
+
+	RenderClass Renderer;
+	m_renderer = &Renderer;
+	m_renderer->Initialise(m_hWnd);
+
 	InitialiseWindows();
+
+	return 0;
 }
 
 int SystemClass::Run()
@@ -63,8 +74,6 @@ int SystemClass::Run()
 	// Initialise Direct3D
 	// RenderClass Renderer(hWnd);
 
-	// Create game
-	MyGame Game(m_hWnd);
 
 	while (TRUE)
 	{
@@ -78,12 +87,12 @@ int SystemClass::Run()
 			break;
 		if (GetAsyncKeyState(VK_ESCAPE))
 			break;
-		Game.Update();
+		m_input->Frame();
 		// Game.mRenderer.render_frame();
 	}
 
 	// clean up DirectX and COM
-	Game.mRenderer.cleanD3D();
+
 
 	return msg.wParam;
 
@@ -103,17 +112,24 @@ int SystemClass::Run()
 
 int SystemClass::Shutdown()
 {
-	
+	int result = ShutdownWindow();
 
-
-
+	return result;
 }
 
 int SystemClass::ShutdownWindow()
 {
-	DestroyWindow(m_hWnd);
+	BOOL result = false;
+	result = DestroyWindow(m_hWnd);
 
 	UnregisterClass(m_wc.lpszClassName, m_hInstance);
+
+	if (result)
+	{
+		return 0;
+	}
+	
+	return 1;
 }
 
 // this is the main message handler for the program
@@ -133,4 +149,21 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 	// Handle any messages the switch statement didn't
 	return DefWindowProc(hWnd, message, wParam, lParam);
+}
+
+int SystemClass::Frame()
+{
+	m_input->Frame();
+
+	return 0;
+}
+
+int SystemClass::Update()
+{
+	return 0;
+}
+
+int SystemClass::Render()
+{
+	return 0;
 }

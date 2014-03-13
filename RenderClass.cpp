@@ -1,13 +1,5 @@
 #include "RenderClass.h"
 
-
-RenderClass::RenderClass(HWND &pHWND)
-{
-
-	RenderClass::initD3D(pHWND);
-
-}
-
 RenderClass::RenderClass()
 {
 
@@ -17,39 +9,7 @@ RenderClass::~RenderClass()
 {
 }
 
-void RenderClass::initD3D(HWND &pHWND)					// sets up and initializes Direct3D
-{
-	d3d = Direct3DCreate9(D3D_SDK_VERSION);
-
-	m_FOV = 45;
-
-	D3DPRESENT_PARAMETERS d3dpp;
-
-	ZeroMemory(&d3dpp, sizeof(d3dpp));
-	d3dpp.Windowed = TRUE;
-	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	d3dpp.hDeviceWindow = pHWND;
-	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-	d3dpp.BackBufferWidth = SCREEN_WIDTH;
-	d3dpp.BackBufferHeight = SCREEN_HEIGHT;
-	d3dpp.EnableAutoDepthStencil = TRUE;			// automatically run the z-buffer for us
-	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;		// 16-bit pixel format for the z-buffer
-
-	// create a device class using this information and the info from the d3dpp stuct
-	d3d->CreateDevice(D3DADAPTER_DEFAULT,
-		D3DDEVTYPE_HAL,
-		pHWND,
-		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
-		&d3dpp,
-		&d3ddev);
-
-	// init_graphics();    // call the function to initialize the triangle
-
-	d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE);    // turn off the 3D lighting
-	// d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);    // both sides of the triangles
-	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
-}
-
+/*
 void RenderClass::render_frame()		// renders a single frame
 {
 
@@ -81,8 +41,9 @@ void RenderClass::render_frame()		// renders a single frame
 
 	d3ddev->Present(NULL, NULL, NULL, NULL);
 }
+*/
 
-
+/*
 void RenderClass::cleanD3D(void)						// closes Direct3D and releases memory
 {
 	if (v_buffer)
@@ -99,19 +60,14 @@ void RenderClass::cleanD3D(void)						// closes Direct3D and releases memory
 	d3ddev->Release();		// close and release the 3D device
 	d3d->Release();			// close and release Direct3D
 }
+*/
 
 void RenderClass::init_graphics(void)					// 3D declarations
 {
 
 		// Create a sphere
-		CUSTOMVERTEX sphereOrigin = { 0.0f, 0.0f, 0.0f, D3DCOLOR_XRGB(0, 0, 255) };
-		float fl_radius = 1.0f;
-		int slices = 15;
-		int stacks = 15;
-	
-		ID3DXMesh *sphereMesh;
-		LPD3DXBUFFER vRemap;
-		LPD3DXBUFFER adjacencyBuffer;
+
+
 	//		D3DXATTRIBUTERANGE sphereAttribs;
 
 
@@ -141,7 +97,7 @@ void RenderClass::init_graphics(void)					// 3D declarations
 		// sphereMesh->LockIndexBuffer(D3DLOCK_DISCARD, (LPVOID*) &i_buffer);
 		// sphereMesh->GetIndexBuffer(&i_buffer);
 
-		d3ddev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		// d3ddev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	//	for (DWORD i = 0; i < sphereMesh->GetNumFaces(); i++)
 	//	{
@@ -157,54 +113,72 @@ void RenderClass::init_graphics(void)					// 3D declarations
 	//	sphereMesh->Release();
 }
 
-void RenderClass::SetViewTransform()
+
+bool RenderClass::Initialise(HWND phWND)
 {
-	// set the view transform
-	D3DXMATRIX matView;    // the view transform matrix
-	D3DXMatrixLookAtLH(&matView,
-		&D3DXVECTOR3(0.0f, 8.0f, 25.0f),   // the camera position
-		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),    // the look-at position
-		&D3DXVECTOR3(0.0f, 1.0f, 0.0f));    // the up direction
-	d3ddev->SetTransform(D3DTS_VIEW, &matView);    // set the view transform to matView
+	m_D3D = t2GNew D3DClass;
+	m_D3D->Initialise(phWND);
+
+	m_camera = t2GNew MyCameraController;
+	m_camera->SetPosition(0.0f, 3.0f, 10.0f);
+	m_camera->Render();
+	m_camera->GetViewMatrix(m_viewMatrix);
+
+	return true;
 }
 
-void RenderClass::SetViewTransform(D3DXVECTOR3 pCameraPosition, D3DXVECTOR3 pLookAtPosition, D3DXVECTOR3 UpDirection)
-{// set the view transform
-	D3DXMATRIX matView;    // the view transform matrix
-	D3DXMatrixLookAtLH(&matView,
-		&pCameraPosition,   // the camera position
-		&pLookAtPosition,    // the look-at position
-		&UpDirection);    // the up direction
-	d3ddev->SetTransform(D3DTS_VIEW, &matView);    // set the view transform to matView
+void RenderClass::CreateCharacter()
+{
+	// Create the sphere
+	float fl_radius = 1.0f;
+	int slices = 15;
+	int stacks = 15;
+	m_adjacencyBuffer = new LPD3DXBUFFER;
+	m_vRemap = new LPD3DXBUFFER;
+	D3DXCreateSphere(m_D3D->d3ddev, fl_radius, slices, stacks, &m_characterMesh, m_adjacencyBuffer);
+
+	DWORD arraySize = m_characterMesh->GetNumFaces() * 3;
+
+	DWORD * m_adaj = new DWORD[arraySize];	
+	DWORD * m_optAdaj = new DWORD[arraySize];
+	DWORD * m_fRemap = new DWORD[arraySize];
+
+	m_characterMesh->GenerateAdjacency(0.1f, m_adaj);
+
+	m_characterMesh->OptimizeInplace(
+			D3DXMESHOPT_ATTRSORT | D3DXMESHOPT_COMPACT | D3DXMESHOPT_IGNOREVERTS,
+			m_adaj,
+			m_optAdaj,
+			m_fRemap,
+			m_vRemap);
+	
+	m_player = new CharacterClass;
+
+	m_player->mMyMesh = m_characterMesh;
+
+
 }
 
-void RenderClass::SetProjectionTransform()
+void RenderClass::DrawMesh()
 {
-	// set the projection transform
-	D3DXMATRIX matProjection;										// the projection transform matrix
-	D3DXMatrixPerspectiveFovLH(&matProjection,
-		D3DXToRadian(45),											// the horizontal field of view
-		(FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT,					// aspect ratio
-		1.0f,														// the near view-plane
-		100.0f);													// the far view-plane
-	d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);			// set the projection
-}
+	D3DXComputeNormals(m_characterMesh, m_optAdaj);
 
-void RenderClass::SetProjectionTransform(int pFOV, float pNearView = 1.0f, float pFarView = 100.0f)
-{
-	// set the projection transform
-	D3DXMATRIX matProjection;										// the projection transform matrix
-	D3DXMatrixPerspectiveFovLH(&matProjection,
-		D3DXToRadian(pFOV),											// the horizontal field of view
-		(FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT,					// aspect ratio
-		pNearView,													// the near view-plane
-		pFarView);													// the far view-plane
-	d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);			// set the projection
-}
+	// Pass into buffers
 
+	m_player->mMyMesh->DrawSubset(0);
 
+	m_player->mMyMesh->GetVertexBuffer(&m_D3D->v_buffer);
+	m_player->mMyMesh->GetIndexBuffer(&m_D3D->i_buffer);
 
-void RenderClass::SetMeshManager(MeshManager &pMeshManager)
-{
-	mMeshManager = &pMeshManager;
+	VOID *pVoid;
+
+	memcpy(&pVoid, &m_D3D->v_buffer, sizeof(m_player->mMyMesh->GetNumBytesPerVertex()));
+	v_buffer_index_offset += static_cast<int>(m_player->mMyMesh->GetNumVertices());			// Casting as an int to create an offset for buffering multiple meshes at once.
+	m_player->mMyMesh->UnlockVertexBuffer();
+	m_player->mMyMesh->UnlockIndexBuffer();
+	m_player->mMyMesh->Release();
+	m_D3D->v_buffer->Unlock();
+	m_D3D->i_buffer->Unlock();   
+	m_D3D->i_buffer->Release();
+	m_D3D->d3ddev->EndScene();
 }

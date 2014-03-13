@@ -19,7 +19,6 @@
 
 #include "RenderClass.h"
 #include "T2G\Code\Leak Detector.h"
-#include "MyGame.h"
 #include "SystemClass.h"
 
 
@@ -29,7 +28,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	
 	SystemClass System;
 
 	System.Initialise(hInstance, nCmdShow);
@@ -37,10 +35,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	// enter the main loop:
 	System.Run();
 
-
-	System.Shutdown();
-
-
-	
+	// Shutdown system object
+	return System.Shutdown();
 }
 

@@ -3,45 +3,64 @@
 
 MyCameraController::MyCameraController()
 {
+	mPosition = t2GNew D3DXVECTOR3;
+	mLookAt = t2GNew D3DXVECTOR3;
+	mUp = t2GNew D3DXVECTOR3;
+	mRotation = t2GNew D3DXVECTOR3;
 }
-
-void MyCameraController::SetRenderClass(RenderClass &pRenderClass)
-{
-	mRenderClass = &pRenderClass;	// Pass in the render class to a pointer.
-}
-
 
 MyCameraController::~MyCameraController()
 {
 }
 
-void MyCameraController::SetViewTransform()
+
+bool MyCameraController::SetPosition(float pX, float pY, float pZ)
 {
-	// set the view transform
-	D3DXMatrixLookAtLH(&mMatView,
-		&D3DXVECTOR3(0.0f, 8.0f, 25.0f),						// the camera position
-		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),							// the look-at position
-		&D3DXVECTOR3(0.0f, 1.0f, 0.0f));						// the up direction
-	mRenderClass->d3ddev->SetTransform(D3DTS_VIEW, &mMatView);  // set the view transform to matView
+	mPosition = t2GNew D3DXVECTOR3;
+	mPosition->x = pX;
+	mPosition->y = pY;
+	mPosition->z = pZ;
+	return true;
 }
 
-void MyCameraController::SetViewTransform(float pPosX, float pPosY, float pPosZ, float pLookX, float pLookY, float pLookZ)
+bool MyCameraController::SetRotation(float pX, float pY, float pZ)
 {
-	// set the view transform
-	D3DXMatrixLookAtLH(&mMatView,
-		&D3DXVECTOR3(pPosX, pPosY, pPosZ),							// the camera position
-		&D3DXVECTOR3(pLookX, pLookY, pLookZ),						// the look-at position
-		&D3DXVECTOR3(0.0f, 1.0f, 0.0f));							// the up direction
-	mRenderClass->d3ddev->SetTransform(D3DTS_VIEW, &mMatView);		// set the view transform to matView
+	mRotation = t2GNew D3DXVECTOR3;
+	mRotation->x = pX;
+	mRotation->y = pY;
+	mRotation->z = pZ;
+	return true;
 }
 
-void MyCameraController::SetProjectionTransform(int pFOV, float pNear, float pFar)
+bool MyCameraController::Render()
 {
-	// set the projection transform
-	D3DXMatrixPerspectiveFovLH(&mMatProjection,
-		D3DXToRadian(FOV),															// the horizontal field of view
-		(FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT,									// aspect ratio
-		pNear,																		// the near view-plane
-		pFar);																	// the far view-plane
-	mRenderClass->d3ddev->SetTransform(D3DTS_PROJECTION, &mMatProjection);			// set the projection
+	D3DXVECTOR3 up;
+	D3DXVECTOR3 position;
+	D3DXVECTOR3 lookAt;
+	float radians;
+
+	mUp->x = 0.0f;
+	mUp->y = 1.0f;
+	mUp->z = 0.0f;
+
+	position.x = mPosition->x;
+	position.y = mPosition->y;
+	position.z = mPosition->z;
+
+	radians = D3DXToRadian(mRotation->y);
+
+	lookAt.x = sinf(radians) + mPosition->x;
+	lookAt.y = mPosition->y;
+	lookAt.z = cosf(radians) + mPosition->z;
+
+	// Create view matrix
+	D3DXMatrixLookAtLH(&mMatView, &position, &lookAt, &up);
+
+	return true;
+}
+
+void MyCameraController::GetViewMatrix(D3DXMATRIX &pViewMatrix)
+{
+	pViewMatrix = mMatView;
+	return;
 }

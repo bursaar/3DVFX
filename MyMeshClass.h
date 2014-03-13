@@ -1,6 +1,5 @@
 #pragma once
 #include "RenderClass.h"
-#include "MeshManager.h"
 
 class MyMeshClass
 {
