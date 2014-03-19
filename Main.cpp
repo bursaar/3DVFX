@@ -18,7 +18,6 @@
 
 
 #include "RenderClass.h"
-#include "T2G\Code\Leak Detector.h"
 #include "SystemClass.h"
 
 

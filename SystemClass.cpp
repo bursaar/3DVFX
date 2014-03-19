@@ -3,6 +3,8 @@
 
 SystemClass::SystemClass()
 {
+	m_nCmdShow = 0;
+
 }
 
 
@@ -22,7 +24,6 @@ int SystemClass::InitialiseWindows()
 	m_wc.lpfnWndProc = WindowProc;
 	m_wc.hInstance = m_hInstance;
 	m_wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	// wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 	m_wc.lpszClassName = L"WindowClass1";
 
 	// register the window class
@@ -72,7 +73,7 @@ int SystemClass::Run()
 	ShowWindow(m_hWnd, m_nCmdShow);
 
 	// Initialise Direct3D
-	// RenderClass Renderer(hWnd);
+	m_renderer->Initialise(m_hWnd);
 
 
 	while (TRUE)
@@ -88,11 +89,8 @@ int SystemClass::Run()
 		if (GetAsyncKeyState(VK_ESCAPE))
 			break;
 		m_input->Frame();
-		// Game.mRenderer.render_frame();
+		m_renderer->DrawMesh();
 	}
-
-	// clean up DirectX and COM
-
 
 	return msg.wParam;
 
@@ -132,11 +130,16 @@ int SystemClass::ShutdownWindow()
 	return 1;
 }
 
+LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam)
+{
+	return DefWindowProc(hwnd, umsg, wparam, lparam);
+}
+
 // this is the main message handler for the program
-LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
 {
 	// sort through and find what code to run for the message given
-	switch (message)
+	switch (umessage)
 	{
 		// this message is read when the window is closed
 	case WM_DESTROY:
@@ -147,8 +150,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 	} break;
 	}
 
-	// Handle any messages the switch statement didn't
-	return DefWindowProc(hWnd, message, wParam, lParam);
+	// Handle any messages the switch statement didn't get
+	return ApplicationHandle->MessageHandler(hwnd, umessage, wparam, lparam);
 }
 
 int SystemClass::Frame()

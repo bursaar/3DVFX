@@ -3,6 +3,11 @@
 
 InputClass::InputClass()
 {
+	m_direction = NONE;
+	mKeyUp = false;
+	mKeyRight = false;
+	mKeyDown = false;
+	mKeyLeft = false;
 }
 
 

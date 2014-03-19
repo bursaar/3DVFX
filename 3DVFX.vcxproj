@@ -104,7 +104,6 @@
     <ClInclude Include="RenderClass.h" />
     <ClInclude Include="Screen Properties.h" />
     <ClInclude Include="SystemClass.h" />
-    <ClInclude Include="T2G\Code\Leak Detector.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

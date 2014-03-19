@@ -1,5 +1,4 @@
 #pragma once
-#include "T2G\Code\Leak Detector.h"
 #include "D3DClass.h"
 #include "Screen Properties.h"
 #include "MyCameraController.h"
@@ -40,17 +39,11 @@ public:
 	void CreateCharacter();
 	void DrawMesh();
 
-	int v_buffer_index_offset;
-	int i_buffer_index_offset;
-
 	~RenderClass();
 
 private:
 	void initD3D(HWND &pHWND);					// sets up and initializes Direct3D
-	void SetViewTransform();						// Set the view transform
-	void SetViewTransform(D3DXVECTOR3 pCameraPosition, D3DXVECTOR3 pLookAtPosition, D3DXVECTOR3 UpDirection); // Overload for changing transform
-	void SetProjectionTransform();
-	void SetProjectionTransform(int pFOV, float pNearView, float pFarView);
+
 
 	// Mesh operations
 	LPD3DXBUFFER *m_adjacencyBuffer;

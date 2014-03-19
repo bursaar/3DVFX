@@ -8,8 +8,8 @@ public:
 
 	LPDIRECT3D9 d3d;							// our Direct3D interface
 	LPDIRECT3DDEVICE9 d3ddev;					// the device class
-	LPDIRECT3DVERTEXBUFFER9 v_buffer = NULL;    // the vertex buffer
-	LPDIRECT3DINDEXBUFFER9 i_buffer = NULL;		// the index buffer
+	LPDIRECT3DVERTEXBUFFER9 v_buffer;    // the vertex buffer
+	LPDIRECT3DINDEXBUFFER9 i_buffer;		// the index buffer
 
 	float fieldOfView;
 	float screenAspect;

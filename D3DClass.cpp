@@ -3,6 +3,7 @@
 
 D3DClass::D3DClass()
 {
+
 }
 
 
@@ -35,18 +36,18 @@ void D3DClass::Initialise(HWND pHWND)
 		&d3dpp,
 		&d3ddev);
 
-	// init_graphics();    // call the function to initialize the triangle
-
-	d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE);    // turn off the 3D lighting
-	// d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);    // both sides of the triangles
-	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
+	d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(255, 255, 255));
+	d3ddev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE);				// turn off the 3D lighting
+	d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);		// both sides of the triangles
+	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);				// turn on the z-buffer
 
 	fieldOfView = D3DXToRadian(45);
 	screenAspect = SCREEN_WIDTH / SCREEN_HEIGHT;
 	nearView = 1.0f;
 	farView = 500.0f;
 
-	// Set the projection matrix
+	// Initialise and set the projection matrix
 	D3DXMatrixPerspectiveFovLH(&mMatProjection, fieldOfView, screenAspect, nearView, farView);
 
 	// Initialise world matrix

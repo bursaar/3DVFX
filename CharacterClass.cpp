@@ -4,6 +4,17 @@
 CharacterClass::CharacterClass()
 {
 	speed = 0.0f;
+	rotationInRadians = 0.0f;
+	acceleration = 0.0f;
+	location.x = 0.0f;
+	location.y = 0.0f;
+	location.z = 0.0f;
+	friction = 1.0f;
+	mKeyUp = false;
+	mKeyDown = false;
+	mKeyRight = false;
+	mKeyLeft = false;
+
 }
 
 
@@ -11,9 +22,9 @@ CharacterClass::~CharacterClass()
 {
 }
 
-void CharacterClass::DrawCharacter()
+void CharacterClass::DrawCharacter(IDirect3DVertexBuffer9 *pVbuff, IDirect3DIndexBuffer9 *pIbuff)
 {
-	characterMesh->DrawSubset(0);
+	characterMesh->LockVertexBuffer(D3DLOCK_DISCARD, (void**)&pVbuff);								// Ref: http://www.gamedev.net/topic/309185-id3dxmeshlockvertexbuffer-method-question/
 }
 
 void CharacterClass::UpdateCharacter(int pMovement)
@@ -89,4 +100,14 @@ void CharacterClass::UpdateInput(int pMovement)
 int CharacterClass::UpdateLocation()
 {
 	return 0;
+}
+
+void CharacterClass::ApplyMesh(ID3DXMesh &pMesh)
+{
+	characterMesh = &pMesh;
+}
+
+void CharacterClass::GetMesh(ID3DXMesh &pMesh)
+{
+	pMesh = *characterMesh;
 }

@@ -5,13 +5,6 @@
 
 #define WIN32_LEAN_AND_MEAN
 
-// the WindowProc function prototype
-LRESULT CALLBACK WindowProc(HWND hWnd,
-	UINT message,
-	WPARAM wParam,
-	LPARAM lParam);
-
-
 class SystemClass
 {
 public:
@@ -29,6 +22,8 @@ public:
 	int Initialise(HINSTANCE pHInstance, int nCmdShow);
 	int Shutdown();
 
+	LRESULT CALLBACK MessageHandler(HWND, UINT, WPARAM, LPARAM);
+
 	SystemClass();
 	~SystemClass();
 
@@ -41,3 +36,12 @@ private:
 	InputClass *m_input;
 };
 
+
+// the WindowProc function prototype
+LRESULT CALLBACK WindowProc(HWND hWnd,
+	UINT message,
+	WPARAM wParam,
+	LPARAM lParam);
+
+// Global
+static SystemClass *ApplicationHandle = 0;

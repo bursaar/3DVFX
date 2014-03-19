@@ -3,10 +3,10 @@
 
 MyCameraController::MyCameraController()
 {
-	mPosition = t2GNew D3DXVECTOR3;
-	mLookAt = t2GNew D3DXVECTOR3;
-	mUp = t2GNew D3DXVECTOR3;
-	mRotation = t2GNew D3DXVECTOR3;
+	mPosition = new D3DXVECTOR3;
+	mLookAt = new D3DXVECTOR3;
+	mUp = new D3DXVECTOR3;
+	mRotation = new D3DXVECTOR3;
 }
 
 MyCameraController::~MyCameraController()
@@ -16,7 +16,7 @@ MyCameraController::~MyCameraController()
 
 bool MyCameraController::SetPosition(float pX, float pY, float pZ)
 {
-	mPosition = t2GNew D3DXVECTOR3;
+	mPosition = new D3DXVECTOR3;
 	mPosition->x = pX;
 	mPosition->y = pY;
 	mPosition->z = pZ;
@@ -25,7 +25,7 @@ bool MyCameraController::SetPosition(float pX, float pY, float pZ)
 
 bool MyCameraController::SetRotation(float pX, float pY, float pZ)
 {
-	mRotation = t2GNew D3DXVECTOR3;
+	mRotation = new D3DXVECTOR3;
 	mRotation->x = pX;
 	mRotation->y = pY;
 	mRotation->z = pZ;
@@ -56,11 +56,20 @@ bool MyCameraController::Render()
 	// Create view matrix
 	D3DXMatrixLookAtLH(&mMatView, &position, &lookAt, &up);
 
+	// Create projection matrix
+	D3DXMatrixPerspectiveFovLH(&mMatProj, D3DXToRadian(45), SCREEN_HEIGHT / SCREEN_WIDTH, 1.0f, 500.0f);
+
 	return true;
 }
 
 void MyCameraController::GetViewMatrix(D3DXMATRIX &pViewMatrix)
 {
 	pViewMatrix = mMatView;
+	return;
+}
+
+void MyCameraController::GetProjectionMatrix(D3DXMATRIX &pProjMatrix)
+{
+	pProjMatrix = mMatProj;
 	return;
 }

@@ -113,22 +113,48 @@ void RenderClass::init_graphics(void)					// 3D declarations
 	//	sphereMesh->Release();
 }
 
-
 bool RenderClass::Initialise(HWND phWND)
 {
-	m_D3D = t2GNew D3DClass;
+	m_D3D = new D3DClass;
 	m_D3D->Initialise(phWND);
 
-	m_camera = t2GNew MyCameraController;
+	m_camera = new MyCameraController;
 	m_camera->SetPosition(0.0f, 3.0f, 10.0f);
 	m_camera->Render();
 	m_camera->GetViewMatrix(m_viewMatrix);
 
+	CreateCharacter();
 	return true;
 }
 
 void RenderClass::CreateCharacter()
 {
+	// Create sphere used to be here
+	
+	// m_player = new CharacterClass;
+
+	// m_player->characterMesh = m_characterMesh;
+
+
+}
+
+void RenderClass::DrawMesh()
+{
+	
+	
+
+	D3DXMATRIX meshProjection;
+	D3DXMATRIX meshView;
+	D3DXMATRIX meshRotation;
+	D3DXMATRIX meshRotationX;
+	D3DXMATRIX meshRotationY;
+	D3DXMATRIX meshRotationZ;
+	D3DXMATRIX meshTranslation;
+	D3DXMATRIX meshScale;
+
+	m_camera->GetViewMatrix(meshView);
+	m_camera->GetProjectionMatrix(meshProjection);
+
 	// Create the sphere
 	float fl_radius = 1.0f;
 	int slices = 15;
@@ -139,46 +165,39 @@ void RenderClass::CreateCharacter()
 
 	DWORD arraySize = m_characterMesh->GetNumFaces() * 3;
 
-	DWORD * m_adaj = new DWORD[arraySize];	
+	DWORD * m_adaj = new DWORD[arraySize];
 	DWORD * m_optAdaj = new DWORD[arraySize];
 	DWORD * m_fRemap = new DWORD[arraySize];
 
 	m_characterMesh->GenerateAdjacency(0.1f, m_adaj);
 
 	m_characterMesh->OptimizeInplace(
-			D3DXMESHOPT_ATTRSORT | D3DXMESHOPT_COMPACT | D3DXMESHOPT_IGNOREVERTS,
-			m_adaj,
-			m_optAdaj,
-			m_fRemap,
-			m_vRemap);
-	
-	m_player = new CharacterClass;
+		D3DXMESHOPT_ATTRSORT,
+		m_adaj,
+		m_optAdaj,
+		m_fRemap,
+		m_vRemap);
 
-	m_player->mMyMesh = m_characterMesh;
+	D3DXMatrixScaling(&meshScale, 2.5f, 2.5f, 2.5f);
+	D3DXMatrixTranslation(&meshTranslation, 0.0f, 2.0f, -3.0f);
+	D3DXMatrixRotationX(&meshRotationX, D3DXToRadian(0));
+	D3DXMatrixRotationY(&meshRotationY, D3DXToRadian(45));
+	D3DXMatrixRotationZ(&meshRotationZ, D3DXToRadian(0));
 
+	m_D3D->d3ddev->SetTransform(D3DTS_VIEW, &meshView);
+	m_D3D->d3ddev->SetTransform(D3DTS_PROJECTION, &meshProjection);
+	m_D3D->d3ddev->SetTransform(D3DTS_WORLD, &(meshScale * meshRotationX * meshRotationY * meshRotationZ * meshTranslation));
 
-}
+	m_D3D->d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
-void RenderClass::DrawMesh()
-{
-	D3DXComputeNormals(m_characterMesh, m_optAdaj);
+	m_D3D->d3ddev->BeginScene();
 
-	// Pass into buffers
+	m_characterMesh->DrawSubset(0);
 
-	m_player->mMyMesh->DrawSubset(0);
-
-	m_player->mMyMesh->GetVertexBuffer(&m_D3D->v_buffer);
-	m_player->mMyMesh->GetIndexBuffer(&m_D3D->i_buffer);
-
-	VOID *pVoid;
-
-	memcpy(&pVoid, &m_D3D->v_buffer, sizeof(m_player->mMyMesh->GetNumBytesPerVertex()));
-	v_buffer_index_offset += static_cast<int>(m_player->mMyMesh->GetNumVertices());			// Casting as an int to create an offset for buffering multiple meshes at once.
-	m_player->mMyMesh->UnlockVertexBuffer();
-	m_player->mMyMesh->UnlockIndexBuffer();
-	m_player->mMyMesh->Release();
-	m_D3D->v_buffer->Unlock();
-	m_D3D->i_buffer->Unlock();   
-	m_D3D->i_buffer->Release();
 	m_D3D->d3ddev->EndScene();
+
+	m_D3D->d3ddev->Present(NULL, NULL, NULL, NULL);
+
+	m_characterMesh->Release();
+
 }
