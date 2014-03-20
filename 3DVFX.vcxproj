@@ -89,15 +89,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CharacterClass.cpp" />
+    <ClCompile Include="InputClass.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="MyCameraController.cpp" />
     <ClCompile Include="MyMeshClass.cpp" />
     <ClCompile Include="RenderClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CharacterClass.h" />
-    <ClInclude Include="MeshManager.h" />
+    <ClInclude Include="InputClass.h" />
     <ClInclude Include="MyCameraController.h" />
     <ClInclude Include="MyMeshClass.h" />
     <ClInclude Include="RenderClass.h" />

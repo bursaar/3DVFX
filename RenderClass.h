@@ -1,23 +1,17 @@
 #pragma once
+#include "CharacterClass.h"
 #include "T2G\Code\Leak Detector.h"
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "Screen Properties.h"
-#include "MeshManager.h"
 #include <vector>
+#include "MyMeshClass.h"
 
 using namespace std;
 
 // include the Direct3D Library file
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
-
-// global declarations
-struct CUSTOMVERTEX
-{
-	FLOAT x, y, z;    // from the D3DFVF_XYZRHW flag
-	DWORD color;    // from the D3DFVF_DIFFUSE flag
-};
 
 class RenderClass
 {
@@ -31,6 +25,9 @@ public:
 	// Overloaded constructors
 	RenderClass();
 	RenderClass(HWND hWnd);
+	
+	CharacterClass *playerCharacter;
+	MyMeshClass *playerMesh;
 
 	// Public member functions to:
 	void render_frame();		// render a single frame

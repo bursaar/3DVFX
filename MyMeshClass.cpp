@@ -1,19 +1,25 @@
 #include "MyMeshClass.h"
 
 
-MyMeshClass::MyMeshClass(MeshManager pMeshManager, ID3DXMesh &pMesh, RenderClass pRenderClass)
+MyMeshClass::MyMeshClass(LPDIRECT3DDEVICE9 &pD3DDevice)
 {
-	myMeshManager = &pMeshManager;			// Load a pointer to the mesh manager
-	mesh = &pMesh;							// Pass a mesh by reference
-	myMeshManager->AddMesh();				// Add a mesh to the mesh manager
-	OptimizeMesh();							// Optimise the loaded mesh
-	mRenderClass = &pRenderClass;			// Load a pointer to the render class
+	D3DDevice = &pD3DDevice;
+
+	// Create a sphere
+	CUSTOMVERTEX sphereOrigin = { 0.0f, 0.0f, 0.0f, D3DCOLOR_XRGB(0, 0, 255) };
+	float fl_radius = 1.0f;
+	int slices = 15;
+	int stacks = 15;
+
+	LPD3DXBUFFER adjacencyBuffer;
+
+	D3DXCreateSphere(*D3DDevice, fl_radius, slices, stacks, &mesh, &adjacencyBuffer);
+
 }
 
 
 MyMeshClass::~MyMeshClass()
 {
-	myMeshManager->RemoveMesh();
 }
 
 void MyMeshClass::SetScale(float pX, float pY, float pZ)
@@ -62,10 +68,15 @@ void MyMeshClass::OptimizeMesh()
 
 void MyMeshClass::ApplyWorldTransform()
 {
-	mRenderClass->d3ddev->SetTransform(D3DTS_WORLD, 
+	(*D3DDevice)->SetTransform(D3DTS_WORLD, 
 		&(matRotateX
 		* matRotateY
 		* matRotateZ
 		* matScale
 		* matTranslate));
+}
+
+void MyMeshClass::Frame()
+{
+	ApplyWorldTransform();
 }

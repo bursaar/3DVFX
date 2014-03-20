@@ -44,9 +44,7 @@
     <ClCompile Include="CharacterClass.cpp">
       <Filter>Character</Filter>
     </ClCompile>
-    <ClCompile Include="MeshManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
+    <ClCompile Include="InputClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen Properties.h">
@@ -67,8 +65,6 @@
     <ClInclude Include="CharacterClass.h">
       <Filter>Character</Filter>
     </ClInclude>
-    <ClInclude Include="MeshManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
+    <ClInclude Include="InputClass.h" />
   </ItemGroup>
 </Project>

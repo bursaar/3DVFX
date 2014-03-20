@@ -1,10 +1,17 @@
 #include "CharacterClass.h"
 
 
-CharacterClass::CharacterClass(MyMeshClass pMyMesh)
+CharacterClass::CharacterClass()
 {
-	speed = 0.0f;
-	characterMesh = pMyMesh.mesh;
+	translation.x = 0.0f;
+	translation.y = 0.0f;
+	translation.z = 0.0f;
+	rotation.x = 0.0f;
+	rotation.y = 0.0f;
+	rotation.z = 0.0f;
+	scale.x = 1.0f;
+	scale.y = 1.0f;
+	scale.z = 1.0f;
 }
 
 
@@ -14,77 +21,48 @@ CharacterClass::~CharacterClass()
 
 void CharacterClass::DrawCharacter()
 {
-	characterMesh->DrawSubset(0);
+	characterMesh->mesh->DrawSubset(0);
 }
 
 void CharacterClass::UpdateCharacter()
 {
 	UpdateInput();
-	UpdateLocation();
+	
+	D3DXMATRIX matScale;
+	D3DXMATRIX matTranslate;
+	D3DXMATRIX matRotateZ;
+	D3DXMATRIX matRotateY;											// a matrix to store the rotation for each object
+	D3DXMATRIX matRotateX;
+
+	D3DXMatrixScaling(&matScale, 2.5f, 2.5f, 2.5f);								// Scale object
+	D3DXMatrixRotationY(&matRotateY, D3DXToRadian(270));						// Rotate object left and right
+	D3DXMatrixRotationX(&matRotateX, speed);										// Rotate object clockwise / counter clock
+	D3DXMatrixRotationZ(&matRotateZ, 0.0f);
+	D3DXMatrixTranslation(&matTranslate, 0.0f, 0.0f, speed);			// Move object
 }
 
 // Check whether there is movement required
 void CharacterClass::UpdateInput()
 {
-	if (GetAsyncKeyState(VK_UP) || GetAsyncKeyState(0x57))
+	switch (Input.Frame())
 	{
-		mKeyUp = true;
-	}
-	else
-	{
-		mKeyUp = false;
-	}
-
-	if (GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState(0x44))
-	{
-		mKeyRight = true;
-	}
-	else
-	{
-		mKeyRight = false;
-	}
-
-	if (GetAsyncKeyState(VK_DOWN) || GetAsyncKeyState(0x53))
-	{
-		mKeyDown = true;
-	}
-	else
-	{
-		mKeyDown = false;
-	}
-
-	if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x41))
-	{
-		mKeyLeft = true;
-	}
-	else
-	{
-		mKeyLeft = false;
+	case 12:
+		speed -= 0.01f;
+		break;
+	case 18:
+		speed += 0.01f;
+		break;
+	case 6:
+		speed += 0;
+		break;
 	}
 }
 
-int CharacterClass::UpdateLocation()
+void CharacterClass::Frame()
 {
-	if (mKeyUp)
-	{
-		movement = FORWARD;
-		return FORWARD;
-	}
-	if (mKeyRight)
-	{
-		movement = RIGHT;
-		return RIGHT;
-	}
-	if (mKeyDown)
-	{
-		movement = BACK;
-		return BACK;
-	}
-	if (mKeyLeft)
-	{
-		movement = LEFT;
-		return LEFT;
-	}
-	movement = NONE;
-	return NONE;
+	UpdateInput();
+	characterMesh->SetRotation(rotation.x, rotation.y, rotation.z);
+	characterMesh->SetTranslation(translation.x, translation.y, translation.z * speed);
+	characterMesh->ApplyWorldTransform();
+	DrawCharacter();
 }
