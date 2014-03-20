@@ -1,11 +1,9 @@
 #pragma once
 #include "CharacterClass.h"
-#include "T2G\Code\Leak Detector.h"
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "Screen Properties.h"
 #include <vector>
-#include "MyMeshClass.h"
 
 using namespace std;
 
@@ -27,7 +25,6 @@ public:
 	RenderClass(HWND hWnd);
 	
 	CharacterClass *playerCharacter;
-	MyMeshClass *playerMesh;
 
 	// Public member functions to:
 	void render_frame();		// render a single frame

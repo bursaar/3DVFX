@@ -45,7 +45,7 @@ void RenderClass::initD3D(HWND hWnd)					// sets up and initializes Direct3D
 	d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE);    // turn off the 3D lighting
 	// d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);    // both sides of the triangles
 	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
-	playerMesh = new MyMeshClass(d3ddev);
+
 	// init_graphics();
 }
 
@@ -69,7 +69,6 @@ void RenderClass::render_frame()		// renders a single frame
 	d3ddev->SetFVF(CUSTOMFVF);
 
 	// init_graphics();
-	playerCharacter->Frame();
 
 	// Pipeline:
 // 	d3ddev->SetTransform(D3DTS_WORLD, &(matScale * matRotateY * matRotateX * matTranslate));
@@ -94,45 +93,7 @@ void RenderClass::cleanD3D(void)						// closes Direct3D and releases memory
 
 void RenderClass::init_graphics(void)					// 3D declarations
 {
-		playerCharacter = new CharacterClass();
-		playerCharacter->characterMesh = playerMesh;	// Put mesh created in renderer into player character
-
-		DWORD arraySize = playerCharacter->characterMesh->mesh->GetNumFaces() * 3;
-
-		DWORD * adaj = new DWORD[arraySize];											// Taken from http://ngemu.com/threads/c-setting-the-size-of-array-during-runtime.42522/
-		DWORD * optAdaj = new DWORD[arraySize];
-		DWORD * fRemap = new DWORD[arraySize];
-		LPD3DXBUFFER vRemap;
 		
-		playerCharacter->characterMesh->mesh->GenerateAdjacency(0.1f, adaj);
-
-		playerCharacter->characterMesh->mesh->OptimizeInplace(
-			D3DXMESHOPT_ATTRSORT | D3DXMESHOPT_COMPACT | D3DXMESHOPT_IGNOREVERTS,
-			adaj,
-			optAdaj,
-			fRemap,
-			&vRemap);
-
-		VOID* pVoid;    // a void pointer
-
-		D3DXComputeNormals(playerCharacter->characterMesh->mesh, optAdaj);
-
-		playerCharacter->characterMesh->mesh->LockVertexBuffer(D3DLOCK_DISCARD, (LPVOID*)&v_buffer);
-		playerCharacter->characterMesh->mesh->GetVertexBuffer(&v_buffer);
-		playerCharacter->characterMesh->mesh->LockIndexBuffer(D3DLOCK_DISCARD, (LPVOID*)&i_buffer);
-		playerCharacter->characterMesh->mesh->GetIndexBuffer(&i_buffer);
-
-		d3ddev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-		playerCharacter->Frame();
-		
-		// memcpy(&pVoid, &v_buffer, sizeof(sphereMesh->GetNumBytesPerVertex()));
-		playerCharacter->characterMesh->mesh->UnlockVertexBuffer();
-		playerCharacter->characterMesh->mesh->UnlockIndexBuffer();
-		v_buffer->Unlock();
-		i_buffer->Unlock();
-
-		playerCharacter->characterMesh->mesh->Release();
 }
 
 void RenderClass::SetViewTransform()
