@@ -89,24 +89,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CharacterClass.cpp" />
-    <ClCompile Include="D3DClass.cpp" />
-    <ClCompile Include="InputClass.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="MyCameraController.cpp" />
+    <ClCompile Include="MyMeshClass.cpp" />
     <ClCompile Include="RenderClass.cpp" />
-    <ClCompile Include="SystemClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CharacterClass.h" />
-    <ClInclude Include="D3DClass.h" />
-    <ClInclude Include="InputClass.h" />
+    <ClInclude Include="MeshManager.h" />
     <ClInclude Include="MyCameraController.h" />
+    <ClInclude Include="MyMeshClass.h" />
     <ClInclude Include="RenderClass.h" />
     <ClInclude Include="Screen Properties.h" />
-    <ClInclude Include="SystemClass.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <ClInclude Include="T2G\Code\Leak Detector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

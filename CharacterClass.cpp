@@ -1,20 +1,10 @@
 #include "CharacterClass.h"
 
 
-CharacterClass::CharacterClass()
+CharacterClass::CharacterClass(MyMeshClass pMyMesh)
 {
 	speed = 0.0f;
-	rotationInRadians = 0.0f;
-	acceleration = 0.0f;
-	location.x = 0.0f;
-	location.y = 0.0f;
-	location.z = 0.0f;
-	friction = 1.0f;
-	mKeyUp = false;
-	mKeyDown = false;
-	mKeyRight = false;
-	mKeyLeft = false;
-
+	characterMesh = pMyMesh.mesh;
 }
 
 
@@ -22,92 +12,79 @@ CharacterClass::~CharacterClass()
 {
 }
 
-void CharacterClass::DrawCharacter(IDirect3DVertexBuffer9 *pVbuff, IDirect3DIndexBuffer9 *pIbuff)
+void CharacterClass::DrawCharacter()
 {
-	characterMesh->LockVertexBuffer(D3DLOCK_DISCARD, (void**)&pVbuff);								// Ref: http://www.gamedev.net/topic/309185-id3dxmeshlockvertexbuffer-method-question/
+	characterMesh->DrawSubset(0);
 }
 
-void CharacterClass::UpdateCharacter(int pMovement)
+void CharacterClass::UpdateCharacter()
 {
-	UpdateInput(pMovement);
+	UpdateInput();
 	UpdateLocation();
 }
 
 // Check whether there is movement required
-void CharacterClass::UpdateInput(int pMovement)
+void CharacterClass::UpdateInput()
 {
-	// Player attributes first - NPC attributes will be derived from this model
-	if (speed > 0)
+	if (GetAsyncKeyState(VK_UP) || GetAsyncKeyState(0x57))
 	{
-		speed -= friction;		// Trend towards zero with friction variable.
+		mKeyUp = true;
 	}
-	if (speed < 0)
+	else
 	{
-		speed += friction;		// Trend towards zero with friction variable.
-	}
-
-	switch (pMovement)
-	{
-	case InputClass::BACKWARDRIGHT:
-	{
-									  speed += acceleration;
-									  rotationInRadians -= rotationInRadians;
-									  break;
-	}
-	case InputClass::BACKWARDLEFT:
-	{
-									 speed += acceleration;
-									 rotationInRadians -= rotationInRadians;
-									 break;
-	}
-	case InputClass::FORWARDRIGHT:
-	{
-									 speed -= acceleration;
-									 rotationInRadians += rotationInRadians;
-									 break;
-	}
-	case InputClass::FORWARDLEFT:
-	{
-									speed -= acceleration;
-									rotationInRadians -= rotationInRadians;
-									break;
-	}
-	case InputClass::BACK:
-	{
-									 speed += acceleration;
-									 break;
-	}
-	case InputClass::FORWARD:
-	{
-									speed -= acceleration;
-									break;
-	}
-	case InputClass::LEFT:
-	{
-							 rotationInRadians -= rotationInRadians;
-							 break;
-	}
-	case InputClass::RIGHT:
-	{
-							  rotationInRadians += rotationInRadians;
-							  break;
-	}
+		mKeyUp = false;
 	}
 
-	// Send data somewhere
+	if (GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState(0x44))
+	{
+		mKeyRight = true;
+	}
+	else
+	{
+		mKeyRight = false;
+	}
+
+	if (GetAsyncKeyState(VK_DOWN) || GetAsyncKeyState(0x53))
+	{
+		mKeyDown = true;
+	}
+	else
+	{
+		mKeyDown = false;
+	}
+
+	if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x41))
+	{
+		mKeyLeft = true;
+	}
+	else
+	{
+		mKeyLeft = false;
+	}
 }
 
 int CharacterClass::UpdateLocation()
 {
-	return 0;
-}
-
-void CharacterClass::ApplyMesh(ID3DXMesh &pMesh)
-{
-	characterMesh = &pMesh;
-}
-
-void CharacterClass::GetMesh(ID3DXMesh &pMesh)
-{
-	pMesh = *characterMesh;
+	if (mKeyUp)
+	{
+		movement = FORWARD;
+		return FORWARD;
+	}
+	if (mKeyRight)
+	{
+		movement = RIGHT;
+		return RIGHT;
+	}
+	if (mKeyDown)
+	{
+		movement = BACK;
+		return BACK;
+	}
+	if (mKeyLeft)
+	{
+		movement = LEFT;
+		return LEFT;
+	}
+	movement = NONE;
+	return NONE;
 }
