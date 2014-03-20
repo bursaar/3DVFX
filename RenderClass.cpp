@@ -188,7 +188,7 @@ void RenderClass::DrawMesh()
 	m_D3D->d3ddev->SetTransform(D3DTS_PROJECTION, &meshProjection);
 	m_D3D->d3ddev->SetTransform(D3DTS_WORLD, &(meshScale * meshRotationX * meshRotationY * meshRotationZ * meshTranslation));
 
-	m_D3D->d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+	// m_D3D->d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
 	m_D3D->d3ddev->BeginScene();
 
