@@ -3,7 +3,11 @@
 
 InputClass::InputClass()
 {
-	keyinput = 0;
+	m_direction = NONE;
+	mKeyUp = false;
+	mKeyRight = false;
+	mKeyDown = false;
+	mKeyLeft = false;
 }
 
 
@@ -11,108 +15,96 @@ InputClass::~InputClass()
 {
 }
 
-
-void InputClass::GetKeyboardState()
+int InputClass::UpdateKeyboard()
 {
-	if (GetAsyncKeyState(VK_UP)
-		|| GetAsyncKeyState(0x57))
+	if (GetAsyncKeyState(VK_UP) || GetAsyncKeyState(0x57))
 	{
-		keyinput = LEFT;
-
-		if (GetAsyncKeyState(VK_LEFT)
-			|| GetAsyncKeyState(0x41))
-		{
-			keyinput = UPLEFT;
-			return;
-		}
-		if (GetAsyncKeyState(VK_RIGHT)
-			|| GetAsyncKeyState(0x44))
-		{
-			keyinput = UPRIGHT;
-			return;
-		}
-		return;
+		mKeyUp = true;
+	}
+	else
+	{
+		mKeyUp = false;
 	}
 
-	if (GetAsyncKeyState(VK_DOWN))
+	if (GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState(0x44))
 	{
-		keyinput = DOWN;
-
-		if (GetAsyncKeyState(VK_LEFT)
-			|| GetAsyncKeyState(0x41))
-		{
-			keyinput = DOWNLEFT;
-			return;
-		}
-		if (GetAsyncKeyState(VK_RIGHT)
-			|| GetAsyncKeyState(0x44))
-		{
-			keyinput = DOWNRIGHT;
-			return;
-		}
-		return;
+		mKeyRight = true;
+	}
+	else
+	{
+		mKeyRight = false;
 	}
 
-	if (GetAsyncKeyState(VK_LEFT)
-		|| GetAsyncKeyState(0x41))
+	if (GetAsyncKeyState(VK_DOWN) || GetAsyncKeyState(0x53))
 	{
-		keyinput = LEFT;
-		return;
+		mKeyDown = true;
+	}
+	else
+	{
+		mKeyDown = false;
 	}
 
-	if (GetAsyncKeyState(VK_RIGHT)
-		|| GetAsyncKeyState(0x44))
+	if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x41))
 	{
-		keyinput = RIGHT;
-		return;
+		mKeyLeft = true;
+	}
+	else
+	{
+		mKeyLeft = false;
 	}
 
-	keyinput = KEYNONE;
-	return;
+	return 1;
 }
 
 int InputClass::Frame()
 {
-	GetKeyboardState();
-	switch (keyinput)
+	UpdateKeyboard();
+	UpdateDirection();
+	return 0;
+}
+
+int InputClass::UpdateDirection()
+{
+	if (mKeyUp && mKeyLeft)
 	{
-	case KEYNONE:
-		direction = DIRECTIONS::DIRNONE;
-		rotation = ROTATIONS::ROTNONE;
-		break;
-	case UPLEFT:
-		direction = DIRECTIONS::FORWARD;
-		rotation = ROTATIONS::COUNTER;
-		break;
-	case UPRIGHT:
-		direction = DIRECTIONS::FORWARD;
-		rotation = ROTATIONS::CLOCK;
-		break;
-	case DOWNLEFT:
-		direction = DIRECTIONS::BACK;
-		rotation = ROTATIONS::COUNTER;
-		break;
-	case DOWNRIGHT:
-		direction = DIRECTIONS::BACK;
-		rotation = ROTATIONS::CLOCK;
-	case UP:
-		direction = DIRECTIONS::FORWARD;
-		rotation = ROTATIONS::ROTNONE;
-		break;
-	case RIGHT:
-		direction = DIRECTIONS::DIRNONE;
-		rotation = ROTATIONS::CLOCK;
-		break;
-	case LEFT:
-		direction = DIRECTIONS::DIRNONE;
-		rotation = ROTATIONS::COUNTER;
-		break;
-	case DOWN:
-		direction = DIRECTIONS::BACK;
-		rotation = ROTATIONS::ROTNONE;
-		break;
+		m_direction = FORWARDLEFT;
+		return FORWARDLEFT;
 	}
-
-	return direction * rotation;
-
+	if (mKeyUp && mKeyRight)
+	{
+		m_direction = FORWARDRIGHT;
+		return FORWARDRIGHT;
+	}
+	if (mKeyDown && mKeyLeft)
+	{
+		m_direction = BACKWARDLEFT;
+		return BACKWARDLEFT;
+	}
+	if (mKeyDown && mKeyRight)
+	{
+		m_direction = BACKWARDRIGHT;
+		return BACKWARDRIGHT;
+	}
+	if (mKeyUp)
+	{
+		m_direction = FORWARD;
+		return FORWARD;
+	}
+	if (mKeyRight)
+	{
+		m_direction = RIGHT;
+		return RIGHT;
+	}
+	if (mKeyDown)
+	{
+		m_direction = BACK;
+		return BACK;
+	}
+	if (mKeyLeft)
+	{
+		m_direction = LEFT;
+		return LEFT;
+	}
+	m_direction = NONE;
+	return NONE;
 }

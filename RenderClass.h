@@ -1,8 +1,8 @@
 #pragma once
-#include "CharacterClass.h"
-#include <d3d9.h>
-#include <d3dx9.h>
+#include "D3DClass.h"
 #include "Screen Properties.h"
+#include "MyCameraController.h"
+#include "CharacterClass.h"
 #include <vector>
 
 using namespace std;
@@ -11,33 +11,45 @@ using namespace std;
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
 
+// global declarations
+struct CUSTOMVERTEX
+{
+	FLOAT x, y, z;    // from the D3DFVF_XYZRHW flag
+	DWORD color;    // from the D3DFVF_DIFFUSE flag
+};
+
 class RenderClass
 {
 public:
-	LPDIRECT3D9 d3d;							// the pointer to our Direct3D interface
-	LPDIRECT3DDEVICE9 d3ddev;					// the pointer to the device class
-	LPDIRECT3DVERTEXBUFFER9 v_buffer = NULL;    // the pointer to the vertex buffer
-	LPDIRECT3DINDEXBUFFER9 i_buffer = NULL;		// the pointer to the index buffer
-	int m_FOV = 45;
+	D3DClass *m_D3D;
+	ID3DXMesh *m_characterMesh;
+	ID3DXMesh *m_wallMesh;
+	ID3DXMesh *m_floorMesh;
+	D3DXMATRIX m_viewMatrix;
+	CharacterClass *m_player;
+	MyCameraController* m_camera;
 
 	// Overloaded constructors
 	RenderClass();
-	RenderClass(HWND hWnd);
-	
-	CharacterClass *playerCharacter;
+	bool Initialise(HWND phWND);
 
-	// Public member functions to:
-	void render_frame();		// render a single frame
-	// void render_frame(ID3DXMesh *pMeshToRender);
-	void cleanD3D(void);						// close Direct3D and release memory
+	void cleanD3D(void);						// close Direct3D and release memo
+
 	void init_graphics(void);					// 3D declarations - drawing
+	void CreateCharacter();
+	void DrawMesh();
+
 	~RenderClass();
 
 private:
-	void initD3D(HWND hWnd);					// sets up and initializes Direct3D
-	void SetViewTransform();						// Set the view transform
-	void SetViewTransform(D3DXVECTOR3 pCameraPosition, D3DXVECTOR3 pLookAtPosition, D3DXVECTOR3 UpDirection); // Overload for changing transform
-	void SetProjectionTransform();
-	void SetProjectionTransform(int pFOV, float pNearView, float pFarView);
+	void initD3D(HWND &pHWND);					// sets up and initializes Direct3D
+
+
+	// Mesh operations
+	LPD3DXBUFFER *m_adjacencyBuffer;
+	LPD3DXBUFFER *m_vRemap;
+	DWORD *m_adaj;
+	DWORD *m_optAdaj;
+	DWORD *m_fRemap;
 };
 
