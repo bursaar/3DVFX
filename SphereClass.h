@@ -1,23 +1,15 @@
-#pragma once
 
-class SphereClass
+#include "RenderableObject.h"
+class SphereClass :
+	public RenderableObject
 {
 public:
 	SphereClass();
 	~SphereClass();
-
-	static IDirect3DVertexBuffer9* mSphereVertexBuffer;
-
-	static int mNumSphereVerts;
-
-	static int mNumSpheres;
-
-	Vector3D mPosition;
-	float mRadius;
-	DWORD mColour;
-	void RenderSphere(bool wireframe = true);
-
 private:
-	void CreateWireFrameSphere();
+	LPD3DXMESH mMesh;
+	DWORD mColour;
+public:
+	void Initialise(RenderClass * pRenderClass) override;
+	void Update(double deltaTime, double totalTime) override;
 };
-

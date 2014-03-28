@@ -94,6 +94,7 @@
     <ClCompile Include="MyCameraController.cpp" />
     <ClCompile Include="RenderableObject.cpp" />
     <ClCompile Include="RenderClass.cpp" />
+    <ClCompile Include="SphereClass.cpp" />
     <ClCompile Include="SystemClass.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +104,7 @@
     <ClInclude Include="RenderableObject.h" />
     <ClInclude Include="RenderClass.h" />
     <ClInclude Include="Screen Properties.h" />
+    <ClInclude Include="SphereClass.h" />
     <ClInclude Include="SystemClass.h" />
   </ItemGroup>
   <ItemGroup>

@@ -29,6 +29,11 @@ public:
 	RenderableObject();
 	~RenderableObject();
 	void Release();				// This member function is lightly adapted from the original LIT material.
+	virtual void Initialise(RenderClass * pRenderClass);
+	virtual void Update(double deltaTime, double totalTime);
+	virtual void Render(const D3DXMATRIXA16 &baseMatrix);
+	void GetPosition(double &px, double &py, double &pz);	// Apart from following the LIT material's use of doubles, this implementation is my own
+	double GetRotateY();	// Apart from following the LIT material's use of double as a return value, I implemented this function myself.
 
 protected:
 	bool initialised;			// Is the object initialised?
@@ -44,6 +49,8 @@ protected:
 	D3DXVECTOR3 mRotation;		// Rotation
 
 	vector<RenderableObject *> mChildren;	// This stack was used in the original LIT material.
+
+	vector<CUSTOMVERTEX> vertices;			// A stack similar to this was used in the original LIT material, but with a different struct.
 
 	IDirect3DIndexBuffer9 * mIndexBuffer;	// This index buffer was used in the original LIT material.
 

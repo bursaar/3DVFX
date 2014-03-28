@@ -35,6 +35,9 @@
     <Filter Include="System">
       <UniqueIdentifier>{63584d84-b27a-45b4-ae02-ec2c2ae3b15d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Renderer\Objects\Base Class">
+      <UniqueIdentifier>{2ccd57c1-3bd5-4ffe-9739-8123c1cf46a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderClass.cpp">
@@ -53,7 +56,10 @@
     <ClCompile Include="D3DClass.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="RenderableObject.cpp" />
+    <ClCompile Include="RenderableObject.cpp">
+      <Filter>Renderer\Objects\Base Class</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen Properties.h">
@@ -74,7 +80,10 @@
     <ClInclude Include="D3DClass.h">
       <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="RenderableObject.h" />
+    <ClInclude Include="RenderableObject.h">
+      <Filter>Renderer\Objects\Base Class</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereClass.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd">

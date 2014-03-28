@@ -80,3 +80,81 @@ void RenderableObject::Release()
 		object->Release();							// Release that object
 	}
 }
+
+void RenderableObject::Initialise(RenderClass * pRenderClass)
+{
+	// Store render locally
+	mRenderer = pRenderClass;
+
+	// If it needs to be rendered...
+	if (mRenderThis)
+	{
+		// Create the vertex buffer
+		mVertexBuffer = pRenderClass->CreateVertexBuffer(vertices);
+	}
+
+	// If the children should be initialised, then initialise them
+	for (
+		vector<RenderableObject *>::iterator iter = mChildren.begin();
+		iter != mChildren.end();
+		iter++
+		)
+	{
+		RenderableObject * object = *iter;
+		object->Initialise(pRenderClass);
+	}
+
+		// Make sure we're not initialised again
+		initialised = true;
+
+}
+
+void RenderableObject::Update(double deltaTime, double totalTime)
+{
+	// Check that we've been initialised
+	if (!initialised)
+	{
+		OutputDebugStringA("Renderable object is being updated without being initialised!");
+		return;
+	}
+
+	// Update all active children
+	for (
+		vector<RenderableObject *> ::iterator iter = mChildren.begin();
+		iter != mChildren.end();
+		iter++
+		)
+	{
+		RenderableObject * object = *iter;
+		object->Update(deltaTime, totalTime);
+	}
+}
+
+void RenderableObject::Render(const D3DXMATRIXA16 & baseMatrix)
+{
+	//If not yet initialised
+	if (!initialised)
+	{
+		OutputDebugStringA("RenderableObject::Render tried to render an object that was not yet initialised");
+		return;
+	}
+
+	// If the object is flagged to be drawn
+	if (mRenderThis)
+	{
+		// Get renderer to draw object
+		mRenderer->Draw(mVertexBuffer, mTexture, mPosition, mScale, mRotation, baseMatrix, vertices.size(), mIndexBuffer, facecount);
+	}
+}
+
+void RenderableObject::GetPosition(double &px, double &py, double &pz)
+{
+	px = mPosition.x;
+	py = mPosition.y;
+	pz = mPosition.z;
+}
+
+double RenderableObject::GetRotateY()
+{
+	return (double)mRotation.y;
+}
