@@ -1,10 +1,10 @@
 #pragma once
-#include "QuadClass.h"
+#include "RenderableObject.h"
 class FloorClass :
-	public QuadClass
+	public RenderableObject
 {
 public:
 	FloorClass();
-	void InitialiseFloor(RenderClass *pRenderClass);
+	void Initialise(RenderClass *pRenderClass);
 };
 

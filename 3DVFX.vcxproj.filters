@@ -63,7 +63,6 @@
       <Filter>Renderer\Objects</Filter>
     </ClCompile>
     <ClCompile Include="FloorClass.cpp" />
-    <ClCompile Include="QuadClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen Properties.h">
@@ -94,7 +93,6 @@
       <Filter>Character</Filter>
     </ClInclude>
     <ClInclude Include="FloorClass.h" />
-    <ClInclude Include="QuadClass.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd">

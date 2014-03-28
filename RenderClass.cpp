@@ -136,7 +136,7 @@ bool RenderClass::Initialise(HWND phWND)
 	m_D3D = new D3DClass;
 	m_D3D->Initialise(phWND);
 
-	m_camera = new MyCameraController;
+	// m_camera = new MyCameraController;
 	m_camera->SetPosition(0.0f, 3.0f, 10.0f);
 	m_camera->Render();
 	m_camera->GetViewMatrix(m_viewMatrix);
@@ -148,8 +148,6 @@ bool RenderClass::Initialise(HWND phWND)
 
 void RenderClass::DrawMesh()
 {
-	
-	
 
 	D3DXMATRIX meshProjection;
 	D3DXMATRIX meshView;
