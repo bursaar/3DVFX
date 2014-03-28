@@ -4,7 +4,7 @@ class PlayerClass :
 	public SphereClass
 {
 public:
-	PlayerClass() : SphereClass(0xFF0000FF)
+	PlayerClass() : SphereClass(0xFF0000FF)		// Starting sphere as seen in LIT material
 	{
 
 	};

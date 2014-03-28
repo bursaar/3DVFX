@@ -69,7 +69,7 @@ bool MyCameraController::Render()
 	position.y = mPosition->y;
 	position.z = mPosition->z;
 
-	radians = D3DXToRadian(mRotation->y);
+	radians = mRotation->y * DEG_TO_RAD;
 
 	lookAt.x = sinf(radians) + mPosition->x;
 	lookAt.y = mPosition->y;
@@ -79,7 +79,7 @@ bool MyCameraController::Render()
 	D3DXMatrixLookAtLH(&mMatView, &position, &lookAt, &up);
 
 	// Create projection matrix
-	D3DXMatrixPerspectiveFovLH(&mMatProj, D3DXToRadian(45), SCREEN_HEIGHT / SCREEN_WIDTH, 1.0f, 500.0f);
+	D3DXMatrixPerspectiveFovLH(&mMatProj, 45 * DEG_TO_RAD, SCREEN_HEIGHT / SCREEN_WIDTH, 1.0f, 500.0f);
 
 	return true;
 }
@@ -143,4 +143,17 @@ void MyCameraController::SetViewTransform(IDirect3DDevice9 * pDevice)
 		D3DXMATRIX transformedCamera = matTranslate * matRotateY * viewMatrix;
 		pDevice->SetTransform(D3DTS_VIEW, &transformedCamera);
 	}
+}
+
+void MyCameraController::Move(float px, float py, float pz)
+{
+	//Translate the movement coordinates to match camera direction
+	D3DXVECTOR3 translationVector(px, py, pz);
+	D3DXMATRIX matRotateY;
+	D3DXMatrixRotationY(&matRotateY, (0 - rotateYaw) * DEG_TO_RAD);
+	D3DXVec3TransformCoord(&translationVector, &translationVector, &matRotateY);
+
+	x += translationVector.x;
+	y += translationVector.y;
+	z += translationVector.z;
 }

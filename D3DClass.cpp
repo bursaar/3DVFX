@@ -40,7 +40,7 @@ void D3DClass::Initialise(HWND pHWND)
 	d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);		// both sides of the triangles
 	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);				// turn on the z-buffer
 
-	fieldOfView = D3DXToRadian(45);
+	fieldOfView = 45 * DEG_TO_RAD;
 	screenAspect = SCREEN_WIDTH / SCREEN_HEIGHT;
 	nearView = 1.0f;
 	farView = 500.0f;

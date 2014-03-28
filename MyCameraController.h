@@ -31,6 +31,7 @@ public:
 	bool SetRotation(float pX, float pY, float pZ);
 	void SetViewTransform(IDirect3DDevice9 * pDevice);
 
+	void Move(float px, float py, float pz);
 	void GetViewMatrix(D3DXMATRIX &pViewMatrix);
 	void GetProjectionMatrix(D3DXMATRIX &pProjMatrix);
 

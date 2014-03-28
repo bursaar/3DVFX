@@ -14,9 +14,9 @@ using namespace std;
 // global declarations
 struct CUSTOMVERTEX
 {
-	FLOAT x, y, z;    // from the D3DFVF_XYZRHW flag
-	DWORD colour;    // from the D3DFVF_DIFFUSE flag
-	float tu, tv;	 // UV co-ordinates between 0 and 1 - This part of the struct was added from the original Train2Game LIT material.
+	FLOAT x, y, z;		// from the D3DFVF_XYZRHW flag
+	DWORD colour;		// from the D3DFVF_DIFFUSE flag
+	float tu, tv;		// UV co-ordinates between 0 and 1 - This part of the struct was added from the original Train2Game LIT material.
 	static const DWORD FORMAT = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1;		// This line was taken from the vertex struct in the Train2Game LIT material.
 	static const int STRIDE_SIZE = 24;
 
@@ -49,15 +49,11 @@ public:
 	RenderClass();
 	bool Initialise(HWND phWND);
 	IDirect3DTexture9 * LoadTexture(LPCWSTR fileName);
-	void cleanD3D(void);						// close Direct3D and release memo
 	
 	bool EndFrame();							// Taken from LIT materials
 	bool Reset();								// Taken from LIT materials
 
 	void BeginFrame();							// Implementation taken from LIT materials.
-	void init_graphics(void);					// 3D declarations - drawing
-	void CreateCharacter();
-	void DrawMesh();
 	void Draw(IDirect3DVertexBuffer9 * vertexBuffer, IDirect3DTexture9 * texture, D3DXVECTOR3 &position, D3DXVECTOR3 &scale, D3DXVECTOR3 &rotation, const D3DXMATRIXA16 & baseMatrix, int verticeCount, IDirect3DIndexBuffer9 * indexbuff, int primCount);
 	~RenderClass();
 
