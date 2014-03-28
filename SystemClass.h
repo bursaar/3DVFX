@@ -19,7 +19,6 @@ public:
 	int m_nCmdShow;
 
 	int Run();
-	int Update();
 	int Initialise(HINSTANCE pHInstance, int nCmdShow);
 	int Shutdown();
 
@@ -31,8 +30,6 @@ public:
 private:
 	int InitialiseWindows();
 	int ShutdownWindow();
-	int Frame();
-	int Render();
 	RenderClass *m_renderer;
 	InputClass *m_input;
 };

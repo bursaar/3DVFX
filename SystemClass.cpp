@@ -6,7 +6,6 @@
 SystemClass::SystemClass()
 {
 	m_nCmdShow = 0;
-
 }
 
 
@@ -211,19 +210,5 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lpar
 	return ApplicationHandle->MessageHandler(hwnd, umessage, wparam, lparam);
 }
 
-int SystemClass::Frame()
-{
-	m_input->Frame();
 
-	return 0;
-}
 
-int SystemClass::Update()
-{
-	return 0;
-}
-
-int SystemClass::Render()
-{
-	return 0;
-}
