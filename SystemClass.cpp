@@ -1,4 +1,5 @@
 #include "SystemClass.h"
+#include "FloorClass.h"
 
 
 SystemClass::SystemClass()
@@ -75,7 +76,10 @@ int SystemClass::Run()
 	// Initialise Direct3D
 	m_renderer->Initialise(m_hWnd);
 
+	FloorClass * floor = new FloorClass;
 
+	floor->Initialise(m_renderer);
+	
 	while (TRUE)
 	{
 		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -88,8 +92,13 @@ int SystemClass::Run()
 			break;
 		if (GetAsyncKeyState(VK_ESCAPE))
 			break;
-		m_input->Frame();
-		m_renderer->DrawMesh();
+
+		floor->Update(0, 0);
+
+		m_renderer->BeginFrame();
+
+		// m_input->Frame();
+		// m_renderer->DrawMesh();
 	}
 
 	return msg.wParam;

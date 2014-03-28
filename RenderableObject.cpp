@@ -114,7 +114,7 @@ void RenderableObject::Update(double deltaTime, double totalTime)
 	// Check that we've been initialised
 	if (!initialised)
 	{
-		OutputDebugStringA("Renderable object is being updated without being initialised!");
+		OutputDebugStringA("Renderable object is being updated without being initialised!\n");
 		return;
 	}
 
@@ -135,7 +135,7 @@ void RenderableObject::Render(const D3DXMATRIXA16 & baseMatrix)
 	//If not yet initialised
 	if (!initialised)
 	{
-		OutputDebugStringA("RenderableObject::Render tried to render an object that was not yet initialised");
+		OutputDebugStringA("RenderableObject::Render tried to render an object that was not yet initialised\n");
 		return;
 	}
 
@@ -157,4 +157,13 @@ void RenderableObject::GetPosition(double &px, double &py, double &pz)
 double RenderableObject::GetRotateY()
 {
 	return (double)mRotation.y;
+}
+
+void RenderableObject::SetTexture(LPCWSTR fileName)
+{
+	// Load the texture
+	mTexture = mRenderer->LoadTexture(fileName);
+
+	// Store name of texture
+	mTextureName = wstring(fileName);
 }

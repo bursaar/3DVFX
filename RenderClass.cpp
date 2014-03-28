@@ -16,7 +16,7 @@ IDirect3DVertexBuffer9 * RenderClass::CreateVertexBuffer(vector<CUSTOMVERTEX> ve
 	HRESULT result = m_D3D->d3ddev->CreateVertexBuffer(sizeof(CUSTOMVERTEX)* vertices.size(), D3DUSAGE_WRITEONLY, CUSTOMVERTEX::FORMAT, D3DPOOL_DEFAULT, &vertexBuffer, NULL);
 	if (result != S_OK)
 	{
-		OutputDebugStringA("The RenderClass::CreateVertexBuffer method failed at creating a vertex buffer.");
+		OutputDebugStringA("The RenderClass::CreateVertexBuffer method failed at creating a vertex buffer.\n");
 	}
 
 	void* bufferMemory;
@@ -150,11 +150,7 @@ bool RenderClass::Initialise(HWND phWND)
 
 void RenderClass::CreateCharacter()
 {
-	// Create sphere used to be here
-	
-	// m_player = new CharacterClass;
 
-	// m_player->characterMesh = m_characterMesh;
 
 
 }
@@ -228,7 +224,7 @@ void RenderClass::Draw(IDirect3DVertexBuffer9 * vertexBuffer, IDirect3DTexture9 
 	// Check that the minimum number of vertices is enough to make a polygon
 	if (verticeCount < 3)
 	{
-		OutputDebugStringA("Not enough vertices to make a polygon in the Draw method of the renderer.");
+		OutputDebugStringA("Not enough vertices to make a polygon in the Draw method of the renderer.\n");
 		return;
 	}
 
@@ -303,4 +299,48 @@ void RenderClass::Draw(IDirect3DVertexBuffer9 * vertexBuffer, IDirect3DTexture9 
 	// Set culling mode
 	m_D3D->d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);		// Show both sides of each polygon.
 	// m_D3D->d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);		// Cull any polygons drawn with their backs to us.
+}
+
+IDirect3DTexture9 * RenderClass::LoadTexture(LPCWSTR fileName)
+{
+	wstring path = wstring(fileName);
+
+	// Check to see if the texture has been used before
+	if (textureCache.count(fileName) == 0)
+	{
+		// Load the texture into memory
+		IDirect3DTexture9 * texture;
+		HRESULT result = D3DXCreateTextureFromFile(m_D3D->d3ddev, fileName, &texture);
+		if (result != S_OK)
+		{
+			OutputDebugStringA("The LoadTexture function in the RenderClass failed to create a texture from a loaded file.\n");
+			return nullptr;
+		}
+		// Put texture into cache so it isn't repeatedly loaded
+		textureCache[fileName] = texture;
+
+		// Since this is the first time the texture has been seen, we set the reference count to 1
+		textureUsageCount[fileName] = 1;
+		return texture;
+	}
+	else
+	{
+		// This texture has been loaded before
+		// Increase reference count to keep track of how many renderable objects are using this texture
+		textureUsageCount[fileName]++;
+
+		// Return previously-loaded texture from cache
+		return textureCache[fileName];
+	}
+}
+
+void RenderClass::BeginFrame()
+
+{
+	// Clear the scene
+	m_D3D->d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0x00000000, 1.0f, 0);
+
+	// Tell device to start drawing
+	m_D3D->d3ddev->BeginScene();
+
 }

@@ -59,7 +59,11 @@
     <ClCompile Include="RenderableObject.cpp">
       <Filter>Renderer\Objects\Base Class</Filter>
     </ClCompile>
-    <ClCompile Include="SphereClass.cpp" />
+    <ClCompile Include="SphereClass.cpp">
+      <Filter>Renderer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorClass.cpp" />
+    <ClCompile Include="QuadClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen Properties.h">
@@ -83,7 +87,14 @@
     <ClInclude Include="RenderableObject.h">
       <Filter>Renderer\Objects\Base Class</Filter>
     </ClInclude>
-    <ClInclude Include="SphereClass.h" />
+    <ClInclude Include="SphereClass.h">
+      <Filter>Renderer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerClass.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorClass.h" />
+    <ClInclude Include="QuadClass.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd">

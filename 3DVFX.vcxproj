@@ -89,9 +89,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="D3DClass.cpp" />
+    <ClCompile Include="FloorClass.cpp" />
     <ClCompile Include="InputClass.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyCameraController.cpp" />
+    <ClCompile Include="QuadClass.cpp" />
     <ClCompile Include="RenderableObject.cpp" />
     <ClCompile Include="RenderClass.cpp" />
     <ClCompile Include="SphereClass.cpp" />
@@ -99,8 +101,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D3DClass.h" />
+    <ClInclude Include="FloorClass.h" />
     <ClInclude Include="InputClass.h" />
     <ClInclude Include="MyCameraController.h" />
+    <ClInclude Include="PlayerClass.h" />
+    <ClInclude Include="QuadClass.h" />
     <ClInclude Include="RenderableObject.h" />
     <ClInclude Include="RenderClass.h" />
     <ClInclude Include="Screen Properties.h" />

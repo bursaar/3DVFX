@@ -5,6 +5,9 @@ class SphereClass :
 {
 public:
 	SphereClass();
+	// Add overloaded constructor from LIT materials to enable creation of a sphere of a certain colour.
+	SphereClass(DWORD pColour)
+		:mColour(pColour){}
 	~SphereClass();
 private:
 	LPD3DXMESH mMesh;

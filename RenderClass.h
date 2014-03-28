@@ -3,6 +3,7 @@
 #include "Screen Properties.h"
 #include "MyCameraController.h"
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -20,12 +21,14 @@ struct CUSTOMVERTEX
 	static const int STRIDE_SIZE = 24;
 
 	// Reusing the constructor from the Train2Game LIT materials, without the UV co-ordinates.
-	CUSTOMVERTEX(float px, float py, float pz, DWORD pcolour)
+	CUSTOMVERTEX(float px, float py, float pz, DWORD pcolour, float pu, float pv)
 	{
 		x = px;
 		y = py;
 		z = pz;
 		colour = pcolour;
+		tu = pu;
+		tv = pv;
 	}
 };
 
@@ -45,9 +48,10 @@ public:
 	// Overloaded constructors
 	RenderClass();
 	bool Initialise(HWND phWND);
-
+	IDirect3DTexture9 * LoadTexture(LPCWSTR fileName);
 	void cleanD3D(void);						// close Direct3D and release memo
 
+	void BeginFrame();							// Implementation taken from LIT materials.
 	void init_graphics(void);					// 3D declarations - drawing
 	void CreateCharacter();
 	void DrawMesh();
@@ -57,6 +61,9 @@ public:
 private:
 	void initD3D(HWND &pHWND);					// sets up and initializes Direct3D
 
+	// These maps used as cache and tally are taken from the LIT material.
+	map<wstring, IDirect3DTexture9*> textureCache;
+	map<wstring, int> textureUsageCount;
 
 	// Mesh operations
 	LPD3DXBUFFER *m_adjacencyBuffer;
