@@ -136,7 +136,7 @@ bool RenderClass::Initialise(HWND phWND)
 	m_D3D = new D3DClass;
 	m_D3D->Initialise(phWND);
 
-	// m_camera = new MyCameraController;
+	m_camera = new MyCameraController;
 	m_camera->SetPosition(0.0f, 3.0f, 10.0f);
 	m_camera->Render();
 	m_camera->GetViewMatrix(m_viewMatrix);
@@ -331,5 +331,41 @@ void RenderClass::BeginFrame()
 
 	// Tell device to start drawing
 	m_D3D->d3ddev->BeginScene();
+
+}
+
+//Implementation taken from LIT
+bool RenderClass::Reset()
+{
+	HRESULT g = m_D3D->d3ddev->Reset(&m_D3D->d3dpp);
+
+	// If it worked, return true
+	return (g == S_OK);
+}
+
+bool RenderClass::EndFrame()
+{
+	// Call end scene on the device
+	m_D3D->d3ddev->EndScene();
+
+	// Present back buffer
+	HRESULT result = m_D3D->d3ddev->Present(NULL, NULL, NULL, NULL);
+	if (result != S_OK)
+	{
+		if (result == D3DERR_DEVICELOST)
+		{
+			// Device is lost
+			OutputDebugStringA("The render device was lost on the End Frame function of the render class.\n");
+			return false;
+		}
+		else
+		{
+			// Unhandled error
+			OutputDebugStringA("The render device was lost on the End Frame function of the render class and has generated an unhandled error.\n");
+		}
+		// If it all went ok, return true
+		return true;
+
+	}
 
 }

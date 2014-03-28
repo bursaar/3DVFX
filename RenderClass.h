@@ -50,6 +50,9 @@ public:
 	bool Initialise(HWND phWND);
 	IDirect3DTexture9 * LoadTexture(LPCWSTR fileName);
 	void cleanD3D(void);						// close Direct3D and release memo
+	
+	bool EndFrame();							// Taken from LIT materials
+	bool Reset();								// Taken from LIT materials
 
 	void BeginFrame();							// Implementation taken from LIT materials.
 	void init_graphics(void);					// 3D declarations - drawing

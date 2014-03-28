@@ -2,6 +2,7 @@
 #include "Screen Properties.h"
 #include "InputClass.h"
 #include "RenderClass.h"
+#include "T2G\Library\Timer.h"
 
 #define WIN32_LEAN_AND_MEAN
 

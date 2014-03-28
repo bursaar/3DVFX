@@ -32,6 +32,7 @@ public:
 	virtual void Initialise(RenderClass * pRenderClass);
 	virtual void Update(double deltaTime, double totalTime);
 	virtual void Render(const D3DXMATRIXA16 &baseMatrix);
+	void Resume();
 	void GetPosition(double &px, double &py, double &pz);	// Apart from following the LIT material's use of doubles, this implementation is my own
 	double GetRotateY();	// Apart from following the LIT material's use of double as a return value, I implemented this function myself.
 	void SetTexture(LPCWSTR fileName);	// Taken from the LIT materials

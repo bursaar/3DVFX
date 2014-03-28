@@ -167,3 +167,29 @@ void RenderableObject::SetTexture(LPCWSTR fileName)
 	// Store name of texture
 	mTextureName = wstring(fileName);
 }
+
+void RenderableObject::Resume()
+{
+	// If there is rendering to be done, recreate the vertex buffer
+	if (mRenderThis)
+	{
+		mVertexBuffer = mRenderer->CreateVertexBuffer(vertices);
+	}
+
+	// If there's a texture name set, reload texture
+	if (!mTextureName.empty())
+	{
+		mTexture = mRenderer->LoadTexture(mTextureName.c_str());
+	}
+
+	// Iterate through the children and tell them to reload their resources as well
+	for (
+		vector<RenderableObject *>::iterator iter = mChildren.begin();
+		iter != mChildren.end();
+	iter++
+		)
+	{
+		RenderableObject * object = *iter;
+		object->Resume();
+	}
+}

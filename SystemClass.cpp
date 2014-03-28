@@ -1,5 +1,6 @@
 #include "SystemClass.h"
 #include "FloorClass.h"
+#include "PlayerClass.h"
 
 
 SystemClass::SystemClass()
@@ -53,11 +54,9 @@ int SystemClass::Initialise(HINSTANCE pHInstance, int pNCmdShow)
 	m_hInstance = pHInstance;
 	m_nCmdShow = pNCmdShow;
 
-	InputClass Input;
-	m_input = &Input;
+	m_input = new InputClass;
+	m_renderer = new RenderClass;
 
-	RenderClass Renderer;
-	m_renderer = &Renderer;
 	m_renderer->Initialise(m_hWnd);
 
 	InitialiseWindows();
@@ -67,6 +66,9 @@ int SystemClass::Initialise(HINSTANCE pHInstance, int pNCmdShow)
 
 int SystemClass::Run()
 {
+	// Create new timer
+	Train2Game::Timer * timer = new Train2Game::Timer;
+
 	// this struct holds Windows event messages
 	MSG msg;
 
@@ -77,8 +79,9 @@ int SystemClass::Run()
 	m_renderer->Initialise(m_hWnd);
 
 	FloorClass * floor = new FloorClass;
+	PlayerClass * player = new PlayerClass;
 
-	floor->InitialiseFloor(m_renderer);
+	floor->Initialise(m_renderer);
 	
 	while (TRUE)
 	{
@@ -92,13 +95,58 @@ int SystemClass::Run()
 			break;
 		if (GetAsyncKeyState(VK_ESCAPE))
 			break;
+		double updTime = timer->Update();
+		double totTime = timer->Total();
 
-		floor->Update(0, 0);
+		floor->Update(updTime, totTime);
+		player->Update(updTime, totTime);
 
 		m_renderer->BeginFrame();
 
-		// m_input->Frame();
-		// m_renderer->DrawMesh();
+		D3DXMATRIXA16 baseMatrix;
+
+		m_renderer->m_D3D->d3ddev->GetTransform(D3DTS_WORLD, &baseMatrix);
+
+		floor->Render(baseMatrix);
+		player->Render(baseMatrix);
+
+		// I took the below if statement's structure from the LIT material
+		if (m_renderer->EndFrame())
+		{
+			// Release all buffers
+			floor->Release();
+			player->Release();
+
+			// Loop until successful reset or closure
+			while (!m_renderer->Reset() && msg.message != WM_QUIT)
+			{
+				// Keep the message queue going so the window remains responsive
+				if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+				{
+					DispatchMessage(&msg);
+				}
+
+				// Limit the speed of the loop to roughly 60Hz
+				DWORD pause = 1000 / 60;
+				Sleep(pause);
+			}
+
+			// If the user quits, we break to avoid initialising anything.
+			if (msg.message == WM_QUIT)
+			{
+				break;
+			}
+
+			// At this point, the device is back and the user hasn't quit
+			m_renderer->Initialise(m_hWnd);
+
+			// Recreate vertex buffers and reload textures in use
+			floor->Resume();
+			player->Resume();
+
+			// Update to keep the timer correct
+			timer->Update();
+		}
 	}
 
 	return msg.wParam;

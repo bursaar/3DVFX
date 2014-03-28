@@ -10,6 +10,7 @@ public:
 	LPDIRECT3DDEVICE9 d3ddev;					// the device class
 	LPDIRECT3DVERTEXBUFFER9 v_buffer;    // the vertex buffer
 	LPDIRECT3DINDEXBUFFER9 i_buffer;		// the index buffer
+	D3DPRESENT_PARAMETERS d3dpp;				// The present parameters
 
 	float fieldOfView;
 	float screenAspect;
