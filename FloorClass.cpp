@@ -24,7 +24,11 @@ void FloorClass::Initialise(RenderClass * pRenderClass)
 
 	RenderableObject::Initialise(pRenderClass);
 
-	SetTexture(TEXT("../floor.jpg"));	// Used TEXT macro according to example in Floor.cpp in LIT materials.
+	SetTexture(TEXT("floor.jpg"));	// Used TEXT macro according to example in Floor.cpp in LIT materials.
+}
 
-
+void FloorClass::Update(double deltaTime, double totalTime)
+{
+	// Call our base class and tell it to update, triggering update on all derived objects
+	RenderableObject::Update(deltaTime, totalTime);
 }
