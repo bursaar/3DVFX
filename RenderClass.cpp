@@ -141,18 +141,9 @@ bool RenderClass::Initialise(HWND phWND)
 	m_camera->Render();
 	m_camera->GetViewMatrix(m_viewMatrix);
 
-	CreateCharacter();
-
 	uvPan = 0;
 
 	return true;
-}
-
-void RenderClass::CreateCharacter()
-{
-
-
-
 }
 
 void RenderClass::DrawMesh()

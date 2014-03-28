@@ -5,6 +5,6 @@ class FloorClass :
 {
 public:
 	FloorClass();
-	void InitialiseFloor();
+	void InitialiseFloor(RenderClass *pRenderClass);
 };
 

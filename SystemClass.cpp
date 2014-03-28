@@ -78,7 +78,7 @@ int SystemClass::Run()
 
 	FloorClass * floor = new FloorClass;
 
-	floor->Initialise(m_renderer);
+	floor->InitialiseFloor(m_renderer);
 	
 	while (TRUE)
 	{

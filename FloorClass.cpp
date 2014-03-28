@@ -10,9 +10,9 @@ FloorClass::FloorClass()
 	mScale.z = 20.0f;
 }
 
-void FloorClass::InitialiseFloor()
+void FloorClass::InitialiseFloor(RenderClass *pRenderClass)
 {
-	RenderableObject::Initialise(mRenderer);
+	RenderableObject::Initialise(pRenderClass);
 
-	SetTexture(TEXT("floor.jpg"));	// Used TEXT macro according to example in Floor.cpp in LIT materials.
+	// SetTexture(TEXT("../floor.jpg"));	// Used TEXT macro according to example in Floor.cpp in LIT materials.
 }
