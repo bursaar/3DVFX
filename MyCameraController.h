@@ -2,6 +2,13 @@
 #include "Screen Properties.h"
 #include <d3dx9.h>
 
+#ifndef __DEG_TO_RAD
+#define __DEG_TO_RAD					// Include guard to make sure the const is only ever included once.
+
+const float DEG_TO_RAD = 0.017453292519943295769236907684886f;		// This constant was included in the original LIT material.
+
+#endif
+
 class MyCameraController
 {
 public:

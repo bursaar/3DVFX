@@ -44,9 +44,6 @@
       <Filter>Renderer\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="CharacterClass.cpp">
-      <Filter>Character</Filter>
-    </ClCompile>
     <ClCompile Include="SystemClass.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -56,6 +53,7 @@
     <ClCompile Include="D3DClass.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="RenderableObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen Properties.h">
@@ -67,9 +65,6 @@
     <ClInclude Include="MyCameraController.h">
       <Filter>Renderer\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterClass.h">
-      <Filter>Character</Filter>
-    </ClInclude>
     <ClInclude Include="SystemClass.h">
       <Filter>System</Filter>
     </ClInclude>
@@ -79,6 +74,7 @@
     <ClInclude Include="D3DClass.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="RenderableObject.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd">

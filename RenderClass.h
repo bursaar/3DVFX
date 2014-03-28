@@ -2,7 +2,6 @@
 #include "D3DClass.h"
 #include "Screen Properties.h"
 #include "MyCameraController.h"
-#include "CharacterClass.h"
 #include <vector>
 
 using namespace std;
@@ -26,7 +25,6 @@ public:
 	ID3DXMesh *m_wallMesh;
 	ID3DXMesh *m_floorMesh;
 	D3DXMATRIX m_viewMatrix;
-	CharacterClass *m_player;
 	MyCameraController* m_camera;
 
 	// Overloaded constructors
