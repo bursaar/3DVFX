@@ -13,8 +13,9 @@
 // ================================================================================================	//
 
 // ACKNOWLEDGEMENTS
-// Basic window construction code taken from http://www.directxtutorial.com/Lesson.aspx?lessonid=9-1-3
+// Basic window construction code adapted from http://www.directxtutorial.com/Lesson.aspx?lessonid=9-1-3
 // Method of input taken from http://www.rastertek.com/dx11tut13.html
+// Code commented with LIT was taken from the Train2Game LIT series on how to make a game in C++
 
 
 #include "RenderClass.h"

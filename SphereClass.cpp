@@ -3,7 +3,7 @@
 
 SphereClass::SphereClass()
 {
-	mColour = 0;
+	mColour = 0xFF00FFFF;
 }
 
 

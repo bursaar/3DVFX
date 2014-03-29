@@ -1,5 +1,5 @@
 #include "SystemClass.h"
-#include "FloorClass.h"
+#include "Scene.h"
 #include "PlayerClass.h"
 
 
@@ -77,14 +77,15 @@ int SystemClass::Run()
 	// Initialise Direct3D
 	m_renderer->Initialise(m_hWnd);
 
-	FloorClass * floor = new FloorClass;
+	Scene * scene = new Scene;
 	PlayerClass * player = new PlayerClass;
 
-	floor->Initialise(m_renderer);
+	scene->Initialise(m_renderer);
 	player->Initialise(m_renderer);
 	
 	MyCameraController * camera = m_renderer->GetCameraController();
 	camera->Follow(player);
+	player->Move(0.0f, 0.0f, -50.0f);
 
 	while (TRUE)
 	{
@@ -101,7 +102,7 @@ int SystemClass::Run()
 		double updTime = timer->Update();
 		double totTime = timer->Total();
 
-		floor->Update(updTime, totTime);
+		scene->Update(updTime, totTime);
 		player->Update(updTime, totTime);
 
 		m_renderer->BeginFrame();
@@ -110,14 +111,14 @@ int SystemClass::Run()
 
 		m_renderer->m_D3D->d3ddev->GetTransform(D3DTS_WORLD, &baseMatrix);
 
-		floor->Render(baseMatrix);
+		scene->Render(baseMatrix);
 		player->Render(baseMatrix);
 
 		// I took the below if statement's structure from the LIT material
 		if (m_renderer->EndFrame())
 		{
 			// Release all buffers
-			floor->Release();
+			scene->Release();
 			player->Release();
 
 			// Loop until successful reset or closure
@@ -144,7 +145,7 @@ int SystemClass::Run()
 			m_renderer->Initialise(m_hWnd);
 
 			// Recreate vertex buffers and reload textures in use
-			floor->Resume();
+			scene->Resume();
 			player->Resume();
 
 			// Update to keep the timer correct
@@ -163,6 +164,11 @@ int SystemClass::Run()
 		// send the message to the WindowProc function
 		DispatchMessage(&msg);
 	}
+
+	// Release the objects in the scene
+	player->Release();
+	scene->Release();
+	// m_renderer->Release();
 
 	// return this part of the WM_QUIT message to Windows
 	return msg.wParam;

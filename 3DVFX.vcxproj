@@ -95,6 +95,7 @@
     <ClCompile Include="MyCameraController.cpp" />
     <ClCompile Include="RenderableObject.cpp" />
     <ClCompile Include="RenderClass.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SphereClass.cpp" />
     <ClCompile Include="SystemClass.cpp" />
     <ClCompile Include="T2G\Library\Timer.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="PlayerClass.h" />
     <ClInclude Include="RenderableObject.h" />
     <ClInclude Include="RenderClass.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Screen Properties.h" />
     <ClInclude Include="SphereClass.h" />
     <ClInclude Include="SystemClass.h" />

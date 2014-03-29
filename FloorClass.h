@@ -6,6 +6,6 @@ class FloorClass :
 public:
 	FloorClass();
 	void Initialise(RenderClass *pRenderClass);
-	void Update(double deltaTime, double totalTime);
+	// void Update(double deltaTime, double totalTime);
 };
 

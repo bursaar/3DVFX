@@ -50,7 +50,7 @@ bool MyCameraController::SetRotation(float pX, float pY, float pZ)
 
 void MyCameraController::GetViewMatrix(D3DXMATRIX &pViewMatrix)
 {
-	pViewMatrix = mMatView;
+	pViewMatrix = viewMatrix;
 	return;
 }
 

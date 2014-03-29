@@ -31,7 +31,7 @@ private:
 	D3DXVECTOR3 mLookAt;
 	D3DXVECTOR3 mUp;
 	D3DXVECTOR3 mRotation;
-	D3DXMATRIX mMatView;								// View matrix
+	// D3DXMATRIX mMatView;								// View matrix
 	D3DXMATRIX mMatProj;								// Projection matrix
 
 	// vvvvv These private member variables were taken from the Train2Game LIT materials' camera class

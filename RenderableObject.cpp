@@ -193,3 +193,16 @@ void RenderableObject::Resume()
 		object->Resume();
 	}
 }
+
+void RenderableObject::Move(float pX, float pY, float pZ)
+{
+	// Translate the movement to match camera direction
+	D3DXVECTOR3 translationVector(pX, pY, pZ);
+	D3DXMATRIX matRotateY;
+	D3DXMatrixRotationY(&matRotateY, (0 - (float)mRotation.y) * DEG_TO_RAD);
+	D3DXVec3TransformCoord(&translationVector, &translationVector, &matRotateY);
+
+	mPosition.x += translationVector.x;
+	mPosition.y += translationVector.y;
+	mPosition.z += translationVector.z;
+}

@@ -62,6 +62,30 @@ void RenderClass::Draw(IDirect3DVertexBuffer9 * vertexBuffer, IDirect3DTexture9 
 	// Update camera position
 	m_camera->SetViewTransform(m_D3D->d3ddev);
 
+
+	// Check for bad view transform
+	D3DXMATRIXA16 testViewTransform;
+	m_camera->GetViewMatrix(testViewTransform);
+	if (!  testViewTransform._11 == 0
+		&& testViewTransform._12 == 0
+		&& testViewTransform._13 == 0
+		&& testViewTransform._14 == 0
+		&& testViewTransform._21 == 0
+		&& testViewTransform._22 == 0
+		&& testViewTransform._23 == 0
+		&& testViewTransform._24 == 0
+		&& testViewTransform._31 == 0
+		&& testViewTransform._32 == 0
+		&& testViewTransform._33 == 0
+		&& testViewTransform._34 == 0
+		&& testViewTransform._41 == 0
+		&& testViewTransform._42 == 0
+		&& testViewTransform._43 == 0
+		&& testViewTransform._44 == 0
+		)
+	{
+		OutputDebugStringA("The SetViewTransform() operation in the RenderClass::Draw isn't working properly. It's all zeroes.\n");
+	}
 	// Rotate -> Scale -> Move
 	
 	// Prepare rotation matrix
