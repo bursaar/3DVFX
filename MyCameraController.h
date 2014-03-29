@@ -15,28 +15,26 @@ public:
 	MyCameraController();
 	~MyCameraController();
 
-	D3DXVECTOR3 *mPosition;
-	D3DXVECTOR3 *mLookAt;
-	D3DXVECTOR3 *mUp;
-	D3DXVECTOR3 *mRotation;
-	D3DXMATRIX mMatView;								// View matrix
-	D3DXMATRIX mMatProj;								// Projection matrix
 
-
-	void Follow(void * player);
-
-	bool Render();
+	void Follow(void * player);							// LIT
 
 	bool SetPosition(float pX, float pY, float pZ);
 	bool SetRotation(float pX, float pY, float pZ);
-	void SetViewTransform(IDirect3DDevice9 * pDevice);
+	void SetViewTransform(IDirect3DDevice9 * pDevice);	// LIT
 
 	void Move(float px, float py, float pz);
 	void GetViewMatrix(D3DXMATRIX &pViewMatrix);
 	void GetProjectionMatrix(D3DXMATRIX &pProjMatrix);
 
 private:
-	// These private member variables were taken from the Train2Game LIT materials' camera class
+	D3DXVECTOR3 mPosition;
+	D3DXVECTOR3 mLookAt;
+	D3DXVECTOR3 mUp;
+	D3DXVECTOR3 mRotation;
+	D3DXMATRIX mMatView;								// View matrix
+	D3DXMATRIX mMatProj;								// Projection matrix
+
+	// vvvvv These private member variables were taken from the Train2Game LIT materials' camera class
 	VOID *followTarget;
 	float x, y, z, rotateYaw;
 	D3DXMATRIXA16 viewMatrix;

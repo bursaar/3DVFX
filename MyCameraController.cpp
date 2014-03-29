@@ -4,25 +4,21 @@
 
 MyCameraController::MyCameraController()
 {
-	mPosition = new D3DXVECTOR3;
-	mLookAt = new D3DXVECTOR3;
-	mUp = new D3DXVECTOR3;
-	mRotation = new D3DXVECTOR3;
 
 	// Set where the camera begins
-	mPosition->x = 0.0f;
-	mPosition->y = 0.0f;
-	mPosition->z = -5.0f;
+	mPosition.x = 0.0f;
+	mPosition.y = 0.0f;
+	mPosition.z = -5.0f;
 
 	// Set where the camera is pointed
-	mLookAt->x = 0.0f;
-	mLookAt->y = 0.0f;
-	mLookAt->z = 1.0f;
+	mLookAt.x = 0.0f;
+	mLookAt.y = 0.0f;
+	mLookAt.z = 1.0f;
 
 	// Set the camera's up direction
-	mUp->x = 0.0f;
-	mUp->y = 1.0f;
-	mUp->z = 0.0f;
+	mUp.x = 0.0f;
+	mUp.y = 1.0f;
+	mUp.z = 0.0f;
 }
 
 void MyCameraController::Follow(void *player)
@@ -38,49 +34,17 @@ MyCameraController::~MyCameraController()
 
 bool MyCameraController::SetPosition(float pX, float pY, float pZ)
 {
-	mPosition = new D3DXVECTOR3;
-	mPosition->x = pX;
-	mPosition->y = pY;
-	mPosition->z = pZ;
+	mPosition.x = pX;
+	mPosition.y = pY;
+	mPosition.z = pZ;
 	return true;
 }
 
 bool MyCameraController::SetRotation(float pX, float pY, float pZ)
 {
-	mRotation = new D3DXVECTOR3;
-	mRotation->x = pX;
-	mRotation->y = pY;
-	mRotation->z = pZ;
-	return true;
-}
-
-bool MyCameraController::Render()
-{
-	D3DXVECTOR3 up;
-	D3DXVECTOR3 position;
-	D3DXVECTOR3 lookAt;
-	float radians;
-
-	mUp->x = 0.0f;
-	mUp->y = 1.0f;
-	mUp->z = 0.0f;
-
-	position.x = mPosition->x;
-	position.y = mPosition->y;
-	position.z = mPosition->z;
-
-	radians = mRotation->y * DEG_TO_RAD;
-
-	lookAt.x = sinf(radians) + mPosition->x;
-	lookAt.y = mPosition->y;
-	lookAt.z = cosf(radians) + mPosition->z;
-
-	// Create view matrix
-	D3DXMatrixLookAtLH(&mMatView, &position, &lookAt, &up);
-
-	// Create projection matrix
-	D3DXMatrixPerspectiveFovLH(&mMatProj, 45 * DEG_TO_RAD, SCREEN_HEIGHT / SCREEN_WIDTH, 1.0f, 500.0f);
-
+	mRotation.x = pX;
+	mRotation.y = pY;
+	mRotation.z = pZ;
 	return true;
 }
 
@@ -107,7 +71,7 @@ void MyCameraController::SetViewTransform(IDirect3DDevice9 * pDevice)
 
 	if (followTarget != nullptr)
 	{
-		D3DXMatrixLookAtLH(&viewMatrix, mPosition, mLookAt, mUp);
+		D3DXMatrixLookAtLH(&viewMatrix, &mPosition, &mLookAt, &mUp);
 
 		// Apply object position as a transform
 		D3DXMATRIX followTranslate;

@@ -35,7 +35,6 @@ bool RenderClass::Initialise(HWND phWND)
 
 	m_camera = new MyCameraController;
 	m_camera->SetPosition(0.0f, 3.0f, 10.0f);
-	m_camera->Render();
 	m_camera->GetViewMatrix(m_viewMatrix);
 
 	uvPan = 0;
@@ -203,4 +202,9 @@ bool RenderClass::EndFrame()
 
 	}
 
+}
+
+MyCameraController* RenderClass::GetCameraController()
+{
+	return m_camera;
 }

@@ -81,7 +81,11 @@ int SystemClass::Run()
 	PlayerClass * player = new PlayerClass;
 
 	floor->Initialise(m_renderer);
+	player->Initialise(m_renderer);
 	
+	MyCameraController * camera = m_renderer->GetCameraController();
+	camera->Follow(player);
+
 	while (TRUE)
 	{
 		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))

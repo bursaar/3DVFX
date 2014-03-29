@@ -40,7 +40,7 @@ public:
 	ID3DXMesh *m_wallMesh;
 	ID3DXMesh *m_floorMesh;
 	D3DXMATRIX m_viewMatrix;
-	MyCameraController* m_camera;
+	MyCameraController* GetCameraController();
 
 	IDirect3DVertexBuffer9 * CreateVertexBuffer(vector<CUSTOMVERTEX> vertices); // Lightly adapted from Train2Game LIT material
 	float uvPan;
@@ -58,6 +58,7 @@ public:
 	~RenderClass();
 
 private:
+	MyCameraController* m_camera;
 	void initD3D(HWND &pHWND);					// sets up and initializes Direct3D
 
 	// These maps used as cache and tally are taken from the LIT material.

@@ -27,6 +27,20 @@ void SphereClass::Initialise(RenderClass * pRenderClass)
 		}
 		mMesh->UnlockVertexBuffer();
 	}
+
+	collidable = true;
+	radius = 1;
+
+	LPDIRECT3DINDEXBUFFER9 pIndBuf;
+	mMesh->GetIndexBuffer(&pIndBuf);
+
+	mIndexBuffer = (IDirect3DIndexBuffer9 *)pIndBuf;
+
+	facecount = mMesh->GetNumFaces();
+	mRenderThis = true;
+	RenderableObject::Initialise(pRenderClass);
+
+	initialised = true;
 }
 
 
