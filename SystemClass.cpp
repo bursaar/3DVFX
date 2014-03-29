@@ -109,7 +109,7 @@ int SystemClass::Run()
 
 		D3DXMATRIXA16 baseMatrix;
 
-		m_renderer->m_D3D->d3ddev->GetTransform(D3DTS_WORLD, &baseMatrix);
+		m_renderer->d3ddev->GetTransform(D3DTS_WORLD, &baseMatrix);
 
 		scene->Render(baseMatrix);
 		player->Render(baseMatrix);

@@ -15,7 +15,7 @@ SphereClass::~SphereClass()
 // This method is taken from the Train2Game LIT with minor modifications.
 void SphereClass::Initialise(RenderClass * pRenderClass)
 {
-	D3DXCreateSphere(pRenderClass->m_D3D->d3ddev, 0.5, 20, 20, &mMesh, NULL);
+	D3DXCreateSphere(pRenderClass->d3ddev, 0.5, 20, 20, &mMesh, NULL);
 	int verticeCount = mMesh->GetNumFaces();
 	CUSTOMVERTEX *pVert;
 	if (mMesh->LockVertexBuffer(D3DLOCK_DISCARD, (LPVOID *)&pVert) == S_OK)

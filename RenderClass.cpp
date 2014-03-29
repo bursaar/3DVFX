@@ -14,7 +14,7 @@ IDirect3DVertexBuffer9 * RenderClass::CreateVertexBuffer(vector<CUSTOMVERTEX> ve
 	IDirect3DVertexBuffer9 * vertexBuffer;
 
 	// Set parameters for the buffer to keep all uses consistent.
-	HRESULT result = m_D3D->d3ddev->CreateVertexBuffer(sizeof(CUSTOMVERTEX)* vertices.size(), D3DUSAGE_WRITEONLY, CUSTOMVERTEX::FORMAT, D3DPOOL_DEFAULT, &vertexBuffer, NULL);
+	HRESULT result = d3ddev->CreateVertexBuffer(sizeof(CUSTOMVERTEX)* vertices.size(), D3DUSAGE_WRITEONLY, CUSTOMVERTEX::FORMAT, D3DPOOL_DEFAULT, &vertexBuffer, NULL);
 	if (result != S_OK)
 	{
 		OutputDebugStringA("The RenderClass::CreateVertexBuffer method failed at creating a vertex buffer.\n");
@@ -30,14 +30,46 @@ IDirect3DVertexBuffer9 * RenderClass::CreateVertexBuffer(vector<CUSTOMVERTEX> ve
 
 bool RenderClass::Initialise(HWND phWND)
 {
-	m_D3D = new D3DClass;
-	m_D3D->Initialise(phWND);
+	d3d = Direct3DCreate9(D3D_SDK_VERSION);
+
+	ZeroMemory(&d3dpp, sizeof(d3dpp));
+	d3dpp.Windowed = TRUE;
+	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	d3dpp.hDeviceWindow = phWND;
+	d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;		// Changed to match LIT
+	d3dpp.BackBufferWidth = SCREEN_WIDTH;
+	d3dpp.BackBufferHeight = SCREEN_HEIGHT;
+	d3dpp.EnableAutoDepthStencil = TRUE;			// automatically run the z-buffer for us
+	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;		// 16-bit pixel format for the z-buffer
+
+	// create a device class using this information and the info from the d3dpp stuct
+	d3d->CreateDevice(D3DADAPTER_DEFAULT,
+		D3DDEVTYPE_HAL,
+		phWND,
+		D3DCREATE_HARDWARE_VERTEXPROCESSING,			// Changed from software to match LIT
+		&d3dpp,
+		&d3ddev);
+
+	d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(255, 255, 255));
+	d3ddev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE);				// turn off the 3D lighting
+	d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);		// both sides of the triangles
+	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);				// turn on the z-buffer
+
+	fieldOfView = 45 * DEG_TO_RAD;
+	screenAspect = SCREEN_WIDTH / SCREEN_HEIGHT;
+	nearView = 1.0f;
+	farView = 500.0f;
 
 	m_camera = new MyCameraController;
-	m_camera->SetPosition(0.0f, 3.0f, 10.0f);
-	m_camera->GetViewMatrix(m_viewMatrix);
+	m_camera->SetViewTransform(d3ddev);
+	// m_camera->SetPosition(0.0f, 3.0f, 10.0f);
+	// m_camera->GetViewMatrix(m_viewMatrix);
 
 	uvPan = 0;
+
+	D3DXMATRIXA16 projectionMatrix;
+	D3DXMatrixPerspectiveFovLH(&projectionMatrix, fieldOfView, (float)d3dpp.BackBufferWidth / (float)d3dpp.BackBufferHeight, nearView, farView);		//Taken from LIT
 
 	return true;
 }
@@ -60,8 +92,7 @@ void RenderClass::Draw(IDirect3DVertexBuffer9 * vertexBuffer, IDirect3DTexture9 
 					rotateMatrixZ;
 
 	// Update camera position
-	m_camera->SetViewTransform(m_D3D->d3ddev);
-
+	m_camera->SetViewTransform(d3ddev);
 
 	// Check for bad view transform
 	D3DXMATRIXA16 testViewTransform;
@@ -86,6 +117,7 @@ void RenderClass::Draw(IDirect3DVertexBuffer9 * vertexBuffer, IDirect3DTexture9 
 	{
 		OutputDebugStringA("The SetViewTransform() operation in the RenderClass::Draw isn't working properly. It's all zeroes.\n");
 	}
+	// Since we know the view transform is good...
 	// Rotate -> Scale -> Move
 	
 	// Prepare rotation matrix
@@ -109,43 +141,65 @@ void RenderClass::Draw(IDirect3DVertexBuffer9 * vertexBuffer, IDirect3DTexture9 
 	m._33 = 1.0;
 	D3DXMATRIXA16 neutral;
 	
-	m_D3D->d3ddev->GetTransform(D3DTS_WORLD, &neutral);
+	d3ddev->GetTransform(D3DTS_WORLD, &neutral);
 
 	worldMatrix = neutral * matRotate * *D3DXMatrixScaling(&scaleMatrix, (float)scale.x, (float)scale.y, (float)scale.z) *m;
 
 	// Apply transformation to the world
-	m_D3D->d3ddev->SetTransform(D3DTS_WORLD, &neutral);
+	d3ddev->SetTransform(D3DTS_WORLD, &neutral);
 
 	// Draw to screen
 	// Tell DX that we want to use the built-in vertex buffer
-	m_D3D->d3ddev->SetStreamSource(0, vertexBuffer, 0, CUSTOMVERTEX::STRIDE_SIZE);
+	d3ddev->SetStreamSource(0, vertexBuffer, 0, CUSTOMVERTEX::STRIDE_SIZE);
 
 	// Tell DX which texture to use for this draw operation
-	m_D3D->d3ddev->SetTexture(0, texture);
-
+	d3ddev->SetTexture(0, texture);
+	
 	uvPan += 0.0001f;		// NOTE not sure what this is for
 
+	d3ddev->SetVertexShader(NULL);
+	d3ddev->SetPixelShader(NULL);
+
+	if (indexbuff == 0)
+	{
+		// Draw the quad
+		d3ddev->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, verticeCount - 2);
+	}
+	else
+	{
+		d3ddev->SetIndices(indexbuff);
+		HRESULT result = d3ddev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, verticeCount, 0, primCount);
+		if (result != S_OK)
+		{
+			OutputDebugStringA("Problem with the DrawIndexedPrimitive function in RenderClass::Draw.\n");
+		}
+	}
+
+	// Reset world translation back to default
+	d3ddev->SetTransform(D3DTS_WORLD, &neutral);
+	/*
 	// Creating a perspective projection
 	D3DXMATRIXA16 projectionMatrix;
 	D3DXMatrixPerspectiveFovLH(
 		&projectionMatrix,						// Pass in projection matrix by reference to be filled in
 		45 * DEG_TO_RAD,						// Height of the field of view
 		SCREEN_HEIGHT / SCREEN_WIDTH,			// Aspect ratio is height divided by width
-		0.5f,									// The distance to the near-view plane
-		100.0f									// The distance to the far-view plane
+		nearView,									// The distance to the near-view plane
+		farView									// The distance to the far-view plane
 		);
 
-	m_D3D->d3ddev->SetTransform(D3DTS_PROJECTION, &projectionMatrix);
+	d3ddev->SetTransform(D3DTS_PROJECTION, &projectionMatrix);
 
 	// Disable lighting (for now)
-	m_D3D->d3ddev->SetRenderState(D3DRS_LIGHTING, false);
+	d3ddev->SetRenderState(D3DRS_LIGHTING, false);
 
 	// Set our vertex format
-	m_D3D->d3ddev->SetFVF(CUSTOMVERTEX::FORMAT);
+	d3ddev->SetFVF(CUSTOMVERTEX::FORMAT);
 
 	// Set culling mode
-	m_D3D->d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);		// Show both sides of each polygon.
+	d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);		// Show both sides of each polygon.
 	// m_D3D->d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);		// Cull any polygons drawn with their backs to us.
+	*/
 }
 
 IDirect3DTexture9 * RenderClass::LoadTexture(LPCWSTR fileName)
@@ -157,7 +211,7 @@ IDirect3DTexture9 * RenderClass::LoadTexture(LPCWSTR fileName)
 	{
 		// Load the texture into memory
 		IDirect3DTexture9 * texture;
-		HRESULT result = D3DXCreateTextureFromFile(m_D3D->d3ddev, fileName, &texture);
+		HRESULT result = D3DXCreateTextureFromFile(d3ddev, fileName, &texture);
 		if (result != S_OK)
 		{
 			OutputDebugStringA("The LoadTexture function in the RenderClass failed to create a texture from a loaded file.\n");
@@ -185,17 +239,17 @@ void RenderClass::BeginFrame()
 
 {
 	// Clear the scene
-	m_D3D->d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0x00000000, 1.0f, 0);
+	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0x00000000, 1.0f, 0);
 
 	// Tell device to start drawing
-	m_D3D->d3ddev->BeginScene();
+	d3ddev->BeginScene();
 
 }
 
 //Implementation taken from LIT
 bool RenderClass::Reset()
 {
-	HRESULT g = m_D3D->d3ddev->Reset(&m_D3D->d3dpp);
+	HRESULT g = d3ddev->Reset(&d3dpp);
 
 	// If it worked, return true
 	return (g == S_OK);
@@ -204,10 +258,10 @@ bool RenderClass::Reset()
 bool RenderClass::EndFrame()
 {
 	// Call end scene on the device
-	m_D3D->d3ddev->EndScene();
+	d3ddev->EndScene();
 
 	// Present back buffer
-	HRESULT result = m_D3D->d3ddev->Present(NULL, NULL, NULL, NULL);
+	HRESULT result = d3ddev->Present(NULL, NULL, NULL, NULL);
 	if (result != S_OK)
 	{
 		if (result == D3DERR_DEVICELOST)
