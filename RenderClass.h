@@ -36,9 +36,6 @@ class RenderClass
 {
 public:
 	D3DClass *m_D3D;
-	ID3DXMesh *m_characterMesh;
-	ID3DXMesh *m_wallMesh;
-	ID3DXMesh *m_floorMesh;
 	D3DXMATRIX m_viewMatrix;
 	MyCameraController* GetCameraController();
 

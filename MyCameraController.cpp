@@ -23,7 +23,6 @@ MyCameraController::MyCameraController()
 
 void MyCameraController::Follow(void *player)
 {
-	followTarget = new RenderableObject;
 	followTarget = player;
 }
 
@@ -120,4 +119,9 @@ void MyCameraController::Move(float px, float py, float pz)
 	x += translationVector.x;
 	y += translationVector.y;
 	z += translationVector.z;
+}
+
+void MyCameraController::Rotate(float angle)
+{
+	rotateYaw += angle;
 }

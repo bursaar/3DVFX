@@ -46,8 +46,8 @@ void D3DClass::Initialise(HWND pHWND)
 	farView = 500.0f;
 
 	// Initialise and set the projection matrix
-	D3DXMatrixPerspectiveFovLH(&mMatProjection, fieldOfView, screenAspect, nearView, farView);
+	// D3DXMatrixPerspectiveFovLH(&mMatProjection, fieldOfView, screenAspect, nearView, farView);
 
 	// Initialise world matrix
-	D3DXMatrixIdentity(&mMatWorld);
+	// D3DXMatrixIdentity(&mMatWorld);
 }

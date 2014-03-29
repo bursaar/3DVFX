@@ -84,7 +84,7 @@ int SystemClass::Run()
 	player->Initialise(m_renderer);
 	
 	MyCameraController * camera = m_renderer->GetCameraController();
-	camera->Follow(player);
+	// camera->Follow(player);
 	player->Move(0.0f, 0.0f, -50.0f);
 
 	while (TRUE)

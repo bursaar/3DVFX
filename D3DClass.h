@@ -32,7 +32,7 @@ public:
 	void Initialise(HWND pHWND);					// sets up and initializes Direct3D
 	
 private:
-	D3DXMATRIX mMatWorld;									// A matrix for the world transform
-	D3DXMATRIX mMatProjection;							// A matrix for the projection transform
+	// D3DXMATRIX mMatWorld;									// A matrix for the world transform
+	// D3DXMATRIX mMatProjection;							// A matrix for the projection transform
 };
 
