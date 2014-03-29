@@ -16,7 +16,7 @@ SphereClass::~SphereClass()
 void SphereClass::Initialise(RenderClass * pRenderClass)
 {
 	D3DXCreateSphere(pRenderClass->d3ddev, 0.5, 20, 20, &mMesh, NULL);
-	int verticeCount = mMesh->GetNumFaces();
+	int verticeCount = mMesh->GetNumVertices();
 	CUSTOMVERTEX *pVert;
 	if (mMesh->LockVertexBuffer(D3DLOCK_DISCARD, (LPVOID *)&pVert) == S_OK)
 	{

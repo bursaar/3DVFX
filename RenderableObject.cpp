@@ -206,3 +206,8 @@ void RenderableObject::Move(float pX, float pY, float pZ)
 	mPosition.y += translationVector.y;
 	mPosition.z += translationVector.z;
 }
+
+void OnCollide(RenderableObject *other)
+{
+	OutputDebugStringA("There was a collision!\n");
+}

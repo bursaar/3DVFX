@@ -71,6 +71,8 @@ private:
 	// These maps used as cache and tally are taken from the LIT material.
 	map<wstring, IDirect3DTexture9*> textureCache;
 	map<wstring, int> textureUsageCount;
+	//Vertex dec
+	LPDIRECT3DVERTEXDECLARATION9 vertexDecl;
 
 	// Mesh operations
 	LPD3DXBUFFER *m_adjacencyBuffer;

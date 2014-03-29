@@ -37,6 +37,7 @@ public:
 	double GetRotateY();	// Apart from following the LIT material's use of double as a return value, I implemented this function myself.
 	void SetTexture(LPCWSTR fileName);	// Taken from the LIT materials
 	void Move(float pX, float pY, float pZ);
+	void OnCollide(RenderableObject* other);
 
 protected:
 	bool initialised;			// Is the object initialised?
@@ -62,6 +63,7 @@ protected:
 	IDirect3DVertexBuffer9 * mVertexBuffer;	// This vertex buffer was used in the original LIT material.
 
 	int facecount;							// This integer of faces to be drawn was in the original LIT material.
+
 
 };
 

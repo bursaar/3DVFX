@@ -112,6 +112,7 @@
     <ClInclude Include="Screen Properties.h" />
     <ClInclude Include="SphereClass.h" />
     <ClInclude Include="SystemClass.h" />
+    <ClInclude Include="T2G\Code\Scene.h" />
     <ClInclude Include="T2G\Library\Timer.h" />
   </ItemGroup>
   <ItemGroup>

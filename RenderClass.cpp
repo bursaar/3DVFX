@@ -70,6 +70,9 @@ bool RenderClass::Initialise(HWND phWND)
 
 	D3DXMATRIXA16 projectionMatrix;
 	D3DXMatrixPerspectiveFovLH(&projectionMatrix, fieldOfView, (float)d3dpp.BackBufferWidth / (float)d3dpp.BackBufferHeight, nearView, farView);		//Taken from LIT
+	d3ddev->SetTransform(D3DTS_PROJECTION, &projectionMatrix);
+
+	d3ddev->SetFVF(CUSTOMVERTEX::FORMAT);
 
 	return true;
 }
@@ -146,7 +149,7 @@ void RenderClass::Draw(IDirect3DVertexBuffer9 * vertexBuffer, IDirect3DTexture9 
 	worldMatrix = neutral * matRotate * *D3DXMatrixScaling(&scaleMatrix, (float)scale.x, (float)scale.y, (float)scale.z) *m;
 
 	// Apply transformation to the world
-	d3ddev->SetTransform(D3DTS_WORLD, &neutral);
+	d3ddev->SetTransform(D3DTS_WORLD, &worldMatrix);
 
 	// Draw to screen
 	// Tell DX that we want to use the built-in vertex buffer
@@ -168,7 +171,7 @@ void RenderClass::Draw(IDirect3DVertexBuffer9 * vertexBuffer, IDirect3DTexture9 
 	else
 	{
 		d3ddev->SetIndices(indexbuff);
-		HRESULT result = d3ddev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, verticeCount, 0, primCount);
+		HRESULT result = d3ddev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, verticeCount, 0, primCount);	
 		if (result != S_OK)
 		{
 			OutputDebugStringA("Problem with the DrawIndexedPrimitive function in RenderClass::Draw.\n");
@@ -274,6 +277,7 @@ bool RenderClass::EndFrame()
 		{
 			// Unhandled error
 			OutputDebugStringA("The render device was lost on the End Frame function of the render class and has generated an unhandled error.\n");
+			return false;
 		}
 		// If it all went ok, return true
 		return true;

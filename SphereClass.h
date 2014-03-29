@@ -1,3 +1,4 @@
+#pragma once
 
 #include "RenderableObject.h"
 class SphereClass :
@@ -10,9 +11,10 @@ public:
 		:mColour(pColour){}
 	~SphereClass();
 private:
-	LPD3DXMESH mMesh;
+
 	DWORD mColour;
 public:
 	void Initialise(RenderClass * pRenderClass) override;
 	void Update(double deltaTime, double totalTime) override;
+	LPD3DXMESH mMesh;
 };

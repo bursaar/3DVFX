@@ -1,5 +1,5 @@
 #include "SystemClass.h"
-#include "Scene.h"
+#include "T2G\Code\Scene.h"
 #include "PlayerClass.h"
 
 
@@ -77,7 +77,7 @@ int SystemClass::Run()
 	// Initialise Direct3D
 	m_renderer->Initialise(m_hWnd);
 
-	Scene * scene = new Scene;
+	Train2Game::Scene * scene = new Train2Game::Scene;
 	PlayerClass * player = new PlayerClass;
 
 	scene->Initialise(m_renderer);
