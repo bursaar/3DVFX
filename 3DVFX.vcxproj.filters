@@ -29,9 +29,6 @@
     <Filter Include="Managers">
       <UniqueIdentifier>{00b3af95-2bdb-4528-8ab1-8d802d753d21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Class Diagrams">
-      <UniqueIdentifier>{38d06493-1c47-4f60-94ba-13998a36bf86}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{63584d84-b27a-45b4-ae02-ec2c2ae3b15d}</UniqueIdentifier>
     </Filter>
@@ -68,8 +65,12 @@
     <ClCompile Include="FloorClass.cpp">
       <Filter>Renderer\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="WallClass.cpp" />
-    <ClCompile Include="AIClass.cpp" />
+    <ClCompile Include="AIClass.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
+    <ClCompile Include="WallClass.cpp">
+      <Filter>Renderer\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen Properties.h">
@@ -108,12 +109,11 @@
     <ClInclude Include="T2G\Code\Scene.h">
       <Filter>Game Code Library</Filter>
     </ClInclude>
-    <ClInclude Include="WallClass.h" />
-    <ClInclude Include="AIClass.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd">
-      <Filter>Class Diagrams</Filter>
-    </None>
+    <ClInclude Include="AIClass.h">
+      <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="WallClass.h">
+      <Filter>Renderer\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

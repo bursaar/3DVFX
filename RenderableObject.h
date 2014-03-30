@@ -42,9 +42,7 @@ public:
 	void Move(float pX, float pY, float pZ);
 	virtual void OnCollide(RenderableObject* other);
 	void RotateY(float angle);
-	void Fade(RenderableObject *other);
 	int GetOpacity(CUSTOMVERTEX pVertex);
-	bool Turn();
 protected:
 	bool initialised;			// Is the object initialised?
 

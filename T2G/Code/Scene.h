@@ -18,6 +18,7 @@ namespace Train2Game
 				mChildren.push_back(npc1);
 				npc2 = new SphereClass(0xFF1234FF);
 				mChildren.push_back(npc2);
+
 				for (int x = 0; x < 10; x++)
 				{
 					for (int y = 0; y < 10; y++)
@@ -27,8 +28,8 @@ namespace Train2Game
 					}
 				}
 
-				npc1->Move(-3,0,0);
-				npc2->Move(2,0,0);
+				npc1->Move(-3,0,1);
+				npc2->Move(2,0,-4);
 
 				for (int x = 0; x < 10; x++)
 				{
@@ -42,7 +43,7 @@ namespace Train2Game
 						thenX = nowX + (nowX * x * scaleX);
 						thenY = nowY;
 						thenZ = nowZ + (nowZ * y * scaleZ);
-						floor[x][y]->Move(thenX, thenY, thenZ);
+						floor[x][y]->Move((float)thenX, (float)thenY, (float)thenZ);
 					}
 				}
 
@@ -94,8 +95,6 @@ namespace Train2Game
 			SphereClass * npc1;
 			SphereClass * npc2;
 			FloorClass * floor[10][10];
-			WallClass * wall;
 			AIClass * ai;
-		
 	};
 }

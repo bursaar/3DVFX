@@ -239,16 +239,6 @@ void RenderableObject::RotateY(float angle)
 	mRotation.y += angle;
 }
 
-void RenderableObject::Fade(RenderableObject *other)
-{
-	DWORD fadeRate = 0x11111111;
-
-	for (vector<CUSTOMVERTEX>::iterator iter = other->vertices.begin(); iter != other->vertices.end(); iter++)
-	{
-		(*iter).colour = fadeRate;
-	}
-}
-
 // This only works when the vertex is at full opacity - in other words, it's a bit useless.
 int RenderableObject::GetOpacity(CUSTOMVERTEX pVertex)
 {
@@ -256,9 +246,4 @@ int RenderableObject::GetOpacity(CUSTOMVERTEX pVertex)
 	int pureColour = pVertex.colour - solidOpacity;		// Get the pure colour without the opacity value
 	int opacity = pVertex.colour - pureColour;
 	return opacity;
-}
-
-bool RenderableObject::Turn()
-{
-	return (bool)rand() % 1;
 }

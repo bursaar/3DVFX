@@ -10,9 +10,9 @@ FloorClass::FloorClass()
 	vertices.push_back(CUSTOMVERTEX(1.0f, -1.0f, 0.0f, 0xffffffff, 1.0f, 1.0f));
 
 	mRotation.x = 90.0f;
-	mPosition.x = 1.0f;
-	mPosition.z = 1.0f;
 	mPosition.y = -0.5f;
+	mPosition.x = 1.0f;		// Need a non-zero value for the multiplication part of tiling.
+	mPosition.z = 1.0f;		// Need a non-zero value for the multiplication part of tiling.
 	mScale.x = 20.0f;
 	mScale.y = 20.0f;
 	mScale.z = 20.0f;
