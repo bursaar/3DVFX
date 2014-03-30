@@ -41,6 +41,7 @@ bool RenderClass::Initialise(HWND phWND)
 	d3dpp.BackBufferHeight = SCREEN_HEIGHT;
 	d3dpp.EnableAutoDepthStencil = TRUE;			// automatically run the z-buffer for us
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;		// 16-bit pixel format for the z-buffer
+	d3dpp.MultiSampleType = D3DMULTISAMPLE_4_SAMPLES;
 
 	// create a device class using this information and the info from the d3dpp stuct
 	d3d->CreateDevice(D3DADAPTER_DEFAULT,
@@ -50,11 +51,13 @@ bool RenderClass::Initialise(HWND phWND)
 		&d3dpp,
 		&d3ddev);
 
+	d3ddev->SetRenderState(D3DRS_MULTISAMPLEANTIALIAS, TRUE);
 	d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(255, 255, 255));
 	d3ddev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE);				// turn off the 3D lighting
 	d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);		// both sides of the triangles
 	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);				// turn on the z-buffer
+
 
 	fieldOfView = 45 * DEG_TO_RAD;
 	screenAspect = SCREEN_WIDTH / SCREEN_HEIGHT;
@@ -63,8 +66,8 @@ bool RenderClass::Initialise(HWND phWND)
 
 	m_camera = new MyCameraController;
 	m_camera->SetViewTransform(d3ddev);
-	// m_camera->SetPosition(0.0f, 3.0f, 10.0f);
-	// m_camera->GetViewMatrix(m_viewMatrix);
+	m_camera->SetPosition(0.0f, 3.0f, 10.0f);
+
 
 	uvPan = 0;
 
@@ -97,30 +100,6 @@ void RenderClass::Draw(IDirect3DVertexBuffer9 * vertexBuffer, IDirect3DTexture9 
 	// Update camera position
 	m_camera->SetViewTransform(d3ddev);
 
-	// Check for bad view transform
-	D3DXMATRIXA16 testViewTransform;
-	m_camera->GetViewMatrix(testViewTransform);
-	if (!  testViewTransform._11 == 0
-		&& testViewTransform._12 == 0
-		&& testViewTransform._13 == 0
-		&& testViewTransform._14 == 0
-		&& testViewTransform._21 == 0
-		&& testViewTransform._22 == 0
-		&& testViewTransform._23 == 0
-		&& testViewTransform._24 == 0
-		&& testViewTransform._31 == 0
-		&& testViewTransform._32 == 0
-		&& testViewTransform._33 == 0
-		&& testViewTransform._34 == 0
-		&& testViewTransform._41 == 0
-		&& testViewTransform._42 == 0
-		&& testViewTransform._43 == 0
-		&& testViewTransform._44 == 0
-		)
-	{
-		OutputDebugStringA("The SetViewTransform() operation in the RenderClass::Draw isn't working properly. It's all zeroes.\n");
-	}
-	// Since we know the view transform is good...
 	// Rotate -> Scale -> Move
 	
 	// Prepare rotation matrix
@@ -284,6 +263,7 @@ bool RenderClass::EndFrame()
 
 	}
 
+	return true;
 }
 
 MyCameraController* RenderClass::GetCameraController()

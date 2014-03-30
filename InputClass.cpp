@@ -59,8 +59,7 @@ int InputClass::UpdateKeyboard()
 int InputClass::Frame()
 {
 	UpdateKeyboard();
-	UpdateDirection();
-	return 0;
+	return UpdateDirection();
 }
 
 int InputClass::UpdateDirection()

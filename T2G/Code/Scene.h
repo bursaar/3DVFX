@@ -13,7 +13,7 @@ namespace Train2Game
 			{
 				npc1 = new SphereClass(0xFFFF0000);
 				mChildren.push_back(npc1);
-				npc2 = new SphereClass(0xFF00FF00);
+				npc2 = new SphereClass(0xFF00FFFF);
 				mChildren.push_back(npc2);
 				floor = new FloorClass();
 				mChildren.push_back(floor);
@@ -55,11 +55,6 @@ namespace Train2Game
 					}
 				}
 			}
-
-
-
-
-
 
 
 		private:

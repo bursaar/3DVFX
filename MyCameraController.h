@@ -19,21 +19,16 @@ public:
 	void Follow(void * player);							// LIT
 
 	bool SetPosition(float pX, float pY, float pZ);
-	bool SetRotation(float pX, float pY, float pZ);
+	bool SetRotation(float angle);
 	void SetViewTransform(IDirect3DDevice9 * pDevice);	// LIT
 
 	void Move(float px, float py, float pz);			// LIT
-	void GetViewMatrix(D3DXMATRIX &pViewMatrix);
-	void GetProjectionMatrix(D3DXMATRIX &pProjMatrix);
 	void Rotate(float angle);							// LIT
 
 private:
 	D3DXVECTOR3 mPosition;
 	D3DXVECTOR3 mLookAt;
 	D3DXVECTOR3 mUp;
-	D3DXVECTOR3 mRotation;
-	// D3DXMATRIX mMatView;								// View matrix
-	D3DXMATRIX mMatProj;								// Projection matrix
 
 	// vvvvv These private member variables were taken from the Train2Game LIT materials' camera class
 	VOID *followTarget;

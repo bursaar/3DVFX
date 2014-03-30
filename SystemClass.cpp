@@ -65,8 +65,6 @@ int SystemClass::Initialise(HINSTANCE pHInstance, int pNCmdShow)
 
 int SystemClass::Run()
 {
-	// Create new timer
-	Train2Game::Timer * timer = new Train2Game::Timer;
 
 	// this struct holds Windows event messages
 	MSG msg;
@@ -74,18 +72,23 @@ int SystemClass::Run()
 	// display the window on the screen
 	ShowWindow(m_hWnd, m_nCmdShow);
 
-	// Initialise Direct3D
-	m_renderer->Initialise(m_hWnd);
 
 	Train2Game::Scene * scene = new Train2Game::Scene;
 	PlayerClass * player = new PlayerClass;
+	InputClass * input = new InputClass;
+
+	// Initialise Direct3D
+	m_renderer->Initialise(m_hWnd);
 
 	scene->Initialise(m_renderer);
 	player->Initialise(m_renderer);
+
+	// Create new timer
+	Train2Game::Timer * timer = new Train2Game::Timer;
 	
 	MyCameraController * camera = m_renderer->GetCameraController();
-	// camera->Follow(player);
-	player->Move(0.0f, 0.0f, -50.0f);
+	camera->Follow(player);
+	player->Move(0.0f, 0.0f, -5.0f);
 
 	while (TRUE)
 	{
@@ -99,23 +102,41 @@ int SystemClass::Run()
 			break;
 		if (GetAsyncKeyState(VK_ESCAPE))
 			break;
+
+		double x, y, z;
+
+		player->GetPosition(x, y, z);
+
+		scene->CheckCollisions(player);
+
 		double updTime = timer->Update();
 		double totTime = timer->Total();
-
 		scene->Update(updTime, totTime);
 		player->Update(updTime, totTime);
 
 		m_renderer->BeginFrame();
+		switch (input->Frame())
+		{
+		case InputClass::NONE:
+			break;
+		case InputClass::FORWARD:
+			player->Move(0.0f, 0.0f, 0.05f);
+		case InputClass::BACK:
+			player->Move(0.0f, 0.0f, -0.05f);
+		case InputClass::LEFT:
+			player->RotateY(1.0f);
+		case InputClass::RIGHT:
+			player->RotateY(-1.0f);
+		}
 
 		D3DXMATRIXA16 baseMatrix;
-
 		m_renderer->d3ddev->GetTransform(D3DTS_WORLD, &baseMatrix);
 
 		scene->Render(baseMatrix);
 		player->Render(baseMatrix);
 
 		// I took the below if statement's structure from the LIT material
-		if (m_renderer->EndFrame())
+		if (!m_renderer->EndFrame())
 		{
 			// Release all buffers
 			scene->Release();
@@ -131,8 +152,7 @@ int SystemClass::Run()
 				}
 
 				// Limit the speed of the loop to roughly 60Hz
-				DWORD pause = 1000 / 60;
-				Sleep(pause);
+				Sleep(16);
 			}
 
 			// If the user quits, we break to avoid initialising anything.
@@ -168,7 +188,10 @@ int SystemClass::Run()
 	// Release the objects in the scene
 	player->Release();
 	scene->Release();
-	// m_renderer->Release();
+	
+	delete scene;
+	delete player;
+	delete m_renderer;
 
 	// return this part of the WM_QUIT message to Windows
 	return msg.wParam;

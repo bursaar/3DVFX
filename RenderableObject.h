@@ -38,6 +38,7 @@ public:
 	void SetTexture(LPCWSTR fileName);	// Taken from the LIT materials
 	void Move(float pX, float pY, float pZ);
 	void OnCollide(RenderableObject* other);
+	void RotateY(float angle);
 
 protected:
 	bool initialised;			// Is the object initialised?

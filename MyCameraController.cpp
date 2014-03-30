@@ -4,6 +4,13 @@
 
 MyCameraController::MyCameraController()
 {
+	x = 0.0f;
+	y = 0.0f;
+	z = 0.0f;
+
+	rotateYaw = 0.0f;
+
+	followTarget = NULL;
 
 	// Set where the camera begins
 	mPosition.x = 0.0f;
@@ -19,6 +26,8 @@ MyCameraController::MyCameraController()
 	mUp.x = 0.0f;
 	mUp.y = 1.0f;
 	mUp.z = 0.0f;
+
+	D3DXMatrixLookAtLH(&viewMatrix, &mPosition, &mLookAt, &mUp);
 }
 
 void MyCameraController::Follow(void *player)
@@ -33,30 +42,16 @@ MyCameraController::~MyCameraController()
 
 bool MyCameraController::SetPosition(float pX, float pY, float pZ)
 {
-	mPosition.x = pX;
-	mPosition.y = pY;
-	mPosition.z = pZ;
+	x = pX;
+	y = pY;
+	z = pZ;
 	return true;
 }
 
-bool MyCameraController::SetRotation(float pX, float pY, float pZ)
+bool MyCameraController::SetRotation(float angle)
 {
-	mRotation.x = pX;
-	mRotation.y = pY;
-	mRotation.z = pZ;
+	rotateYaw = angle;
 	return true;
-}
-
-void MyCameraController::GetViewMatrix(D3DXMATRIX &pViewMatrix)
-{
-	pViewMatrix = viewMatrix;
-	return;
-}
-
-void MyCameraController::GetProjectionMatrix(D3DXMATRIX &pProjMatrix)
-{
-	pProjMatrix = mMatProj;
-	return;
 }
 
 // This implementation is based on the Train2Game LIT material
@@ -68,8 +63,14 @@ void MyCameraController::SetViewTransform(IDirect3DDevice9 * pDevice)
 		matTranslate,	//...translation
 		imatRotateY;	//...inverse rotation in the Y axis
 
+	D3DXMatrixTranslation(&matTranslate, x, y, z);
+
 	if (followTarget != nullptr)
 	{
+		mPosition.x = 0.0f;
+		mPosition.y = 0.0f;
+		mPosition.z = 0.0f;
+
 		D3DXMatrixLookAtLH(&viewMatrix, &mPosition, &mLookAt, &mUp);
 
 		// Apply object position as a transform

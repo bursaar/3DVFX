@@ -145,6 +145,20 @@ void RenderableObject::Render(const D3DXMATRIXA16 & baseMatrix)
 		// Get renderer to draw object
 		mRenderer->Draw(mVertexBuffer, mTexture, mPosition, mScale, mRotation, baseMatrix, vertices.size(), mIndexBuffer, facecount);
 	}
+
+	D3DXMATRIXA16 translateMatrix, rotateMatrixX, rotateMatrixY, rotateMatrixZ;
+	D3DXMatrixRotationX(&rotateMatrixX, (float)mRotation.x);
+	D3DXMatrixRotationZ(&rotateMatrixY, (float)mRotation.z);
+	D3DXMatrixRotationY(&rotateMatrixZ, (float)mRotation.y);
+	D3DXMatrixTranslation(&translateMatrix, (float)mPosition.x, (float)mPosition.y, (float)mPosition.z);
+	D3DXMATRIXA16 childMatrix = rotateMatrixX * rotateMatrixY * rotateMatrixZ * translateMatrix;
+
+	//Iterate over all of our children to draw them too
+	for (std::vector<RenderableObject *>::iterator iter = mChildren.begin(); iter != mChildren.end(); ++iter)
+	{
+		RenderableObject * object = *iter;
+		object->Render(childMatrix);
+	}
 }
 
 void RenderableObject::GetPosition(double &px, double &py, double &pz)
@@ -207,7 +221,12 @@ void RenderableObject::Move(float pX, float pY, float pZ)
 	mPosition.z += translationVector.z;
 }
 
-void OnCollide(RenderableObject *other)
+void RenderableObject::OnCollide(RenderableObject *other)
 {
 	OutputDebugStringA("There was a collision!\n");
+}
+
+void RenderableObject::RotateY(float angle)
+{
+	mRotation.y += angle;
 }
