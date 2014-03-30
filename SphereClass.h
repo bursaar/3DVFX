@@ -10,17 +10,19 @@ public:
 	SphereClass();
 	// Add overloaded constructor from LIT materials to enable creation of a sphere of a certain colour.
 	SphereClass(DWORD pColour)
-		:mColour(pColour){}
+	{
+		mColour = pColour;
+	}
+	float speed = 0.05f;
 	~SphereClass();
 private:
 
-	DWORD mColour;
+
 
 	// For creating the sphere manuallly
 	int ui_ShapeCount;
 	int ui_VCount;
 	CUSTOMVERTEX *arr_Vertices;
-	bool createSphereManually = true;
 
 public:
 	void Initialise(RenderClass * pRenderClass) override;

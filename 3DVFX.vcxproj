@@ -88,6 +88,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AIClass.cpp" />
     <ClCompile Include="D3DClass.cpp" />
     <ClCompile Include="FloorClass.cpp" />
     <ClCompile Include="InputClass.cpp" />
@@ -98,8 +99,10 @@
     <ClCompile Include="SphereClass.cpp" />
     <ClCompile Include="SystemClass.cpp" />
     <ClCompile Include="T2G\Library\Timer.cpp" />
+    <ClCompile Include="WallClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AIClass.h" />
     <ClInclude Include="D3DClass.h" />
     <ClInclude Include="FloorClass.h" />
     <ClInclude Include="InputClass.h" />
@@ -112,6 +115,7 @@
     <ClInclude Include="SystemClass.h" />
     <ClInclude Include="T2G\Code\Scene.h" />
     <ClInclude Include="T2G\Library\Timer.h" />
+    <ClInclude Include="WallClass.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

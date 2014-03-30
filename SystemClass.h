@@ -1,5 +1,6 @@
 #pragma once
 #include "Screen Properties.h"
+#include "AIClass.h"
 #include "InputClass.h"
 #include "RenderClass.h"
 #include "T2G\Library\Timer.h"

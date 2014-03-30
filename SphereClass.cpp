@@ -4,7 +4,6 @@
 SphereClass::SphereClass()
 {
 	mColour = 0xFF00FFFF;
-	createSphereManually = true;
 }
 
 
@@ -16,38 +15,6 @@ SphereClass::~SphereClass()
 // This method is taken from the Train2Game LIT with minor modifications.
 void SphereClass::Initialise(RenderClass * pRenderClass)
 {
-	if (!createSphereManually)
-	{
-		D3DXCreateSphere(pRenderClass->d3ddev, 0.5, 20, 20, &mMesh, NULL);
-		int verticeCount = mMesh->GetNumVertices();
-		CUSTOMVERTEX *pVert;
-		if (mMesh->LockVertexBuffer(D3DLOCK_DISCARD, (LPVOID *)&pVert) == S_OK)
-		{
-			for (int x = 0; x < verticeCount; x++)
-			{
-				CUSTOMVERTEX vert = pVert[x];
-				vertices.push_back(CUSTOMVERTEX(vert.x, vert.y, vert.z, mColour, 0.0f, 0.0f));
-			}
-			mMesh->UnlockVertexBuffer();
-		}
-
-		collidable = true;
-		radius = 1;
-
-		LPDIRECT3DINDEXBUFFER9 pIndBuf;
-		mMesh->GetIndexBuffer(&pIndBuf);
-
-		mIndexBuffer = (IDirect3DIndexBuffer9 *)pIndBuf;
-
-		facecount = mMesh->GetNumFaces();
-
-		mRenderThis = true;
-		RenderableObject::Initialise(pRenderClass);
-
-		initialised = true;
-	}
-	else
-	{
 		CreateSphereManually();
 		int verticeCount = ui_VCount;
 
@@ -66,11 +33,10 @@ void SphereClass::Initialise(RenderClass * pRenderClass)
 		radius = 0.54f;
 
 		// Resize manually-created sphere to match scale of meshed scene
-		float scale = 0.54f;
+		float scale = 1.0f;
 		mScale.x = scale;
 		mScale.y = scale;
 		mScale.z = scale;
-	}
 }
 
 
