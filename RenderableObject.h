@@ -22,6 +22,8 @@ class RenderableObject
 public:
 	bool collidable;			// Can this object collide with other objects?
 
+	DWORD mColour;
+
 	float radius;				// What is the radius of collision?
 
 	bool mRenderThis;			// Should this be rendered?
@@ -34,12 +36,15 @@ public:
 	virtual void Render(const D3DXMATRIXA16 &baseMatrix);
 	void Resume();
 	void GetPosition(double &px, double &py, double &pz);	// Apart from following the LIT material's use of doubles, this implementation is my own
+	void GetScale(double &px, double &py, double &pz);
 	double GetRotateY();	// Apart from following the LIT material's use of double as a return value, I implemented this function myself.
 	void SetTexture(LPCWSTR fileName);	// Taken from the LIT materials
 	void Move(float pX, float pY, float pZ);
-	void OnCollide(RenderableObject* other);
+	virtual void OnCollide(RenderableObject* other);
 	void RotateY(float angle);
-
+	void Fade(RenderableObject *other);
+	int GetOpacity(CUSTOMVERTEX pVertex);
+	bool Turn();
 protected:
 	bool initialised;			// Is the object initialised?
 

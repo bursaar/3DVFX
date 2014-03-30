@@ -68,6 +68,8 @@
     <ClCompile Include="FloorClass.cpp">
       <Filter>Renderer\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="WallClass.cpp" />
+    <ClCompile Include="AIClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen Properties.h">
@@ -106,6 +108,8 @@
     <ClInclude Include="T2G\Code\Scene.h">
       <Filter>Game Code Library</Filter>
     </ClInclude>
+    <ClInclude Include="WallClass.h" />
+    <ClInclude Include="AIClass.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd">

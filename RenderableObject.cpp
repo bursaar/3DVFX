@@ -168,6 +168,13 @@ void RenderableObject::GetPosition(double &px, double &py, double &pz)
 	pz = mPosition.z;
 }
 
+void RenderableObject::GetScale(double &px, double &py, double &pz)
+{
+	px = mScale.x;
+	py = mScale.y;
+	pz = mScale.z;
+}
+
 double RenderableObject::GetRotateY()
 {
 	return (double)mRotation.y;
@@ -224,9 +231,34 @@ void RenderableObject::Move(float pX, float pY, float pZ)
 void RenderableObject::OnCollide(RenderableObject *other)
 {
 	OutputDebugStringA("There was a collision!\n");
+	RotateY(180);		// Turn around!
 }
 
 void RenderableObject::RotateY(float angle)
 {
 	mRotation.y += angle;
+}
+
+void RenderableObject::Fade(RenderableObject *other)
+{
+	DWORD fadeRate = 0x11111111;
+
+	for (vector<CUSTOMVERTEX>::iterator iter = other->vertices.begin(); iter != other->vertices.end(); iter++)
+	{
+		(*iter).colour = fadeRate;
+	}
+}
+
+// This only works when the vertex is at full opacity - in other words, it's a bit useless.
+int RenderableObject::GetOpacity(CUSTOMVERTEX pVertex)
+{
+	DWORD solidOpacity = 0xff000000;
+	int pureColour = pVertex.colour - solidOpacity;		// Get the pure colour without the opacity value
+	int opacity = pVertex.colour - pureColour;
+	return opacity;
+}
+
+bool RenderableObject::Turn()
+{
+	return (bool)rand() % 1;
 }

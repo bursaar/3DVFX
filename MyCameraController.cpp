@@ -88,7 +88,7 @@ void MyCameraController::SetViewTransform(IDirect3DDevice9 * pDevice)
 		D3DXMatrixRotationY(&matRotateY, (0.0f - (float)tr) * DEG_TO_RAD);
 		D3DXMatrixRotationY(&imatRotateY, ((float)tr) * DEG_TO_RAD);
 
-		D3DXVECTOR3 offset(0.0f, 1.0f, -5.0f);
+		D3DXVECTOR3 offset(0.0f, 1.5f, -9.0f);
 
 		// Calculate camera offset from target
 		D3DXVec3TransformCoord(&offset, &offset, &matRotateY);

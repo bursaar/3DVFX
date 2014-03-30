@@ -106,7 +106,7 @@ int SystemClass::Run()
 
 		double x, y, z;
 
-		player->GetPosition(x, y, z);
+    	player->GetPosition(x, y, z);
 
 		scene->CheckCollisions(player);
 
@@ -120,18 +120,22 @@ int SystemClass::Run()
 		if (keys[0x57])
 		{
 			player->Move(0.0f, 0.0f, 0.05f);
+			player->travel = PlayerClass::FORWARD;
 		}
 		if (keys[0x41])
 		{
 			player->Move(-0.05f, 0.0f, 0.0f);
+			player->strafe = PlayerClass::LEFT;
 		}
 		if (keys[0x53])
 		{
 			player->Move(0.0f, 0.0f, -0.05f);
+			player->travel = PlayerClass::BACK;
 		}
 		if (keys[0x44])
 		{
 			player->Move(0.05f, 0.0f, 0.0f);
+			player->strafe = PlayerClass::RIGHT;
 		}
 		if (keys[VK_LEFT])
 		{

@@ -3,6 +3,8 @@
 #include "../../RenderableObject.h"
 #include "../../SphereClass.h"
 #include "../../FloorClass.h"
+#include "../../WallClass.h"
+#include "../../AIClass.h"
 
 namespace Train2Game
 {
@@ -11,17 +13,42 @@ namespace Train2Game
 		public:
 			void Initialise(RenderClass * pRenderer) override
 			{
-				npc1 = new SphereClass(0xFFFF0000);
+				ai = new AIClass;
+				npc1 = new SphereClass(0xFFFF1234);
 				mChildren.push_back(npc1);
-				npc2 = new SphereClass(0xFF00FFFF);
+				npc2 = new SphereClass(0xFF1234FF);
 				mChildren.push_back(npc2);
-				floor = new FloorClass();
-				mChildren.push_back(floor);
+				for (int x = 0; x < 10; x++)
+				{
+					for (int y = 0; y < 10; y++)
+					{
+						floor[x][y] = new FloorClass();
+						mChildren.push_back(floor[x][y]);
+					}
+				}
 
-				npc1->Move(-1,0,0);
-				npc2->Move(1,0,0);
-				
+				npc1->Move(-3,0,0);
+				npc2->Move(2,0,0);
+
+				for (int x = 0; x < 10; x++)
+				{
+					for (int y = 0; y < 10; y++)
+					{
+						double nowX, nowY, nowZ;
+						double thenX, thenY, thenZ;
+						double scaleX, scaleY, scaleZ;
+						floor[x][y]->GetPosition(nowX, nowY, nowZ);
+						floor[x][y]->GetScale(scaleX, scaleY, scaleZ);
+						thenX = nowX + (nowX * x * scaleX);
+						thenY = nowY;
+						thenZ = nowZ + (nowZ * y * scaleZ);
+						floor[x][y]->Move(thenX, thenY, thenZ);
+					}
+				}
+
 				RenderableObject::Initialise(pRenderer);
+
+
 			}
 
 			void CheckCollisions(RenderableObject* player)
@@ -58,14 +85,17 @@ namespace Train2Game
 
 			void Update(double deltaTime, double totalTime) override
 			{
-				
+				ai->Update(npc1);
+				npc2->Move(0.0f, 0.0f, 0.01f);
 				RenderableObject::Update(deltaTime, totalTime);
 			}
 
 		private:
 			SphereClass * npc1;
 			SphereClass * npc2;
-			FloorClass * floor;
+			FloorClass * floor[10][10];
+			WallClass * wall;
+			AIClass * ai;
 		
 	};
 }
