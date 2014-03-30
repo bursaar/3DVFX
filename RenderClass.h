@@ -18,9 +18,11 @@ struct CUSTOMVERTEX
 	DWORD colour;		// from the D3DFVF_DIFFUSE flag
 	float tu, tv;		// UV co-ordinates between 0 and 1 - This part of the struct was added from the original Train2Game LIT material.
 	static const DWORD FORMAT = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1;		// This line was taken from the vertex struct in the Train2Game LIT material.
-	static const int STRIDE_SIZE = 24;
+	D3DXVECTOR3 normal;
+	static const int STRIDE_SIZE = 36;
 
-	// Reusing the constructor from the Train2Game LIT materials, without the UV co-ordinates.
+
+	// Reusing the constructor from the Train2Game LIT materials.
 	CUSTOMVERTEX(float px, float py, float pz, DWORD pcolour, float pu, float pv)
 	{
 		x = px;
@@ -30,6 +32,11 @@ struct CUSTOMVERTEX
 		tu = pu;
 		tv = pv;
 	}
+
+	// Adding a default constructor for the manual sphere creation
+	CUSTOMVERTEX()
+		:x(0.0f), y(0.0f), z(0.0f), colour(0xffffffff), tu(0.0f), tv(0.0f)
+	{}
 };
 
 class RenderClass

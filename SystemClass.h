@@ -32,6 +32,8 @@ private:
 	int ShutdownWindow();
 	RenderClass *m_renderer;
 	InputClass *m_input;
+
+
 };
 
 
