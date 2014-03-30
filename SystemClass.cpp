@@ -121,6 +121,7 @@ int SystemClass::Run()
 		{
 			player->Move(0.0f, 0.0f, 0.05f);
 			player->travel = PlayerClass::FORWARD;
+			scene->RaiseWalls();
 		}
 		if (keys[0x41])
 		{
@@ -131,6 +132,7 @@ int SystemClass::Run()
 		{
 			player->Move(0.0f, 0.0f, -0.05f);
 			player->travel = PlayerClass::BACK;
+			scene->LowerWalls();
 		}
 		if (keys[0x44])
 		{

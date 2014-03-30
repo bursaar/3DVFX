@@ -43,6 +43,8 @@ public:
 	virtual void OnCollide(RenderableObject* other);
 	void RotateY(float angle);
 	int GetOpacity(CUSTOMVERTEX pVertex);
+
+	bool block;
 protected:
 	bool initialised;			// Is the object initialised?
 
@@ -67,7 +69,5 @@ protected:
 	IDirect3DVertexBuffer9 * mVertexBuffer;	// This vertex buffer was used in the original LIT material.
 
 	int facecount;							// This integer of faces to be drawn was in the original LIT material.
-
-
 };
 

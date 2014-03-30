@@ -12,9 +12,15 @@ WallClass::WallClass()
 	mPosition.y = -0.5f;
 	mPosition.x = 1.0f;		// Need a non-zero value for the multiplication part of tiling.
 	mPosition.z = 1.0f;		// Need a non-zero value for the multiplication part of tiling.
-	mScale.x = 20.0f;
+	mPosition.y = -19.9f;
+	mScale.x = 5.0f;
 	mScale.y = 20.0f;
-	mScale.z = 20.0f;
+	mScale.z = 5.0f;
+}
+
+void WallClass::Block(RenderableObject *pObject)
+{
+
 }
 
 

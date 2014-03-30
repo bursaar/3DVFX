@@ -6,6 +6,7 @@ class WallClass :
 public:
 	void Initialise(RenderClass *pRenderClass);
 	void Update(double deltaTime, double totalTime);
+	void Block(RenderableObject *pObject);
 	WallClass();
 };
 

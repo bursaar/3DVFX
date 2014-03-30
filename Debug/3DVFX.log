@@ -1,21 +1,15 @@
-﻿Build started 29/03/2014 23:21:21.
+﻿Build started 30/03/2014 00:29:42.
      1>Project "C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\3DVFX\3DVFX.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt AIClass.cpp FloorClass.cpp InputClass.cpp Main.cpp MyCameraController.cpp RenderClass.cpp RenderableObject.cpp SphereClass.cpp SystemClass.cpp WallClass.cpp
-         SphereClass.cpp
-         MyCameraController.cpp
-         InputClass.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt AIClass.cpp SystemClass.cpp WallClass.cpp
+         WallClass.cpp
          AIClass.cpp
      1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\aiclass.cpp(39): warning C4552: '+' : operator has no effect; expected operator with side-effect
      1>c:\users\ben\dropbox\train2game\portfolios\project 3\assignment 01 – 3d graphics for computer games\project files\3dvfx\3dvfx\aiclass.cpp(47): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
          Generating Code...
-         Skipping... (no relevant changes detected)
-         WallClass.cpp
+         Compiling...
          SystemClass.cpp
-         RenderableObject.cpp
-         RenderClass.cpp
-         Main.cpp
-         FloorClass.cpp
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ben\Dropbox\Train2Game\Portfolios\Project 3\Assignment 01 – 3D Graphics for Computer Games\Project Files\3DVFX\Debug\3DVFX.lib" /MACHINE:X86 Debug\AIClass.obj
          Debug\D3DClass.obj
@@ -34,4 +28,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:06.14
+Time Elapsed 00:00:04.97
