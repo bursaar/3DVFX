@@ -56,6 +56,11 @@ namespace Train2Game
 				}
 			}
 
+			void Update(double deltaTime, double totalTime) override
+			{
+				
+				RenderableObject::Update(deltaTime, totalTime);
+			}
 
 		private:
 			SphereClass * npc1;

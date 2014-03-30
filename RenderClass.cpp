@@ -36,12 +36,12 @@ bool RenderClass::Initialise(HWND phWND)
 	d3dpp.Windowed = TRUE;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	d3dpp.hDeviceWindow = phWND;
-	d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;		// Changed to match LIT
+	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;		// Changed to match LIT
 	d3dpp.BackBufferWidth = SCREEN_WIDTH;
 	d3dpp.BackBufferHeight = SCREEN_HEIGHT;
 	d3dpp.EnableAutoDepthStencil = TRUE;			// automatically run the z-buffer for us
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;		// 16-bit pixel format for the z-buffer
-	d3dpp.MultiSampleType = D3DMULTISAMPLE_4_SAMPLES;
+
 
 	// create a device class using this information and the info from the d3dpp stuct
 	d3d->CreateDevice(D3DADAPTER_DEFAULT,
@@ -51,7 +51,7 @@ bool RenderClass::Initialise(HWND phWND)
 		&d3dpp,
 		&d3ddev);
 
-	d3ddev->SetRenderState(D3DRS_MULTISAMPLEANTIALIAS, TRUE);
+
 	d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(255, 255, 255));
 	d3ddev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE);				// turn off the 3D lighting
@@ -159,29 +159,7 @@ void RenderClass::Draw(IDirect3DVertexBuffer9 * vertexBuffer, IDirect3DTexture9 
 
 	// Reset world translation back to default
 	d3ddev->SetTransform(D3DTS_WORLD, &neutral);
-	/*
-	// Creating a perspective projection
-	D3DXMATRIXA16 projectionMatrix;
-	D3DXMatrixPerspectiveFovLH(
-		&projectionMatrix,						// Pass in projection matrix by reference to be filled in
-		45 * DEG_TO_RAD,						// Height of the field of view
-		SCREEN_HEIGHT / SCREEN_WIDTH,			// Aspect ratio is height divided by width
-		nearView,									// The distance to the near-view plane
-		farView									// The distance to the far-view plane
-		);
 
-	d3ddev->SetTransform(D3DTS_PROJECTION, &projectionMatrix);
-
-	// Disable lighting (for now)
-	d3ddev->SetRenderState(D3DRS_LIGHTING, false);
-
-	// Set our vertex format
-	d3ddev->SetFVF(CUSTOMVERTEX::FORMAT);
-
-	// Set culling mode
-	d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);		// Show both sides of each polygon.
-	// m_D3D->d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);		// Cull any polygons drawn with their backs to us.
-	*/
 }
 
 IDirect3DTexture9 * RenderClass::LoadTexture(LPCWSTR fileName)

@@ -2,6 +2,7 @@
 #include "T2G\Code\Scene.h"
 #include "PlayerClass.h"
 
+bool keys[256];
 
 SystemClass::SystemClass()
 {
@@ -65,6 +66,7 @@ int SystemClass::Initialise(HINSTANCE pHInstance, int pNCmdShow)
 
 int SystemClass::Run()
 {
+	ZeroMemory(&keys, 256);
 
 	// this struct holds Windows event messages
 	MSG msg;
@@ -75,7 +77,6 @@ int SystemClass::Run()
 
 	Train2Game::Scene * scene = new Train2Game::Scene;
 	PlayerClass * player = new PlayerClass;
-	InputClass * input = new InputClass;
 
 	// Initialise Direct3D
 	m_renderer->Initialise(m_hWnd);
@@ -115,17 +116,29 @@ int SystemClass::Run()
 		player->Update(updTime, totTime);
 
 		m_renderer->BeginFrame();
-		switch (input->Frame())
+
+		if (keys[0x57])
 		{
-		case InputClass::NONE:
-			break;
-		case InputClass::FORWARD:
 			player->Move(0.0f, 0.0f, 0.05f);
-		case InputClass::BACK:
+		}
+		if (keys[0x41])
+		{
+			player->Move(-0.05f, 0.0f, 0.0f);
+		}
+		if (keys[0x53])
+		{
 			player->Move(0.0f, 0.0f, -0.05f);
-		case InputClass::LEFT:
+		}
+		if (keys[0x44])
+		{
+			player->Move(0.05f, 0.0f, 0.0f);
+		}
+		if (keys[VK_LEFT])
+		{
 			player->RotateY(1.0f);
-		case InputClass::RIGHT:
+		}
+		if (keys[VK_RIGHT])
+		{
 			player->RotateY(-1.0f);
 		}
 
@@ -237,6 +250,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lpar
 					   PostQuitMessage(0);
 					   return 0;
 	} break;
+	case WM_KEYDOWN:
+		keys[wparam] = true;
+		break;
+	case WM_KEYUP:
+		keys[wparam] = false;
+		break;
 	}
 
 	// Handle any messages the switch statement didn't get
