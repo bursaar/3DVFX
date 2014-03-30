@@ -11,15 +11,27 @@ namespace Train2Game
 	class Scene : public RenderableObject
 	{
 		public:
+
 			void Initialise(RenderClass * pRenderer) override
 			{
+				bool mazeOne[101] = {0,				//  Leading zero to make it tidier to iterate through with nested for loops.
+					1, 0, 1, 1, 1, 1, 1, 1, 0, 1,
+					1, 0, 0, 0, 1, 0, 0, 1, 0, 1,
+					1, 0, 1, 0, 1, 1, 0, 1, 0, 1,
+					1, 0, 1, 0, 0, 0, 0, 1, 0, 1,
+					1, 0, 0, 0, 1, 1, 1, 1, 0, 1,
+					1, 1, 1, 0, 1, 0, 0, 0, 0, 1,
+					1, 0, 0, 0, 1, 0, 1, 1, 1, 1,
+					1, 1, 1, 0, 1, 0, 1, 0, 0, 1,
+					1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+					1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+				};
+
 				ai = new AIClass;
 				npc1 = new SphereClass(0xFFFF1234);
 				mChildren.push_back(npc1);
 				npc2 = new SphereClass(0xFF1234FF);
 				mChildren.push_back(npc2);
-				wall[0] = new WallClass;
-				mChildren.push_back(wall[0]);
 
 				for (int x = 0; x < 10; x++)
 				{
@@ -27,12 +39,12 @@ namespace Train2Game
 					{
 						floor[x][y] = new FloorClass();
 						mChildren.push_back(floor[x][y]);
+						floor[x][y]->block = mazeOne[(x + 1) * (y + 1)];
 					}
 				}
 
 				npc1->Move(-3,0,1);
 				npc2->Move(2,0,-4);
-				// wall[0]->Move(0.0f, -19.0f, 0.0f);
 
 				for (int x = 0; x < 10; x++)
 				{
@@ -49,6 +61,8 @@ namespace Train2Game
 						floor[x][y]->Move((float)thenX, (float)thenY, (float)thenZ);
 					}
 				}
+
+				Block();
 
 				RenderableObject::Initialise(pRenderer);
 
@@ -96,26 +110,51 @@ namespace Train2Game
 
 			void RaiseWalls()
 			{
-				double posX, posY, posZ;
-				double scaleX, scaleY, scaleZ;
-				wall[0]->GetPosition(posX, posY, posZ);
-				wall[0]->GetScale(scaleX, scaleY, scaleZ);
-				if (posY < scaleY - 2)
+				for (int x = 0; x < 10; x++)
 				{
-					wall[0]->Move(0.0f, 0.03f, 0.0f);
+					for (int y = 0; y < 10; y++)
+					{
+						for (int z = 0; z < 4; z++)
+						{
+							if (floor[x][y]->block)
+							{
+								double posX, posY, posZ;
+								double scaleX, scaleY, scaleZ;
+								wall[x][y][z]->GetPosition(posX, posY, posZ);
+								wall[x][y][z]->GetScale(scaleX, scaleY, scaleZ);
+								if (posY < scaleY - 2)
+								{
+									wall[x][y][z]->Move(0.0f, 0.03f, 0.0f);
+								}
+							}
+						}
+					}
 				}
 			}
 
 			void LowerWalls()
 			{
-				double posX, posY, posZ;
-				double scaleX, scaleY, scaleZ;
-				wall[0]->GetPosition(posX, posY, posZ);
-				wall[0]->GetScale(scaleX, scaleY, scaleZ);
-				if (posY > 0 - scaleY)
+				for (int x = 0; x < 10; x++)
 				{
-					wall[0]->Move(0.0f, -0.08f, 0.0f);
+					for (int y = 0; y < 10; y++)
+					{
+						for (int z = 0; z < 4; z++)
+						{
+							if (floor[x][y]->block)
+							{
+								double posX, posY, posZ;
+								double scaleX, scaleY, scaleZ;
+								wall[x][y][z]->GetPosition(posX, posY, posZ);
+								wall[x][y][z]->GetScale(scaleX, scaleY, scaleZ);
+								if (posY > 0 - scaleY)
+								{
+									wall[x][y][z]->Move(0.0f, -0.08f, 0.0f);
+								}
+							}
+						}
+					}
 				}
+
 			}
 
 		private:
@@ -125,21 +164,32 @@ namespace Train2Game
 			AIClass * ai;
 			WallClass * wall[10][10][4];				// A large array so that a maze of walls can be constructed.
 		
-			void Block(RenderableObject *pObject)
+			void Block()
 			{
-				for (int x = 1; x <= 10; x++)
+				for (int x = 0; x < 10; x++)
 				{
-					for (int y = 1; y <= 10; y++)
+					for (int y = 0; y < 10; y++)
 					{
-						if (floor[x - 1][y - 1]->block)
+						if (floor[x][y]->block)
 						{
 							double floorPosX, floorPosY, floorPosZ;
 							double floorScaleX, floorScaleY, floorScaleZ;
 
-							floor[x - 1][y - 1]->GetPosition(floorPosX, floorPosY, floorPosZ);
-							floor[x - 1][y - 1]->GetScale(floorScaleX, floorScaleX, floorScaleZ);
+							floor[x][y]->GetPosition(floorPosX, floorPosY, floorPosZ);
+							floor[x][y]->GetScale(floorScaleX, floorScaleX, floorScaleZ);
 
-							floor[x * y] = 
+							for (int z = 0; z < 4; z++)
+							{
+								wall[x][y][z] = new WallClass;
+								mChildren.push_back(wall[x][y][z]);
+
+								wall[x][y][z]->SetPosition(floorPosX, -19.9f, floorPosZ);
+								wall[x][y][z]->RotateY(90 * z);
+								wall[x][y][z]->Move(0.0f, 0.0f, (floorScaleZ / 2));
+
+							}
+
+
 						}
 					}
 				}

@@ -4,10 +4,10 @@
 WallClass::WallClass()
 {
 	// Creating a quad by pushing the vertices to the draw stack.
-	vertices.push_back(CUSTOMVERTEX(-1.0f, 1.0f, 0.0f, 0xffff00ff, 0.0f, 0.0f));
-	vertices.push_back(CUSTOMVERTEX(1.0f, 1.0f, 0.0f, 0xffffff00, 0.0f, 0.0f));
-	vertices.push_back(CUSTOMVERTEX(-1.0f, -1.0f, 0.0f, 0xff00ffff, 0.0f, 0.0f));
-	vertices.push_back(CUSTOMVERTEX(1.0f, -1.0f, 0.0f, 0xff00ffff, 0.0f, 0.0f));
+	vertices.push_back(CUSTOMVERTEX(-1.0f, 1.0f, 0.0f, 0xff111111, 0.0f, 0.0f));
+	vertices.push_back(CUSTOMVERTEX(1.0f, 1.0f, 0.0f, 0xff111111, 0.0f, 0.0f));
+	vertices.push_back(CUSTOMVERTEX(-1.0f, -1.0f, 0.0f, 0xff999999, 0.0f, 0.0f));
+	vertices.push_back(CUSTOMVERTEX(1.0f, -1.0f, 0.0f, 0xff9f9f9f, 0.0f, 0.0f));
 
 	mPosition.y = -0.5f;
 	mPosition.x = 1.0f;		// Need a non-zero value for the multiplication part of tiling.
@@ -15,12 +15,7 @@ WallClass::WallClass()
 	mPosition.y = -19.9f;
 	mScale.x = 5.0f;
 	mScale.y = 20.0f;
-	mScale.z = 5.0f;
-}
-
-void WallClass::Block(RenderableObject *pObject)
-{
-
+	mScale.z = 20.0f;
 }
 
 

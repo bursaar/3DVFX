@@ -168,6 +168,13 @@ void RenderableObject::GetPosition(double &px, double &py, double &pz)
 	pz = mPosition.z;
 }
 
+void RenderableObject::SetPosition(double px, double py, double pz)
+{
+	mPosition.x = px;
+	mPosition.y = py;
+	mPosition.z = pz;
+}
+
 void RenderableObject::GetScale(double &px, double &py, double &pz)
 {
 	px = mScale.x;

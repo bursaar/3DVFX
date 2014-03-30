@@ -37,12 +37,14 @@ public:
 	void Resume();
 	void GetPosition(double &px, double &py, double &pz);	// Apart from following the LIT material's use of doubles, this implementation is my own
 	void GetScale(double &px, double &py, double &pz);
+	void SetPosition(double px, double py, double pz);
 	double GetRotateY();	// Apart from following the LIT material's use of double as a return value, I implemented this function myself.
 	void SetTexture(LPCWSTR fileName);	// Taken from the LIT materials
 	void Move(float pX, float pY, float pZ);
 	virtual void OnCollide(RenderableObject* other);
 	void RotateY(float angle);
 	int GetOpacity(CUSTOMVERTEX pVertex);
+
 
 	bool block;
 protected:
